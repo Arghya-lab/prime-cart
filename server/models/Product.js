@@ -19,7 +19,7 @@ const ProductVariant = mongoose.Schema({
   },
 });
 
-const ProductSchema = mongoose.Schema(
+const productSchema = mongoose.Schema(
   {
     seller: {
       type: mongoose.Schema.Types.ObjectId,
@@ -75,5 +75,5 @@ const ProductSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const Product = mongoose.model("Product", ProductSchema);
+const Product = mongoose.model("Product", productSchema);
 module.exports = Product;
