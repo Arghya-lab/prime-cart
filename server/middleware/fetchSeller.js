@@ -3,18 +3,18 @@ require("dotenv").config();
 
 const jwtSecret = process.env.JWT_SECRET;
 
-const authMiddleware = (req, res, next) => {
+const fetchSeller = (req, res, next) => {
   try {
-    const authorization = req.header("Authorization");
-    const token = authorization.split("Bearer ")[1];
+    const sellerAuthorization = req.header("seller-auth");
+    const token = sellerAuthorization.split("Bearer ")[1];
     if (!token) {
       res
         .status(401)
         .send({ error: "Please authenticate using a valid token" });
     }
 
-    const customer = jwt.verify(token, jwtSecret);
-    req.customer = customer;
+    const seller = jwt.verify(token, jwtSecret);
+    req.seller = seller;
     next();
   } catch (error) {
     console.log(error);
@@ -22,4 +22,4 @@ const authMiddleware = (req, res, next) => {
   }
 };
 
-module.exports = authMiddleware;
+module.exports = fetchSeller;

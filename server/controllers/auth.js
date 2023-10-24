@@ -97,4 +97,31 @@ const createSeller = async (req, res) => {
   }
 };
 
-module.exports = { signupUser, loginUser, createSeller };
+const getSellerToken = async (req, res) => {
+  try {
+    const { customerId } = req.customer;
+    const customer = await Customer.findById(customerId)
+    if (!customer) {
+      return res.status(400).json({ error: "Seller unavailable." });
+    }
+    if (customer.isSeller !== true) {
+      return res.status(400).json({ error: "Seller unavailable." });
+    }
+    const seller = await Seller.findOne({customerId})
+    const sellerToken = jwt.sign(
+      { sellerId: seller._id, iat: Math.floor(Date.now() / 1000) - 30 },
+      jwtSecret
+    );
+    res.status(200).json({
+      success: true,
+      data: {
+        sellerToken: `Bearer ${sellerToken}`,
+      },
+    });
+  } catch (error) {
+    res.status(400).json({ error: "Server error." });
+  }
+
+}
+
+module.exports = { signupUser, loginUser, createSeller, getSellerToken };

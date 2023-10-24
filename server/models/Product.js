@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const ProductVariant = new mongoose.Schema({
   color: String,
   size: String,
+  ram: String,
+  rom: String,
   price: {
     type: {
       mrp: Number,
