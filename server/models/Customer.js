@@ -19,6 +19,10 @@ const customerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isSeller: {
+      type: Boolean,
+      default: false,
+    }
     // Additional fields such as address, etc.
   },
   { timestamps: true }

@@ -2,22 +2,11 @@ const mongoose = require("mongoose");
 
 const sellerSchema = new mongoose.Schema(
   {
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: "String",
+    customerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Customer",
       required: true,
       unique: true,
-    },
-    password: {
-      type: "String",
-      required: true,
     },
     customerSupportEmail: {
       type: "String",

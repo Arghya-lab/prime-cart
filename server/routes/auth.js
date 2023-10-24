@@ -1,5 +1,6 @@
 const express = require("express");
-const { signupUser, loginUser } = require("../controllers/auth");
+const { signupUser, loginUser, createSeller } = require("../controllers/auth");
+const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
@@ -7,5 +8,7 @@ const router = express.Router();
 router.post("/signup", signupUser);
 // login using : POST api/auth/login
 router.post("/login", loginUser);
+// createSeller using : POST api/auth/createSeller  =>  require token
+router.post("/createSeller", authMiddleware, createSeller);
 
 module.exports = router;

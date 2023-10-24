@@ -21,7 +21,7 @@ const ProductVariant = new mongoose.Schema({
 
 const productSchema = new mongoose.Schema(
   {
-    seller: {
+    sellerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Seller",
       required: true,
