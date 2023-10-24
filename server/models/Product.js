@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const ProductVariant = mongoose.Schema({
+const ProductVariant = new mongoose.Schema({
   color: String,
   size: String,
   price: {
@@ -19,7 +19,7 @@ const ProductVariant = mongoose.Schema({
   },
 });
 
-const productSchema = mongoose.Schema(
+const productSchema = new mongoose.Schema(
   {
     seller: {
       type: mongoose.Schema.Types.ObjectId,
