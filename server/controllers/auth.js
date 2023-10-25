@@ -10,7 +10,7 @@ const signupUser = async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
     if (await Customer.findOne({ email })) {
-      return res.status(400).json({ error: "Customer already present" });
+      return res.status(400).json({ success: false, error: "Customer already present" });
     }
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
@@ -33,7 +33,7 @@ const signupUser = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({ error: "Failed to signup." });
+    res.status(500).json({ success: false, error: "Failed to signup." });
   }
 };
 
@@ -64,7 +64,7 @@ const loginUser = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({ error: "Failed to login." });
+    res.status(500).json({ success: false, error: "Failed to login." });
   }
 };
 
