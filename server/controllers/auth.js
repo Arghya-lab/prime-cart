@@ -33,7 +33,7 @@ const signupUser = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(400).json({ error: "Server error." });
+    res.status(500).json({ error: "Failed to signup." });
   }
 };
 
@@ -64,7 +64,7 @@ const loginUser = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(400).json({ error: "Server error." });
+    res.status(500).json({ error: "Failed to login." });
   }
 };
 
@@ -72,7 +72,7 @@ const createSeller = async (req, res) => {
   try {
     const { customerId } = req.customer;
     if (await Customer.findOne({ customerId })) {
-      return res.status(400).json({ error: "Seller already present" });
+      return res.status(400).json({ success: false, error: "Seller already present" });
     }
     const { customerSupportEmail, panNo, location } = req.body;
     const seller = await Seller.create({
@@ -93,7 +93,7 @@ const createSeller = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(400).json({ error: "Server error." });
+    res.status(500).json({ success: false, error: "Failed to create seller." });
   }
 };
 
@@ -102,10 +102,10 @@ const getSellerToken = async (req, res) => {
     const { customerId } = req.customer;
     const customer = await Customer.findById(customerId)
     if (!customer) {
-      return res.status(400).json({ error: "Seller unavailable." });
+      return res.status(400).json({ success: false, error: "Seller unavailable." });
     }
     if (customer.isSeller !== true) {
-      return res.status(400).json({ error: "Seller unavailable." });
+      return res.status(400).json({ success: false, error: "Seller unavailable." });
     }
     const seller = await Seller.findOne({customerId})
     const sellerToken = jwt.sign(
@@ -119,7 +119,7 @@ const getSellerToken = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(400).json({ error: "Server error." });
+    res.status(500).json({ success: false, error: "Failed to get seller info." });
   }
 
 }

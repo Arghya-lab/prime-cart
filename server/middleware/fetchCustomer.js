@@ -10,7 +10,7 @@ const fetchCustomer = (req, res, next) => {
     if (!token) {
       res
         .status(401)
-        .send({ error: "Please authenticate using a valid token" });
+        .json({ success: false, error: "Please authenticate using a valid token" });
     }
 
     const customer = jwt.verify(token, jwtSecret);
@@ -18,7 +18,7 @@ const fetchCustomer = (req, res, next) => {
     next();
   } catch (error) {
     console.log(error);
-    res.status(401).send({ error: "Please authenticate using a valid token" });
+    res.status(401).json({ success: false, error: "Please authenticate using a valid token" });
   }
 };
 
