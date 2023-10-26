@@ -9,8 +9,9 @@ import {
 import { useFormik } from "formik";
 import { useState } from "react";
 import * as yup from "yup";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login } from "../features/auth/authSlice";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const signupValidationSchema = yup.object({
   firstName: yup
@@ -56,6 +57,10 @@ const signupInitialValues = {
 function LoginPage() {
   const [isLoginPage, setIsLoginPage] = useState(true);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/";
 
   const handleLogin = async (values) => {
     const res = await fetch("http://localhost:8000/api/auth/login", {
@@ -68,7 +73,8 @@ function LoginPage() {
     const json = await res.json();
     if (json.success) {
       dispatch(login(json.data));
-      //  redirect to home page
+      // Send them back to the page they tried to visit when they were redirected to the login page. Use { replace: true } so we don't create another entry in the history stack for the login page.  This means that when they get to the protected page and click the back button, they won't end up back on the login page, which is also really nice for the user experience.
+      navigate(from, { replace: true });
     } else {
       console.log(json.error);
     }
@@ -85,7 +91,8 @@ function LoginPage() {
     const json = await res.json();
     if (json.success) {
       dispatch(login(json.data));
-      //  redirect to home page
+      // Send them back to the page they tried to visit when they were redirected to the login page. Use { replace: true } so we don't create another entry in the history stack for the login page.  This means that when they get to the protected page and click the back button, they won't end up back on the login page, which is also really nice for the user experience.
+      navigate(from, { replace: true });
     } else {
       console.log(json.error);
     }
@@ -97,7 +104,6 @@ function LoginPage() {
       ? loginValidationSchema
       : signupValidationSchema,
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
       isLoginPage ? handleLogin(values) : handleSignup(values);
     },
   });
@@ -197,7 +203,7 @@ function LoginPage() {
             variant="text"
             type="button"
             onClick={() => setIsLoginPage(!isLoginPage)}>
-            {isLoginPage ? "I don't have account" : "Already have account !"}
+            {isLoginPage ? "I don't have account" : "Already have an account !"}
           </Button>
         </Stack>
       </Paper>
