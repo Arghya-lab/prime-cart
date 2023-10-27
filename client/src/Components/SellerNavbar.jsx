@@ -78,7 +78,7 @@ function SellerNavbar() {
         py={1.6}
         width={450}
         justifyContent="space-between">
-        <Button onClick={() => navigate("/sellerAuth")}>
+        <Button onClick={() => navigate("/createProduct")}>
           <Typography variant="caption" display="block" color="whitesmoke">
             Create New Product
           </Typography>

@@ -5,16 +5,38 @@ const Product = require("../models/Product");
 const createProduct = async (req, res) => {
   try {
     const { sellerId } = req.seller;
-    const { name } = req.body;
+    const {
+      name,
+      category,
+      variant,
+      mrp,
+      selling,
+      description,
+      highlights,
+      stock,
+      productImgsName,
+    } = req.body;
     if (await Product.findOne({ name })) {
       res.status(400).json({
         success: false,
         error: "Already product available with same name.",
       });
     }
-    const savedProduct = await Product.create({ sellerId, ...req.body });
+    const imgUrls = productImgsName.split(',')
+    const savedProduct = await Product.create({
+      sellerId,
+      name,
+      category,
+      variant,
+      price: { mrp, selling },
+      description,
+      highlights,
+      stock,
+      imgUrls,
+    });
     res.status(201).json({ success: true, data: savedProduct });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .json({ success: false, error: "Failed to create product." });

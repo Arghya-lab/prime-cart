@@ -11,6 +11,8 @@ const port = process.env.PORT;
 /* CONFIG */
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true})); // To receive image
+app.use("/assets", express.static(__dirname + "/public/assets")); // To serve static files from a directory named "public/assets
 
 /* CONNECT WITH DB */
 connectToDb();

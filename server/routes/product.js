@@ -1,4 +1,5 @@
 const express = require("express");
+const multer  = require('multer')
 const {
   getAllProducts,
   createProduct,
@@ -10,9 +11,20 @@ const fetchSeller = require("../middleware/fetchSeller");
 
 const router = express.Router();
 
+// multer storage config
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./public/assets/productImgs")
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+const upload = multer({ storage })
+
 /* CREATE */
 // create a Product using : POST /api/products/create =>  Seller Token require
-router.post("/create", fetchSeller, createProduct);
+router.post("/create", upload.array('productImgs', 10), fetchSeller, createProduct);
 
 /* READ */
 // get all Products using : GET /api/products

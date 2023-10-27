@@ -9,6 +9,7 @@ import ProfilePage from "./Pages/ProfilePage";
 import SellerAuthPage from "./Pages/SellerAuthPage";
 import SellerPage from "./Pages/SellerPage";
 import NotfoundPage from "./Pages/NotfoundPage";
+import ProductCreatePage from "./Pages/ProductCreatePage";
 
 function App() {
   return (
@@ -53,7 +54,15 @@ function App() {
           path="/seller"
           element={
             <RequireSellerAuth>
-            <SellerPage />
+              <SellerPage />
+            </RequireSellerAuth>
+          }
+        />
+        <Route
+          path="/createProduct"
+          element={
+            <RequireSellerAuth>
+              <ProductCreatePage />
             </RequireSellerAuth>
           }
         />
