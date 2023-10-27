@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -9,28 +12,19 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-// import MenuIcon from "@mui/icons-material/Menu";
-import { useState } from "react";
 import {
   Search,
-  ShoppingCart,
   AccountCircle,
-  Favorite,
-  SensorDoor,
   Logout,
   KeyboardArrowDown,
   KeyboardArrowUp,
 } from "@mui/icons-material";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { setLogout } from "../features/auth/authSlice";
 
-function Navbar() {
+function SellerNavbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const isSeller = Boolean(useSelector((state) => state.auth.sellerToken));
 
   const handleViewItems = () => {
     setIsDropdownOpen(true);
@@ -84,19 +78,16 @@ function Navbar() {
         py={1.6}
         width={450}
         justifyContent="space-between">
-        {isSeller ? (
-          <Button onClick={() => navigate("/seller")}>
-            <Typography variant="caption" display="block" color="whitesmoke">
-              Seller Page
-            </Typography>
-          </Button>
-        ) : (
-          <Button onClick={() => navigate("/sellerAuth")}>
-            <Typography variant="caption" display="block" color="whitesmoke">
-              Become a seller
-            </Typography>
-          </Button>
-        )}
+        <Button onClick={() => navigate("/sellerAuth")}>
+          <Typography variant="caption" display="block" color="whitesmoke">
+            Create New Product
+          </Typography>
+        </Button>
+        <Button onClick={() => navigate("/sellerAuth")}>
+          <Typography variant="caption" display="block" color="whitesmoke">
+            Show my listed products
+          </Typography>
+        </Button>
         <Box
           onMouseEnter={handleViewItems}
           onMouseLeave={handleHideItems}
@@ -149,46 +140,6 @@ function Navbar() {
                 padding: "8px 16px",
                 ":hover": { bgcolor: "#ddd" },
               }}>
-              <Link style={{ textDecoration: "none" }} to="/orders">
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    color: "#222",
-                    ":hover": { color: "#555" },
-                  }}>
-                  <SensorDoor />
-                  <Typography px={1}>Orders</Typography>
-                </Box>
-              </Link>
-            </ListItem>
-            <ListItem
-              sx={{
-                width: "100%",
-                height: "48px",
-                padding: "8px 16px",
-                ":hover": { bgcolor: "#ddd" },
-              }}>
-              <Link style={{ textDecoration: "none" }} to="/wishlist">
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    color: "#222",
-                    ":hover": { color: "#555" },
-                  }}>
-                  <Favorite />
-                  <Typography px={1}>Wishlist</Typography>
-                </Box>
-              </Link>
-            </ListItem>
-            <ListItem
-              sx={{
-                width: "100%",
-                height: "48px",
-                padding: "8px 16px",
-                ":hover": { bgcolor: "#ddd" },
-              }}>
               <Box
                 sx={{
                   display: "flex",
@@ -204,19 +155,9 @@ function Navbar() {
             </ListItem>
           </Paper>
         </Box>
-        <Button>
-          <Typography
-            variant="caption"
-            display="block"
-            color="whitesmoke"
-            sx={{ display: "flex", alignItems: "center" }}>
-            <ShoppingCart />
-            <Typography px={1}>Cart</Typography>
-          </Typography>
-        </Button>
       </Stack>
     </Stack>
   );
 }
 
-export default Navbar;
+export default SellerNavbar;

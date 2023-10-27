@@ -1,8 +1,8 @@
 require("dotenv").config();
-const Customer = require("../models/Customer");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Seller = require("../models/Seller");
+const Customer = require("../models/Customer");
 
 const jwtSecret = process.env.JWT_SECRET;
 
@@ -71,8 +71,11 @@ const loginUser = async (req, res) => {
 const createSeller = async (req, res) => {
   try {
     const { customerId } = req.customer;
-    if (await Customer.findOne({ customerId })) {
-      return res.status(400).json({ success: false, error: "Seller already present" });
+    if (!await Customer.findById(customerId)) {
+      return res.status(400).json({ success: false, error: "Failed to create seller." });
+    }
+    if (await Seller.findOne({ customerId })) {
+      return res.status(400).json({ success: false, error: "You are already a seller." });
     }
     const { customerSupportEmail, panNo, location } = req.body;
     const seller = await Seller.create({
@@ -102,10 +105,10 @@ const getSellerToken = async (req, res) => {
     const { customerId } = req.customer;
     const customer = await Customer.findById(customerId)
     if (!customer) {
-      return res.status(400).json({ success: false, error: "Seller unavailable." });
+      return res.status(400).json({ success: false, error: "You are not a seller." });
     }
     if (customer.isSeller !== true) {
-      return res.status(400).json({ success: false, error: "Seller unavailable." });
+      return res.status(400).json({ success: false, error: "You are not a seller." });
     }
     const seller = await Seller.findOne({customerId})
     const sellerToken = jwt.sign(

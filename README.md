@@ -5,7 +5,7 @@ ShopPrime, the premier online shopping platform that brings you an unparalleled 
 ## Features to add
 
 - [ ] **Mobile Responsiveness**: Ensure the platform is optimized for mobile devices to cater to users on various platforms.
-- [ ] **User Registration and Authentication**: Allow users to create accounts and log in securely.
+- [x] **User Registration and Authentication**: Allow users to create accounts and log in securely.
 - [ ] **Product Listings**: Enable sellers to list their products with details, images, and prices.
 - [ ] **Search and Filters**: Implement a robust search functionality and filters to help users find products quickly.
 - [ ] **Product Categories and Subcategories**: Organize products into relevant categories and subcategories for easy navigation.
@@ -27,7 +27,7 @@ ShopPrime, the premier online shopping platform that brings you an unparalleled 
 
 - ReactJS - Frontend framework
 - Material-UI  - UI library
-- Redux toolkit useDispatch & useSelector hooks - For state management
+- Redux toolkit - For state management
 
 ## Getting Started
 

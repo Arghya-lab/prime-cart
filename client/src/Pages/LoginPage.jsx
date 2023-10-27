@@ -1,3 +1,8 @@
+import { useState } from "react";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Box,
   Paper,
@@ -6,12 +11,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useFormik } from "formik";
-import { useState } from "react";
-import * as yup from "yup";
-import { useDispatch } from "react-redux";
-import { login } from "../features/auth/authSlice";
-import { useLocation, useNavigate } from "react-router-dom";
+import { setCustomerLogin } from "../features/auth/authSlice";
 
 const signupValidationSchema = yup.object({
   firstName: yup
@@ -72,7 +72,7 @@ function LoginPage() {
     });
     const json = await res.json();
     if (json.success) {
-      dispatch(login(json.data));
+      dispatch(setCustomerLogin(json.data));
       // Send them back to the page they tried to visit when they were redirected to the login page. Use { replace: true } so we don't create another entry in the history stack for the login page.  This means that when they get to the protected page and click the back button, they won't end up back on the login page, which is also really nice for the user experience.
       navigate(from, { replace: true });
     } else {
@@ -90,7 +90,7 @@ function LoginPage() {
     });
     const json = await res.json();
     if (json.success) {
-      dispatch(login(json.data));
+      dispatch(setCustomerLogin(json.data));
       // Send them back to the page they tried to visit when they were redirected to the login page. Use { replace: true } so we don't create another entry in the history stack for the login page.  This means that when they get to the protected page and click the back button, they won't end up back on the login page, which is also really nice for the user experience.
       navigate(from, { replace: true });
     } else {
