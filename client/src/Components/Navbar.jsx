@@ -121,6 +121,7 @@ function Navbar() {
               bgcolor: "whitesmoke",
               position: "absolute",
               minWidth: "184px",
+              zIndex: "50",
             }}>
             <ListItem
               sx={{
