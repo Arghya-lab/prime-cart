@@ -1,4 +1,4 @@
-import { Box, Button, Paper, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 import Navbar from "../Components/Navbar";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import ItemCard from "../Components/ItemCard";
