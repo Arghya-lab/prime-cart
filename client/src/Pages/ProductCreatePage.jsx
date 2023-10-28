@@ -4,14 +4,20 @@ import { useSelector } from "react-redux";
 import {
   Box,
   Button,
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  MenuItem,
   Paper,
+  Select,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
 import SellerNavbar from "../Components/SellerNavbar";
 import ImgDrop from "../Components/ImgDrop";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { red } from "@mui/material/colors";
 
 const initialValues = {
   name: "",
@@ -43,9 +49,17 @@ const validationSchema = yup.object({
 function ProductCreatePage() {
   const sellerToken = useSelector((state) => state.auth.sellerToken);
   const [productImgs, setProductImgs] = useState(null);
+  const [imgDropError, setImgDropError] = useState(false);
+
+  useEffect(() => {
+    if (productImgs) {
+      setImgDropError(false);
+    }
+  }, [productImgs]);
 
   const handleDropzoneValue = (value) => {
     setProductImgs(value);
+    setImgDropError(false)
     console.log(value);
   };
 
@@ -53,18 +67,17 @@ function ProductCreatePage() {
     initialValues,
     validationSchema,
     onSubmit: async (values) => {
-      console.log(productImgs);
-      const formData = new FormData()
+      const formData = new FormData();
       for (const value in values) {
-        formData.append(value, values[value])
+        formData.append(value, values[value]);
       }
-      const productImgsName = productImgs.map(productImg=>productImg.name)
-      for (let i = 0; i < productImgs.length; i++) {
-        formData.append(`productImgs`, productImgs[i]);
+      for (const productImg of productImgs) {
+        formData.append(`productImgs`, productImg);
       }
-      // formData.append("productImgs", productImgs);
+      const productImgsName = productImgs
+        .map((productImg) => productImg.name)
+        .join(",");
       formData.append("productImgsName", productImgsName);
-      console.log(formData);
 
       const res = await fetch("http://localhost:8000/api/products/create", {
         method: "POST",
@@ -83,7 +96,6 @@ function ProductCreatePage() {
     },
   });
 
-
   return (
     <Box>
       <SellerNavbar />
@@ -98,6 +110,9 @@ function ProductCreatePage() {
           padding={4}
           onSubmit={formik.handleSubmit}>
           <ImgDrop onDropzoneValue={handleDropzoneValue} />
+          <FormHelperText sx={{ color: red[700], width: "100%" }}>
+            {imgDropError ? "Images not uploaded." : ""}
+          </FormHelperText>
           <TextField
             sx={{ m: 1 }}
             variant="outlined"
@@ -111,25 +126,54 @@ function ProductCreatePage() {
             error={formik.touched.name && Boolean(formik.errors.name)}
             helperText={formik.touched.name && formik.errors.name}
           />
-          <TextField
-            sx={{ m: 1 }}
-            variant="outlined"
-            fullWidth
-            id="category"
-            name="category"
-            label="Category"
-            value={formik.values.category}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.category && Boolean(formik.errors.category)}
-            helperText={formik.touched.category && formik.errors.category}
-          />
+          <FormControl fullWidth>
+            <InputLabel
+              id="category"
+              sx={{
+                color:
+                  formik.touched.category && Boolean(formik.errors.category)
+                    ? red[700]
+                    : undefined,
+              }}>
+              Age
+            </InputLabel>
+            <Select
+              labelId="category"
+              id="category"
+              name="category"
+              label="Category"
+              value={formik.values.category}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={
+                formik.touched.category && Boolean(formik.errors.category)
+              }>
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value="fashion">Fashion</MenuItem>
+              <MenuItem value="homeAndKitchen">Home & kitchen</MenuItem>
+              <MenuItem value="electronics">Electronics</MenuItem>
+              <MenuItem value="beautyPicks">Beauty picks</MenuItem>
+              <MenuItem value="mobileAndTablets">Mobile & tablets</MenuItem>
+              <MenuItem value="healthAndPersonalCare">
+                Health & Personal Care
+              </MenuItem>
+              <MenuItem value="books">Books</MenuItem>
+              <MenuItem value="tvAppliances">Tv appliances</MenuItem>
+            </Select>
+            <FormHelperText
+              sx={{
+                color:
+                  formik.touched.category && Boolean(formik.errors.category)
+                    ? red[700]
+                    : undefined,
+              }}>
+              {formik.touched.category && formik.errors.category}
+            </FormHelperText>
+          </FormControl>
           {/* variant selector have to add */}
-          <Stack
-            spacing={3}
-            direction="row"
-            fullWidth
-            sx={{ m: 1, width: "100%" }}>
+          <Stack spacing={3} direction="row" sx={{ m: 1, width: "100%" }}>
             <TextField
               variant="outlined"
               fullWidth
@@ -159,6 +203,21 @@ function ProductCreatePage() {
             sx={{ m: 1 }}
             variant="outlined"
             fullWidth
+            id="stock"
+            name="stock"
+            label="Stock"
+            value={formik.values.stock}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.stock && Boolean(formik.errors.stock)}
+            helperText={formik.touched.stock && formik.errors.stock}
+          />
+          <TextField
+            sx={{ m: 1 }}
+            variant="outlined"
+            fullWidth
+            multiline
+            rows={6}
             id="description"
             name="description"
             label="Description"
@@ -174,6 +233,8 @@ function ProductCreatePage() {
             sx={{ m: 1 }}
             variant="outlined"
             fullWidth
+            multiline
+            rows={6}
             id="highlights"
             name="highlights"
             label="Highlights"
@@ -185,20 +246,13 @@ function ProductCreatePage() {
             }
             helperText={formik.touched.highlights && formik.errors.highlights}
           />
-          <TextField
-            sx={{ m: 1 }}
-            variant="outlined"
-            fullWidth
-            id="stock"
-            name="stock"
-            label="Stock"
-            value={formik.values.stock}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.stock && Boolean(formik.errors.stock)}
-            helperText={formik.touched.stock && formik.errors.stock}
-          />
-          <Button color="primary" variant="contained" type="submit">
+          <Button
+            color="primary"
+            variant="contained"
+            type="submit"
+            onClick={() => {
+              if (!productImgs) setImgDropError(true);
+            }}>
             Submit
           </Button>
         </Stack>

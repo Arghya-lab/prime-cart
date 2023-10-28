@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import PropTypes from 'prop-types';
 import { useDropzone } from "react-dropzone";
 import { Masonry } from "@mui/lab";
 import { Box, Typography } from "@mui/material";
@@ -70,7 +71,7 @@ function ImgDrop({ onDropzoneValue }) {
         {files.map((file) => (
           <div style={{ padding: 4 }} key={file.name}>
             <img
-              style={{ display: "block", width: "95px" }}
+              style={{ display: "block", width: "95px", maxHeight: "300px" }}
               src={file.preview}
               // Revoke data uri after image is loaded
               onLoad={() => {
@@ -89,5 +90,9 @@ function ImgDrop({ onDropzoneValue }) {
     </Box>
   );
 }
+
+ImgDrop.propTypes = {
+  onDropzoneValue: PropTypes.func.isRequired,
+};
 
 export default ImgDrop;

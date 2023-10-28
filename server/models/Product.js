@@ -35,6 +35,7 @@ const productSchema = new mongoose.Schema(
     },
     category: {
       type: String,
+      enum: ["fashion", "homeAndKitchen", "electronics", "beautyPicks", "mobileAndTablets", "healthAndPersonalCare", "books", "tvAppliances"],
       required: true,
     },
     variant: {

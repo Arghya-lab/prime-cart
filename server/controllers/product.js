@@ -5,7 +5,7 @@ const Product = require("../models/Product");
 const createProduct = async (req, res) => {
   try {
     const { sellerId } = req.seller;
-    const {
+    let {
       name,
       category,
       variant,
@@ -23,6 +23,7 @@ const createProduct = async (req, res) => {
       });
     }
     const imgUrls = productImgsName.split(',')
+    highlights = highlights.split('\n')
     const savedProduct = await Product.create({
       sellerId,
       name,
@@ -48,7 +49,7 @@ const createProduct = async (req, res) => {
 const getAllProducts = async (req, res) => {
   try {
     //  improve and optimize it
-    const products = await Product.find();
+    const products = await Product.find()
     res.status(200).json({ success: true, data: products });
   } catch (error) {
     res
