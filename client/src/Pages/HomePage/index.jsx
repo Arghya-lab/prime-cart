@@ -1,17 +1,17 @@
 import { Box, Button, Stack } from "@mui/material";
-import Navbar from "../Components/Navbar";
+import Navbar from "../../Components/Navbar";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-import ItemCard from "../Components/ItemCard";
+import CategoryWidget from "../../Components/CategoryWidget";
 import {
   slideHeroImages,
   categoryImgs,
   bestSellersInKitchenAndDining,
   bestSellersInBooks,
-} from "../utils/imgLinks";
+} from "./imgLinks";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
-import ShovelerWidget from "../Components/ShovelerWidget";
-import Footer from "../Components/Footer";
+import ShovelerWidget from "../../Components/ShovelerWidget";
+import Footer from "../../Components/Footer";
 
 const properties = {
   prevArrow: (
@@ -94,7 +94,7 @@ function HomePage() {
           }}>
           {categoryImgs.map((data) => (
             <Box key={data.name}>
-              <ItemCard url={data.url} name={data.name} />
+              <CategoryWidget url={data.url} name={data.name} value={data.value} />
             </Box>
           ))}
         </Box>

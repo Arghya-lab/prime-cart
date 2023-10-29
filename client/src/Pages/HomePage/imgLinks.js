@@ -1,3 +1,46 @@
+const categoryImgs = [
+  {
+    url: "http://localhost:5173/categoryImgs/fash.jpg",
+    name: "Fashion",
+    value: "fashion",
+  },
+  {
+    url: "http://localhost:5173/categoryImgs/xcm_cuttle_home_&_kitchen.jpg",
+    name: "Home & kitchen",
+    value: "homeAndKitchen",
+  },
+  {
+    url: "http://localhost:5173/categoryImgs/Fuji_Dash_Electronics.jpg",
+    name: "Electronics",
+    value: "electronics",
+  },
+  {
+    url: "http://localhost:5173/categoryImgs/Fuji_Dash_Beauty.jpg",
+    name: "Beauty picks",
+    value: "beautyPicks",
+  },
+  {
+    url: "http://localhost:5173/categoryImgs/mob_&_tab.jpg",
+    name: "Mobile & tablets",
+    value: "mobileAndTablets",
+  },
+  {
+    url: "http://localhost:5173/categoryImgs/health_essentials.jpg",
+    name: "Health & Personal Care",
+    value: "healthAndPersonalCare",
+  },
+  {
+    url: "http://localhost:5173/categoryImgs/book_pic.jpg",
+    name: "Books",
+    value: "books",
+  },
+  {
+    url: "http://localhost:5173/categoryImgs/tv_appliances.jpg",
+    name: "Tv appliances",
+    value: "tvAppliances",
+  },
+];
+
 const slideHeroImages = [
   {
     url: "http://localhost:5173/heroImgs/beauty_product_hero.jpg",
@@ -16,41 +59,6 @@ const slideHeroImages = [
   },
   {
     url: "http://localhost:5173/heroImgs/shop_holiday_hero.jpg",
-  },
-];
-
-const categoryImgs = [
-  {
-    url: "http://localhost:5173/categoryImgs/fash.jpg",
-    name: "Fashion",
-  },
-  {
-    url: "http://localhost:5173/categoryImgs/xcm_cuttle_home_&_kitchen.jpg",
-    name: "Home & kitchen",
-  },
-  {
-    url: "http://localhost:5173/categoryImgs/Fuji_Dash_Electronics.jpg",
-    name: "Electronics",
-  },
-  {
-    url: "http://localhost:5173/categoryImgs/Fuji_Dash_Beauty.jpg",
-    name: "Beauty picks",
-  },
-  {
-    url: "http://localhost:5173/categoryImgs/mob_&_tab.jpg",
-    name: "Mobile & tablets",
-  },
-  {
-    url: "http://localhost:5173/categoryImgs/health_essentials.jpg",
-    name: "Health & Personal Care",
-  },
-  {
-    url: "http://localhost:5173/categoryImgs/book_pic.jpg",
-    name: "Books",
-  },
-  {
-    url: "http://localhost:5173/categoryImgs/tv_appliances.jpg",
-    name: "Tv appliances",
   },
 ];
 

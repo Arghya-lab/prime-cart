@@ -10,6 +10,7 @@ import SellerAuthPage from "./Pages/SellerAuthPage";
 import SellerPage from "./Pages/SellerPage";
 import NotfoundPage from "./Pages/NotfoundPage";
 import ProductCreatePage from "./Pages/ProductCreatePage";
+import CategoryProductPage from "./Pages/CategoryProductPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/" element={<HomePage />} />
+        <Route path="/category" element={<CategoryProductPage />} />
         <Route
           path="/wishlist"
           element={

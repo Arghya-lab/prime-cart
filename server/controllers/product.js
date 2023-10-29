@@ -45,11 +45,12 @@ const createProduct = async (req, res) => {
 };
 
 /* READ */
-//  get all relevant products
-const getAllProducts = async (req, res) => {
+//  get relevant Category products
+const getCategoryProducts = async (req, res) => {
   try {
+    const { category } = req.params
     //  improve and optimize it
-    const products = await Product.find()
+    const products = await Product.find({ category })
     res.status(200).json({ success: true, data: products });
   } catch (error) {
     res
@@ -131,7 +132,7 @@ const deleteProduct = async (req, res) => {
 
 module.exports = {
   createProduct,
-  getAllProducts,
+  getCategoryProducts,
   getProductById,
   updateProduct,
   deleteProduct,
