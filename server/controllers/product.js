@@ -50,7 +50,8 @@ const getCategoryProducts = async (req, res) => {
   try {
     const { category } = req.params
     //  improve and optimize it
-    const products = await Product.find({ category })
+    const products = await Product.find({ category }).select("_id name imgUrls rating ratingCount price")
+
     res.status(200).json({ success: true, data: products });
   } catch (error) {
     res

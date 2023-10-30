@@ -18,7 +18,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/" element={<HomePage />} />
-        <Route path="/category" element={<CategoryProductPage />} />
+        <Route path={`/category/:type`} element={<CategoryProductPage />} />
         <Route
           path="/wishlist"
           element={

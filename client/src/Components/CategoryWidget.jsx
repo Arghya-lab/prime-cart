@@ -1,21 +1,15 @@
 import PropTypes from "prop-types";
 import Typography from "@mui/material/Typography";
 import { Box, Paper } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function CategoryWidget({ url, name, value }) {
+  const navigate = useNavigate()
 
   const fetchCategoryProducts = async()=>{
-    console.log("hi");
-    const res = await fetch(`http://localhost:8000/api/products/${value}`, {
-      method: "GET"
-    })
-    const json = await res.json()
-    if (json.success) {
-      console.log(json.data);
-    } else {
-      console.log(json.error);
-    }
+    navigate(`/category/${value}`)
   }
+  
   return (
     <Paper square sx={{ width: 350, padding: "16px" }}>
       <Box width={300} mx="auto">

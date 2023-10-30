@@ -3,8 +3,28 @@ import FilterWidget from "../Components/FilterWidget";
 import ProductWidget from "../Components/ProductWidget";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 function CategoryProductPage() {
+  const { type } = useParams();
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const res = await fetch(`http://localhost:8000/api/products/${type}`, {
+        method: "GET",
+      });
+      const json = await res.json();
+      if (json.success) {
+        console.log(json.data);
+        setData(json.data);
+      } else {
+        console.log(json.error);
+      }
+    })();
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -64,12 +84,17 @@ function CategoryProductPage() {
               gridTemplateColumns: "repeat(auto-fill,minmax(320px,auto))",
               gap: "1rem",
             }}>
-            <ProductWidget />
-            <ProductWidget />
-            <ProductWidget />
-            <ProductWidget />
-            <ProductWidget />
-            <ProductWidget />
+            {data?.map((info) => (
+              <ProductWidget
+                key={info._id}
+                id={info._id}
+                name={info.name}
+                imgUrl={info.imgUrls[info.imgUrls.length - 1]}
+                rating={info.rating}
+                ratingCount={info.ratingCount}
+                price={info.price}
+              />
+            ))}
           </Box>
         </Box>
       </Stack>

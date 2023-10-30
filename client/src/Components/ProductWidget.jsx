@@ -6,8 +6,9 @@ import {
   Rating,
   Typography,
 } from "@mui/material";
+import PropTypes from "prop-types"
 
-function ProductWidget() {
+function ProductWidget({ id, name, imgUrl, rating, ratingCount, price }) {
   return (
     <Card
       sx={{
@@ -26,7 +27,8 @@ function ProductWidget() {
         <CardMedia
           component="img"
           alt="Product Image"
-          src="https://m.media-amazon.com/images/I/716Qlc98JFL._AC_UL320_.jpg"
+          /* img url */
+          src={`http://localhost:8000/assets/productImgs/${imgUrl}`}
           sx={{
             position: "absolute",
             margin: "auto",
@@ -56,8 +58,8 @@ function ProductWidget() {
             lineHeight: "24px",
             fontWeight: "600",
           }}>
-          SanDisk 512GB Extreme UHS-I Memory Card with Adapter - Up to 190MB/s,
-          C10, U3, V30, 4K, 5K, A2, Micro SD Card -512G
+            {/* name */}
+          { name }
         </Typography>
         <Box
           sx={{
@@ -66,13 +68,15 @@ function ProductWidget() {
             alignItems: "end",
             gap: "6px",
           }}>
-          <Rating name="read-only" value="3.7" readOnly />
+            {/* value = star count */}
+          <Rating name="read-only" value={rating} readOnly />
           <Typography
             variant="body1"
             sx={{
               color: "#007185",
             }}>
-            23793
+            {/* rating count */}
+            {ratingCount}
           </Typography>
         </Box>
         <Box>
@@ -91,33 +95,38 @@ function ProductWidget() {
               sx={{
                 fontSize: "28px",
               }}>
-              3456{" "}
+            {/* selling price */}
+              {price.selling}
             </Typography>
           </Box>
+          &nbsp;
           <Box
             component="span"
             sx={{
               color: "#565959",
             }}>
             <Typography component="span" variant="body1">
-              New Price:{" "}
+              New Price:
             </Typography>
+            &nbsp;
             <Typography
               component="span"
               sx={{
                 fontSize: "13px",
                 textDecoration: "line-through",
               }}>
-              ₹4567
+            {/* MRP */}
+              ₹{price.mrp}
             </Typography>
+            &nbsp;
             <Typography
               component="span"
               variant="body1"
               sx={{
                 fontSize: "15px",
               }}>
-              {" "}
-              (40% off)
+            {/* MRP-selling % */}
+              ({((price.mrp-price.selling)/price.mrp*100).toFixed(0)}% off)
             </Typography>
           </Box>
         </Box>
@@ -131,6 +140,7 @@ function ProductWidget() {
             sx={{
               fontWeight: "700",
             }}>
+            {/* delivery date */}
             Tuesday, 31 October
           </Typography>
         </Box>
@@ -138,6 +148,15 @@ function ProductWidget() {
       </CardContent>
     </Card>
   );
+}
+
+ProductWidget.propTypes = {
+  id : PropTypes.string.isRequired,
+  name : PropTypes.string.isRequired,
+  imgUrl : PropTypes.string.isRequired,
+  rating : PropTypes.number.isRequired,
+  ratingCount : PropTypes.number.isRequired,
+  price : PropTypes.object.isRequired,
 }
 
 export default ProductWidget;
