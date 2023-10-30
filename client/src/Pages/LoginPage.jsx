@@ -63,7 +63,7 @@ function LoginPage() {
   const from = location.state?.from?.pathname || "/";
 
   const handleLogin = async (values) => {
-    const res = await fetch("http://localhost:8000/api/auth/login", {
+    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -81,7 +81,7 @@ function LoginPage() {
   };
 
   const handleSignup = async (values) => {
-    const res = await fetch("http://localhost:8000/api/auth/signup", {
+    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

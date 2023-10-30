@@ -28,7 +28,7 @@ function ProductWidget({ id, name, imgUrl, rating, ratingCount, price }) {
           component="img"
           alt="Product Image"
           /* img url */
-          src={`http://localhost:8000/assets/productImgs/${imgUrl}`}
+          src={`${import.meta.env.VITE_IMG_BASE_URL}/assets/productImgs/${imgUrl}`}
           sx={{
             position: "absolute",
             margin: "auto",

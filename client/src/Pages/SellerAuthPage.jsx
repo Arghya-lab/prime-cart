@@ -49,7 +49,7 @@ function SellerAuthPage() {
     onSubmit: async (values) => {
       console.log("create Seller");
 
-      const res = await fetch("http://localhost:8000/api/auth/createSeller", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/createSeller`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,7 +72,7 @@ function SellerAuthPage() {
   const handleFetchSellerInfo = async () => {
     console.log("fetch Seller");
 
-    const res = await fetch("http://localhost:8000/api/auth/getSellerToken", {
+    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/getSellerToken`, {
       method: "GET",
       headers: {
         Authorization: Token,

@@ -79,7 +79,7 @@ function ProductCreatePage() {
         .join(",");
       formData.append("productImgsName", productImgsName);
 
-      const res = await fetch("http://localhost:8000/api/products/create", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/products/create`, {
         method: "POST",
         headers: {
           "seller-auth": sellerToken,
