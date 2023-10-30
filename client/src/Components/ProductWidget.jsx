@@ -82,7 +82,7 @@ function ProductWidget() {
               sx={{
                 position: "relative",
                 top: "-0.75em",
-                fontSize: "13px",
+                fontSize: "14px",
               }}>
               ₹
             </Typography>
