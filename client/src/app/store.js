@@ -11,13 +11,14 @@ import {
   REGISTER,
 } from "redux-persist";
 import authSlice from "../features/auth/authSlice";
+import productSlice from "../features/product/productSlice";
 
 const persistConfig = {
   key: "prime-cart",
   storage,
 };
 
-const reducers = combineReducers({ auth: authSlice });
+const reducers = combineReducers({ auth: authSlice, product: productSlice });
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 export default configureStore({

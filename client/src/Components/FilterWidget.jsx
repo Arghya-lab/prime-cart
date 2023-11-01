@@ -1,14 +1,11 @@
-import {
-  Box,
-  FormControl,
-  Select,
-  Rating,
-  Typography,
-  MenuItem,
-} from "@mui/material";
+import { Box, Button, Rating, Typography } from "@mui/material";
 import Slider, { SliderThumb } from "@mui/material/Slider";
 import { styled } from "@mui/material/styles";
 import PropTypes from "prop-types";
+import { useEffect, useMemo, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { setCategoryProducts } from "../features/product/productSlice";
 
 const CustomSlider = styled(Slider)(({ theme }) => ({
   color: "rgb(58, 133, 137)",
@@ -56,6 +53,49 @@ CustomThumbComponent.propTypes = {
 };
 
 function FilterWidget() {
+  const { type } = useParams();
+  const dispatch = useDispatch();
+
+  const I = 700;
+  const [rating, setRating] = useState(null);
+  const [minPrice, setMinPrice] = useState(null);
+  const [maxPrice, setMaxPrice] = useState(null);
+
+  const filter = useMemo(
+    () => ({ rating, minPrice, maxPrice }),
+    [rating, minPrice, maxPrice]
+  );
+
+  useEffect(() => {
+    console.log(filter);
+  }, [filter]);
+
+  const applyFilter = () => {
+    let queryParts = [];
+    if (rating) {
+      queryParts.push(`rating=${rating}`);
+    }
+    if (minPrice) {
+      queryParts.push(`minPrice=${minPrice}`);
+    }
+    if (maxPrice) {
+      queryParts.push(`maxPrice=${maxPrice}`);
+    }
+    const query = queryParts.join("&");
+    (async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/products/${type}?${query}`
+      );
+      const json = await res.json();
+      if (json.success) {
+        console.log(json.data);
+        dispatch(setCategoryProducts(json.data))
+      } else {
+        console.log(json.error);
+      }
+    })();
+  };
+
   return (
     <Box
       sx={{
@@ -86,14 +126,20 @@ function FilterWidget() {
               sx={{
                 display: "flex",
                 alignItems: "center",
+                padding: "2px",
+                border: rating === 4 ? "solid 2px #ddd" : null,
+                color: rating === 4 ? "#710000" : null,
                 ":hover": { cursor: "pointer", color: "#710000" },
+              }}
+              onClick={() => {
+                setRating(4);
               }}>
               {/* single rating box */}
               <Box component="span">
                 {/* rating logo box */}
                 <Rating name="read-only" value={4} readOnly />
               </Box>
-              <Box
+              <Typography
                 component="span"
                 sx={{
                   fontSize: "12px",
@@ -101,21 +147,25 @@ function FilterWidget() {
                   paddingLeft: "4px",
                 }}>
                 & Up
-              </Box>
+              </Typography>
             </Box>
             {/* rating container box */}
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
+                padding: "2px",
+                border: rating === 3 ? "solid 2px #ddd" : null,
+                color: rating === 3 ? "#710000" : null,
                 ":hover": { cursor: "pointer", color: "#710000" },
-              }}>
+              }}
+              onClick={() => setRating(3)}>
               {/* single rating box */}
               <Box component="span">
                 {/* rating logo box */}
                 <Rating name="read-only" value={3} readOnly />
               </Box>
-              <Box
+              <Typography
                 component="span"
                 sx={{
                   fontSize: "12px",
@@ -123,21 +173,25 @@ function FilterWidget() {
                   paddingLeft: "4px",
                 }}>
                 & Up
-              </Box>
+              </Typography>
             </Box>
             {/* rating container box */}
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
+                padding: "2px",
+                border: rating === 2 ? "solid 2px #ddd" : null,
+                color: rating === 2 ? "#710000" : null,
                 ":hover": { cursor: "pointer", color: "#710000" },
-              }}>
+              }}
+              onClick={() => setRating(2)}>
               {/* single rating box */}
               <Box component="span">
                 {/* rating logo box */}
                 <Rating name="read-only" value={2} readOnly />
               </Box>
-              <Box
+              <Typography
                 component="span"
                 sx={{
                   fontSize: "12px",
@@ -145,21 +199,25 @@ function FilterWidget() {
                   paddingLeft: "4px",
                 }}>
                 & Up
-              </Box>
+              </Typography>
             </Box>
             {/* rating container box */}
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
+                padding: "2px",
+                border: rating === 1 ? "solid 2px #ddd" : null,
+                color: rating === 1 ? "#710000" : null,
                 ":hover": { cursor: "pointer", color: "#710000" },
-              }}>
+              }}
+              onClick={() => setRating(1)}>
               {/* single rating box */}
               <Box component="span">
                 {/* rating logo box */}
                 <Rating name="read-only" value={1} readOnly />
               </Box>
-              <Box
+              <Typography
                 component="span"
                 sx={{
                   fontSize: "12px",
@@ -167,7 +225,7 @@ function FilterWidget() {
                   paddingLeft: "4px",
                 }}>
                 & Up
-              </Box>
+              </Typography>
             </Box>
           </Box>
         </Box>
@@ -183,51 +241,24 @@ function FilterWidget() {
             }}>
             Price
           </Typography>
+          <Typography width="100%">
+            ₹{minPrice || "min"} to ₹{maxPrice || "max"}
+          </Typography>
           <CustomSlider
             slots={{ thumb: CustomThumbComponent }}
             getAriaLabel={(index) =>
               index === 0 ? "Minimum price" : "Maximum price"
             }
-            defaultValue={[20, 40]}
+            onChange={(e) => {
+              setMinPrice(e.target.value[0] * I);
+              setMaxPrice(e.target.value[1] * I);
+            }}
+            defaultValue={[0, 100]}
           />
-          <Box
-            width="100%"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}>
-            <FormControl size="small" variant="standard" component="span">
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={10}
-                label="Age"
-                // onChange={handleChange}
-              >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </FormControl>
-            <Typography component="span" px="4px">
-              to
-            </Typography>
-            <FormControl size="small" variant="standard" component="span">
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={30}
-                label="Age"
-                // onChange={handleChange}
-              >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
         </Box>
+        <Button fullWidth variant="contained" onClick={applyFilter}>
+          Apply
+        </Button>
       </Box>
     </Box>
   );

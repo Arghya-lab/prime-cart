@@ -3,22 +3,26 @@ import FilterWidget from "../Components/FilterWidget";
 import ProductWidget from "../Components/ProductWidget";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setCategoryProducts } from "../features/product/productSlice";
 
 function CategoryProductPage() {
   const { type } = useParams();
-  const [data, setData] = useState([]);
+
+  const dispatch = useDispatch()
+  const data = useSelector(state=>state.product.categoryProducts)
 
   useEffect(() => {
     (async () => {
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/products/${type}`, {
-        method: "GET",
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/products/${type}`
+      );
       const json = await res.json();
       if (json.success) {
         console.log(json.data);
-        setData(json.data);
+        dispatch(setCategoryProducts(json.data))
       } else {
         console.log(json.error);
       }
@@ -84,7 +88,7 @@ function CategoryProductPage() {
               gridTemplateColumns: "repeat(auto-fill,minmax(320px,auto))",
               gap: "1rem",
             }}>
-            {data?.map((info) => (
+            {data && data.map((info) => (
               <ProductWidget
                 key={info._id}
                 id={info._id}
