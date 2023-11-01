@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import DropDownWidget from "./DropDownWidget";
 
 function Navbar() {
+  const [searchValue, setSearchValue] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -28,6 +29,17 @@ function Navbar() {
   const handleHideItems = () => {
     setIsDropdownOpen(false);
   };
+
+  const handleSearch = (e)=>{
+    e.preventDefault()
+    const query = searchValue.trim()
+    if (query.length >= 3) {
+      navigate(`/search?query=${encodeURIComponent(searchValue)}`)
+    } else {
+      console.log("query must be at least 3 char length");
+    }
+    setSearchValue("")
+  }
 
   return (
     <Stack
@@ -51,13 +63,15 @@ function Navbar() {
           alignItems: "center",
           width: 640,
         }}
-        onSubmit={() => console.log("Searched")}>
+        onSubmit={handleSearch}>
         <InputBase
           sx={{ ml: 1, flex: 1 }}
           placeholder="Search products...."
           inputProps={{ "aria-label": "search products" }}
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
         />
-        <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+        <IconButton type="submit" sx={{ p: "10px" }} aria-label="search" onClick={handleSearch}>
           <Search />
         </IconButton>
       </Paper>
@@ -95,7 +109,7 @@ function Navbar() {
               }}>
               Account & Lists
             </Typography>
-            {isDropdownOpen ? <KeyboardArrowUp  /> : <KeyboardArrowDown />}
+            {isDropdownOpen ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
           </Box>
           <DropDownWidget isDropdownOpen={isDropdownOpen} />
         </Box>

@@ -7,7 +7,7 @@ ShopPrime, the premier online shopping platform that brings you an unparalleled 
 - [x] **User Registration and Authentication**: Allow users to create accounts and log in securely.
 - [x] **Product Listings**: Enable sellers to list their products with details, images, and prices.
 - [x] **Product Categories**: Organize products into relevant categories for easy navigation.
-- [ ] **Search and Filters**: Implement a robust search functionality and filters to help users find products quickly.
+- [x] **Search and Filters**: Implement a robust search functionality and filters to help users find products quickly.
 - [ ] **Shopping Cart**: Allow users to add products to their cart, review them, and proceed to checkout.
 - [ ] **Shipping and Delivery Options**: Offer various shipping methods and delivery timeframes.
 - [ ] **Checkout Process**: Implement a seamless, multi-step checkout process with options for different payment methods.

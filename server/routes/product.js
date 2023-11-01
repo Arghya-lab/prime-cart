@@ -1,8 +1,9 @@
 const express = require("express");
 const multer  = require('multer')
 const {
-  getCategoryProducts,
   createProduct,
+  getSearchProducts,
+  getCategoryProducts,
   getProductById,
   updateProduct,
   deleteProduct,
@@ -27,7 +28,9 @@ const upload = multer({ storage })
 router.post("/create", upload.array('productImgs', 10), fetchSeller, createProduct);
 
 /* READ */
-// get all Products using : GET /api/products/:category
+// get all search Products using : GET /api/products
+router.get("/", getSearchProducts);
+// get all category Products using : GET /api/products/:category
 router.get("/:category", getCategoryProducts);
 // get a Product using : GET /api/products/:productId
 router.get("/:productId", getProductById);

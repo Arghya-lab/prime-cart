@@ -11,8 +11,8 @@ import { setCategoryProducts } from "../features/product/productSlice";
 function CategoryProductPage() {
   const { type } = useParams();
 
-  const dispatch = useDispatch()
-  const data = useSelector(state=>state.product.categoryProducts)
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.product.categoryProducts);
 
   useEffect(() => {
     (async () => {
@@ -22,7 +22,7 @@ function CategoryProductPage() {
       const json = await res.json();
       if (json.success) {
         console.log(json.data);
-        dispatch(setCategoryProducts(json.data))
+        dispatch(setCategoryProducts(json.data));
       } else {
         console.log(json.error);
       }
@@ -88,17 +88,18 @@ function CategoryProductPage() {
               gridTemplateColumns: "repeat(auto-fill,minmax(320px,auto))",
               gap: "1rem",
             }}>
-            {data && data.map((info) => (
-              <ProductWidget
-                key={info._id}
-                id={info._id}
-                name={info.name}
-                imgUrl={info.imgUrls[info.imgUrls.length - 1]}
-                rating={info.rating}
-                ratingCount={info.ratingCount}
-                price={info.price}
-              />
-            ))}
+            {data &&
+              data.map((info) => (
+                <ProductWidget
+                  key={info._id}
+                  id={info._id}
+                  name={info.name}
+                  imgUrl={info.imgUrls[info.imgUrls.length - 1]}
+                  rating={info.rating}
+                  ratingCount={info.ratingCount}
+                  price={info.price}
+                />
+              ))}
           </Box>
         </Box>
       </Stack>

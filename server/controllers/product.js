@@ -22,8 +22,8 @@ const createProduct = async (req, res) => {
         error: "Already product available with same name.",
       });
     }
-    const imgUrls = productImgsName.split(',')
-    highlights = highlights.split('\n')
+    const imgUrls = productImgsName.split(",");
+    highlights = highlights.split("\n");
     const savedProduct = await Product.create({
       sellerId,
       name,
@@ -45,18 +45,58 @@ const createProduct = async (req, res) => {
 };
 
 /* READ */
+//  get search products
+const getSearchProducts = async (req, res) => {
+  try {
+    //  add pagination
+    const { query } = req.query;
+    //  $or operator allows you to specify multiple conditions and returns documents that match any of the specified conditions.
+    //  $regex is a regular expression pattern match.
+    //  ($options: 'i') performing a case-insensitive search
+    const match = {
+      $or: [
+        { category: { $regex: query, $options: "i" } },
+        { name: { $regex: query, $options: "i" } },
+      ],
+    };
+    const products = await Product.find(match);
+    res.status(200).json({ success: true, data: products });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, error: "Failed to fetch products." });
+    console.log(error);
+  }
+};
+
 //  get relevant Category products
 const getCategoryProducts = async (req, res) => {
   try {
-    const { category } = req.params
-    //  improve and optimize it
-    const products = await Product.find({ category }).select("_id name imgUrls rating ratingCount price")
+    const { category } = req.params;
+    const { rating = null, minPrice = null, maxPrice = null } = req.query;
+    let query = { category };
+    if (rating !== null) {
+      query.rating = { $gte: rating };
+    }
+    if (minPrice !== null || maxPrice !== null) {
+      query["price.selling"] = {}; // Specify that 'price.selling' is an object
+    }
+    if (minPrice !== null) {
+      query["price.selling"].$gte = minPrice;
+    }
+    if (maxPrice !== null) {
+      query["price.selling"].$lte = maxPrice;
+    }
+    const products = await Product.find(query).select(
+      "_id name imgUrls rating ratingCount price"
+    );
 
     res.status(200).json({ success: true, data: products });
   } catch (error) {
     res
       .status(500)
       .json({ success: false, error: "Failed to fetch products." });
+    console.log(error);
   }
 };
 
@@ -133,6 +173,7 @@ const deleteProduct = async (req, res) => {
 
 module.exports = {
   createProduct,
+  getSearchProducts,
   getCategoryProducts,
   getProductById,
   updateProduct,
