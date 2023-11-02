@@ -12,6 +12,7 @@ import NotfoundPage from "./Pages/NotfoundPage";
 import ProductCreatePage from "./Pages/ProductCreatePage";
 import CategoryProductPage from "./Pages/CategoryProductPage";
 import SearchProductPage from "./Pages/SearchProductPage";
+import ProductOverviewPage from "./Pages/ProductOverviewPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/" element={<HomePage />} />
+        <Route path="/product" element={<ProductOverviewPage />} />
         <Route path="/search" element={<SearchProductPage />} />
         <Route path={`/category/:type`} element={<CategoryProductPage />} />
         <Route
