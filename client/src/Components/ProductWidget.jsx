@@ -7,8 +7,15 @@ import {
   Typography,
 } from "@mui/material";
 import PropTypes from "prop-types"
+import { useNavigate } from "react-router-dom";
 
 function ProductWidget({ id, name, imgUrl, rating, ratingCount, price }) {
+  const navigate = useNavigate()
+  
+  const handleCardClick = ()=> {
+    navigate(`/product/${id}`)
+  }
+
   return (
     <Card
       sx={{
@@ -21,9 +28,10 @@ function ProductWidget({ id, name, imgUrl, rating, ratingCount, price }) {
         sx={{
           paddingTop: "100%",
           position: "relative",
-          cursor: "pointer",
           textAlign: "center",
-        }}>
+          cursor: "pointer",
+        }}
+        onClick={handleCardClick}>
         <CardMedia
           component="img"
           alt="Product Image"
@@ -50,7 +58,9 @@ function ProductWidget({ id, name, imgUrl, rating, ratingCount, price }) {
           marginY: "8px",
           fontSize: "14px",
           lineHeight: "20px",
-        }}>
+          cursor: "pointer",
+        }}
+        onClick={handleCardClick}>
         <Typography
           variant="body2"
           sx={{

@@ -84,7 +84,7 @@ function FilterWidget() {
     const query = queryParts.join("&");
     (async () => {
       const res = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/products/${type}?${query}`
+        `${import.meta.env.VITE_API_BASE_URL}/products/category/${type}?${query}`
       );
       const json = await res.json();
       if (json.success) {

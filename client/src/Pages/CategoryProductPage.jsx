@@ -17,7 +17,7 @@ function CategoryProductPage() {
   useEffect(() => {
     (async () => {
       const res = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/products/${type}`
+        `${import.meta.env.VITE_API_BASE_URL}/products/category/${type}`
       );
       const json = await res.json();
       if (json.success) {

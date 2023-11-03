@@ -30,8 +30,8 @@ router.post("/create", upload.array('productImgs', 10), fetchSeller, createProdu
 /* READ */
 // get all search Products using : GET /api/products
 router.get("/", getSearchProducts);
-// get all category Products using : GET /api/products/:category
-router.get("/:category", getCategoryProducts);
+// get all category Products using : GET /api/products/category/:category
+router.get("/category/:category", getCategoryProducts);
 // get a Product using : GET /api/products/:productId
 router.get("/:productId", getProductById);
 

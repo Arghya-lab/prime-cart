@@ -1,58 +1,75 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import {
   Box,
   Button,
   FormControl,
-  InputLabel,
-  List,
-  ListItem,
-  ListItemText,
   MenuItem,
   Rating,
   Select,
   Stack,
   Typography,
 } from "@mui/material";
-import { Fade } from "react-slideshow-image";
-import "react-slideshow-image/dist/styles.css";
-import Navbar from "../Components/Navbar";
-import Footer from "../Components/Footer";
 import {
   LocalShippingOutlined,
   LocationOnOutlined,
   PaymentOutlined,
   ProductionQuantityLimitsOutlined,
 } from "@mui/icons-material";
-
-const fadeImages = [
-  {
-    url: "https://images.unsplash.com/photo-1509721434272-b79147e0e708?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
-    caption: "First Slide",
-  },
-  {
-    url: "https://images.unsplash.com/photo-1506710507565-203b9f24669b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1536&q=80",
-    caption: "Second Slide",
-  },
-  {
-    url: "https://images.unsplash.com/photo-1536987333706-fc9adfb10d91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
-    caption: "Third Slide",
-  },
-];
+import { Fade } from "react-slideshow-image";
+import "react-slideshow-image/dist/styles.css";
+import Navbar from "../Components/Navbar";
+import Footer from "../Components/Footer";
 
 function ProductOverviewPage() {
+  const { productId } = useParams();
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/products/${productId}`
+      );
+      const json = await res.json();
+      if (json.success) {
+        console.log(json.data);
+        setData(json.data);
+      } else {
+        console.log(json.error);
+      }
+    })();
+  }, []);
+
   return (
-    <>
-      <Box>
-        <Navbar />
+    <Box>
+      <Navbar />
+      {data ? (
         <Box
           sx={{
             margin: "1rem",
             display: "flex",
           }}>
-          <div className="slide-container" style={{ width: "820px" }}>
+          <div className="slide-container" style={{ width: "800px" }}>
             <Fade>
-              {fadeImages.map((fadeImage, index) => (
-                <div key={index}>
-                  <img style={{ width: "100%" }} src={fadeImage.url} />
+              {data.imgUrls.map((img, index) => (
+                <div
+                  key={index}
+                  style={{
+                    margin: "auto",
+                    width: "100%",
+                    maxWidth: "600px",
+                    maxHeight: "600px",
+                    padding: "30px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}>
+                  <img
+                    style={{ objectFit: "contain" }}
+                    src={`${
+                      import.meta.env.VITE_IMG_BASE_URL
+                    }/assets/productImgs/${img}`}
+                  />
                 </div>
               ))}
             </Fade>
@@ -62,9 +79,8 @@ function ProductOverviewPage() {
               marginX: "1rem",
             }}>
             <Typography variant="h5">
-              NOCO XGC4 56-Watt XGC Power Adapter For
-              GB70/GB150/GB250+/GB251+/GB500+ NOCO Boost UltraSafe Lithium Jump
-              Starters
+              {/* name */}
+              {data?.name}
             </Typography>
             <Typography
               variant="body1"
@@ -84,12 +100,13 @@ function ProductOverviewPage() {
                 justifyContent: "flex-start",
                 alignItems: "center",
               }}>
-              <Typography>2.8</Typography>
+              {/* rating = star count */}
+              <Typography>{data?.rating}</Typography>
               &nbsp;
               <Rating
                 name="rating"
                 size="small"
-                defaultValue={2.8}
+                defaultValue={data?.rating}
                 precision={0.5}
                 readOnly
               />
@@ -104,7 +121,8 @@ function ProductOverviewPage() {
                     textDecoration: "underline",
                   },
                 }}>
-                5316 rating
+                {/* rating count */}
+                {data?.ratingCount}&nbsp; rating
               </Typography>
             </Box>
             <Box
@@ -135,7 +153,12 @@ function ProductOverviewPage() {
                 sx={{
                   color: "#CC0C39",
                 }}>
-                -21%
+                {/* discount % */}
+                {(
+                  ((data?.price.selling - data?.price.mrp) / data?.price.mrp) *
+                  100
+                ).toFixed(0)}
+                %
               </Typography>
               &nbsp;
               <Box component="span">
@@ -150,7 +173,7 @@ function ProductOverviewPage() {
                 </Typography>
                 <Typography variant="h5" component="span">
                   {/* selling price */}
-                  7699
+                  {data?.price.selling}
                 </Typography>
               </Box>
             </Box>
@@ -166,7 +189,7 @@ function ProductOverviewPage() {
                 component="span"
                 variant="body2"
                 sx={{ textDecoration: "line-through" }}>
-                ₹999
+                ₹{data?.price.mrp}
               </Typography>
             </Box>
             <Typography component="span" variant="body1">
@@ -257,15 +280,11 @@ function ProductOverviewPage() {
               Highlights
             </Typography>
             <Box paddingLeft={2}>
-              <Typography variant="body2">8 GB RAM | 128 GB ROM</Typography>
-              <Typography variant="body2">
-                17.02 cm (6.7 inch) Full HD+ Display
-              </Typography>
-              <Typography variant="body2">
-                100MP (OIS) + 2MP | 16MP Front Camera
-              </Typography>
-              <Typography variant="body2">5000 mAh Battery</Typography>
-              <Typography variant="body2">Dimensity 7050 Processor</Typography>
+              {data?.highlights.map((highlight, index) => (
+                <Typography key={index} variant="body2">
+                  {highlight}
+                </Typography>
+              ))}
             </Box>
             <Box
               sx={{
@@ -282,19 +301,7 @@ function ProductOverviewPage() {
               }}>
               Product Description
             </Typography>
-            <Typography variant="body2">
-              You can enjoy an immersive display on the 120 Hz curved vision
-              display of the realme Pro 5G smartphone. Featuring a 100 MP OIS
-              ProLight camera, this smartphone allows you to capture memories
-              that you can cherish for a lifetime. This smartphone is powered by
-              the Dimensity 7050 5G chipset for fast and efficient performance.
-              The 67 W SUPERVOOC charge of this smartphone charges your phone
-              from 0-50% in about 18 minutes so that you do not have to wait
-              long for it to charge. With up to 12 GB + 12 GB of Dynamic RAM,
-              this smartphone ensures smooth and fast operations for you to game
-              and multitask easily. This smartphone comes with a 5000 mAh
-              battery for long-lasting battery life.
-            </Typography>
+            <Typography variant="body2">{data?.description}</Typography>
             <Box
               sx={{
                 border: "1px solid #d5d9d9",
@@ -339,7 +346,7 @@ function ProductOverviewPage() {
                       color: "#C7511F",
                     },
                   }}>
-                  Deliver to Arghya - Kalidaha 711314‌
+                  Deliver to Arghya - Koala 718951‌
                 </Typography>
               </Box>
               <Typography component="p" variant="h6" sx={{ color: "#007600" }}>
@@ -358,8 +365,8 @@ function ProductOverviewPage() {
                     },
                   }}>
                   Appario Retail Private Ltd
-                </Typography>&nbsp;
-                and&nbsp;
+                </Typography>
+                &nbsp; and&nbsp;
                 <Typography
                   component="span"
                   sx={{
@@ -373,46 +380,62 @@ function ProductOverviewPage() {
                   Fulfilled by Amazon.
                 </Typography>
               </Typography>
-              <Box  paddingY={2} sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-evenly",
-              }}>
-              <Stack direction="row" alignItems="center" gap={2}>
-                <Typography variant="body1">Quantity</Typography>
-                <FormControl size="small">
-                  <Select
-                    // value={age}
-                    // onChange={handleChange}
-                    defaultValue={30}
-                    inputProps={{ 'aria-label': 'Without label' }}
-                  >
-                    <MenuItem value={10}>10</MenuItem>
-                    <MenuItem value={20}>20</MenuItem>
-                    <MenuItem value={30}>30</MenuItem>
-                  </Select>
-                </FormControl>
-              </Stack>
-              <Stack gap={2} alignItems="center">
-                <Button variant="contained" sx={{bgcolor: "#FFD814", color: "#0F1111", width: "200px", ":hover": {bgcolor: "#FFD018"}}}>
-                  Add to Cart
-                </Button>
-                <Button variant="contained" sx={{bgcolor: "#FFA41C", color: "#0F1111", width: "200px", ":hover": {bgcolor: "#FFAA1D"}}}>
-                  Buy Now
-                </Button>
-              </Stack>
+              <Box
+                paddingY={2}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-evenly",
+                }}>
+                <Stack direction="row" alignItems="center" gap={2}>
+                  <Typography variant="body1">Quantity</Typography>
+                  <FormControl size="small">
+                    <Select
+                      // value={age}
+                      // onChange={handleChange}
+                      defaultValue={30}
+                      inputProps={{ "aria-label": "Without label" }}>
+                      <MenuItem value={10}>10</MenuItem>
+                      <MenuItem value={20}>20</MenuItem>
+                      <MenuItem value={30}>30</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Stack>
+                <Stack gap={2} alignItems="center">
+                  <Button
+                    variant="contained"
+                    sx={{
+                      bgcolor: "#FFD814",
+                      color: "#0F1111",
+                      width: "200px",
+                      ":hover": { bgcolor: "#FFD018" },
+                    }}>
+                    Add to Cart
+                  </Button>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      bgcolor: "#FFA41C",
+                      color: "#0F1111",
+                      width: "200px",
+                      ":hover": { bgcolor: "#FFAA1D" },
+                    }}>
+                    Buy Now
+                  </Button>
+                </Stack>
               </Box>
               <Stack alignItems="center" justifyContent="center">
-                <Button variant="outlined">
-                  Add to Wish List
-                </Button>
+                <Button variant="outlined">Add to Wish List</Button>
               </Stack>
             </Box>
           </Box>
         </Box>
-        <Footer />
-      </Box>
-    </>
+      ) : (
+        // add loader
+        "Hi"
+      )}
+      <Footer />
+    </Box>
   );
 }
 
