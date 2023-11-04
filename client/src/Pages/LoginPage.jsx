@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { setCustomerLogin } from "../features/auth/authSlice";
+import { setWishList } from "../features/additionalInfo/additionalInfoSlice";
 
 const signupValidationSchema = yup.object({
   firstName: yup
@@ -63,16 +64,20 @@ function LoginPage() {
   const from = location.state?.from?.pathname || "/";
 
   const handleLogin = async (values) => {
-    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
+    const res = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/auth/login`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      }
+    );
     const json = await res.json();
     if (json.success) {
       dispatch(setCustomerLogin(json.data));
+      dispatch(setWishList(json.data.wishList));
       // Send them back to the page they tried to visit when they were redirected to the login page. Use { replace: true } so we don't create another entry in the history stack for the login page.  This means that when they get to the protected page and click the back button, they won't end up back on the login page, which is also really nice for the user experience.
       navigate(from, { replace: true });
     } else {
@@ -81,16 +86,20 @@ function LoginPage() {
   };
 
   const handleSignup = async (values) => {
-    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
+    const res = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/auth/signup`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      }
+    );
     const json = await res.json();
     if (json.success) {
       dispatch(setCustomerLogin(json.data));
+      dispatch(setWishList(json.data.wishList));
       // Send them back to the page they tried to visit when they were redirected to the login page. Use { replace: true } so we don't create another entry in the history stack for the login page.  This means that when they get to the protected page and click the back button, they won't end up back on the login page, which is also really nice for the user experience.
       navigate(from, { replace: true });
     } else {

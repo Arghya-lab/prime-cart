@@ -29,6 +29,7 @@ const signupUser = async (req, res) => {
       data: {
         name: `${firstName} ${lastName}`,
         email,
+        wishList: customer.wishList,
         token: `Bearer ${token}`,
       },
     });
@@ -60,6 +61,7 @@ const loginUser = async (req, res) => {
       data: {
         name: `${customer.firstName} ${customer.lastName}`,
         email,
+        wishList: customer.wishList,
         token: `Bearer ${token}`,
       },
     });

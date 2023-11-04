@@ -20,10 +20,17 @@ import { Fade } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
+import { useDispatch, useSelector } from "react-redux";
+import { setWishList } from "../features/additionalInfo/additionalInfoSlice";
 
 function ProductOverviewPage() {
   const { productId } = useParams();
+  const dispatch = useDispatch()
+  const token = useSelector(state=>state.auth.token)
+  const wishList = useSelector(state=>state.additionalInfo.wishList)
+
   const [data, setData] = useState(null);
+  const [isWishListProduct, setIsWishListProduct] = useState(false)
 
   useEffect(() => {
     (async () => {
@@ -34,11 +41,54 @@ function ProductOverviewPage() {
       if (json.success) {
         console.log(json.data);
         setData(json.data);
+        setIsWishListProduct(wishList.includes(json.data._id))
       } else {
         console.log(json.error);
       }
     })();
   }, []);
+
+  const handleWishList = () => {
+    if (!isWishListProduct) {
+      (async () => {
+        const res = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/wishList/${productId}`,{
+            method: "POST",
+            headers: {
+              Authorization: token,
+            }
+          }
+        );
+        const json = await res.json();
+        if (json.success) {
+          console.log(json.data);
+          dispatch(setWishList(json.data));
+          setIsWishListProduct(true)
+        } else {
+          console.log(json.error);
+        }
+      })();
+    } else {
+      (async () => {
+        const res = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/wishList/${productId}`, {
+            method: "DELETE",
+            headers: {
+              Authorization: token,
+            }
+          }
+        );
+        const json = await res.json();
+        if (json.success) {
+          console.log(json.data);
+          dispatch(setWishList(json.data));
+          setIsWishListProduct(false)
+        } else {
+          console.log(json.error);
+        }
+      })();
+    }
+  }
 
   return (
     <Box>
@@ -263,7 +313,7 @@ function ProductOverviewPage() {
                 marginTop: "5px",
                 marginBottom: "14px",
               }}></Box>
-            {/* varient info will be here */}
+            {/* variant info will be here */}
             {/* <Box
               sx={{
                 height: "1px",
@@ -425,7 +475,7 @@ function ProductOverviewPage() {
                 </Stack>
               </Box>
               <Stack alignItems="center" justifyContent="center">
-                <Button variant="outlined">Add to Wish List</Button>
+                <Button variant="outlined" onClick={handleWishList}>{isWishListProduct?"Remove from Wish List":"Add to Wish List"}</Button>
               </Stack>
             </Box>
           </Box>
