@@ -8,10 +8,10 @@ ShopPrime, the premier online shopping platform that brings you an unparalleled 
 - [x] **Product Listings**: Enable sellers to list their products with details, images, and prices.
 - [x] **Product Categories**: Organize products into relevant categories for easy navigation.
 - [x] **Search and Filters**: Implement a robust search functionality and filters to help users find products quickly.
+- [ ] **Wishlist**: Allow users to save products they're interested in for future reference.
 - [ ] **Shopping Cart**: Allow users to add products to their cart, review them, and proceed to checkout.
 - [ ] **Shipping and Delivery Options**: Offer various shipping methods and delivery timeframes.
 - [ ] **Checkout Process**: Implement a seamless, multi-step checkout process with options for different payment methods.
-- [ ] **Wishlist**: Allow users to save products they're interested in for future reference.
 - [ ] **Payment Integration**: Integrate various payment gateways to ensure secure transactions.
 - [ ] **Order Tracking and History**: Provide users with the ability to track their orders and view order history.
 - [ ] **User Notifications**: Send email or push notifications for order updates, promotions, and other relevant information.
