@@ -1,7 +1,54 @@
+import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
 import { DeleteOutline, IosShare } from "@mui/icons-material";
-import { Box, Button, IconButton, Rating, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Rating,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { setWishList } from "../features/additionalInfo/additionalInfoSlice";
+import { setWishListProducts } from "../features/product/productSlice";
 
-function WishListProductWidget() {
+function WishListProductWidget({
+  id,
+  name,
+  imgUrl,
+  rating,
+  ratingCount,
+  price,
+}) {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+  let wishListProducts = useSelector((state) => state.product.wishListProducts);
+
+  const handleRemoveFromWishList = () => {
+    (async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/wishList/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      const json = await res.json();
+      if (json.success) {
+        console.log(json.data);
+        dispatch(setWishList(json.data));
+      } else {
+        console.log(json.error);
+      }
+    })();
+    const updatedWishListProducts = wishListProducts.filter(product=>{
+      return product._id !== id
+    })
+    dispatch(setWishListProducts(updatedWishListProducts));
+  };
+
   return (
     <Box sx={{ maxWidth: "1024px", margin: "auto" }}>
       <Box
@@ -18,10 +65,13 @@ function WishListProductWidget() {
             cursor: "pointer",
           }}>
           <img
-            src="https://m.media-amazon.com/images/I/51wlAzvx9SS._SX679_.jpg"
+            /* img url */
+            src={`${
+              import.meta.env.VITE_IMG_BASE_URL
+            }/assets/productImgs/${imgUrl}`}
             height="135px"
             width="135px"
-            style={{margin: "16px"}}
+            style={{ margin: "16px" }}
           />
         </Box>
         <Box
@@ -45,18 +95,15 @@ function WishListProductWidget() {
                 fontWeight: 600,
                 ":hover": { cursor: "pointer", color: "#C7511F" },
               }}>
-              boAt bassheads 105 Wired in Ear Earphones with Mic (Green)
+              {/* name */}
+              {name}
             </Typography>
             <Typography component="p" variant="body2">
               by boAt (Electronics)
             </Typography>
             <Box display="flex" alignItems="center">
-              <Rating
-                name="half-rating-read"
-                defaultValue={4.0}
-                precision={0.5}
-                readOnly
-              />
+              {/* value = star count */}
+              <Rating name="rating" value={rating} precision={0.5} readOnly />
               &nbsp;
               <Typography
                 component="p"
@@ -65,7 +112,8 @@ function WishListProductWidget() {
                   color: "#007185",
                   ":hover": { cursor: "pointer", color: "#C7511F" },
                 }}>
-                30,944
+                {/* rating count */}
+                {ratingCount}
               </Typography>
             </Box>
             <Box marginY="4px">
@@ -79,7 +127,9 @@ function WishListProductWidget() {
                   padding: "4px 6px 4px 6px",
                   borderRadius: "4px",
                 }}>
-                65% off
+                {/* MRP-selling % */}
+                {(((price.mrp - price.selling) / price.mrp) * 100).toFixed(0)}
+                %&nbsp; off
               </Typography>
               &nbsp;
               <Typography
@@ -89,7 +139,7 @@ function WishListProductWidget() {
                   color: "#CC0C39",
                   fontWeight: 600,
                 }}>
-                Great Indian Festival
+                Sale
               </Typography>
             </Box>
             <Box>
@@ -100,7 +150,8 @@ function WishListProductWidget() {
                 ₹
               </Typography>
               <Typography component="span" sx={{ fontWeight: 600 }}>
-                349.00
+                {/* selling price */}
+                {price.selling}
               </Typography>
               &nbsp;
               <Typography component="span" variant="caption" sx={{}}>
@@ -118,7 +169,8 @@ function WishListProductWidget() {
                 component="span"
                 variant="body2"
                 sx={{ color: "#565959", textDecoration: "line-through" }}>
-                Rs.999.00
+                {/* MRP */}
+                Rs.{price.mrp}
               </Typography>
             </Box>
           </Box>
@@ -134,9 +186,17 @@ function WishListProductWidget() {
               }}>
               Add to Cart
             </Button>
-            <Box display="flex" alignItems="center" justifyContent="flex-end" gap="6px">
-            <IconButton><IosShare /></IconButton>
-            <IconButton><DeleteOutline /></IconButton>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="flex-end"
+              gap="6px">
+              <IconButton>
+                <IosShare />
+              </IconButton>
+              <IconButton onClick={handleRemoveFromWishList}>
+                <DeleteOutline />
+              </IconButton>
             </Box>
           </Box>
         </Box>
@@ -144,5 +204,14 @@ function WishListProductWidget() {
     </Box>
   );
 }
+
+WishListProductWidget.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  imgUrl: PropTypes.string.isRequired,
+  rating: PropTypes.number.isRequired,
+  ratingCount: PropTypes.number.isRequired,
+  price: PropTypes.object.isRequired,
+};
 
 export default WishListProductWidget;
