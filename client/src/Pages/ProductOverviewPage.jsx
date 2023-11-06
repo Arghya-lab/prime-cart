@@ -463,20 +463,6 @@ function ProductOverviewPage() {
                   alignItems: "center",
                   justifyContent: "space-evenly",
                 }}>
-                {/* <Stack direction="row" alignItems="center" gap={2}>
-                  <Typography variant="body1">Quantity</Typography>
-                  <FormControl size="small">
-                    <Select
-                      // value={age}
-                      // onChange={handleChange}
-                      defaultValue={30}
-                      inputProps={{ "aria-label": "Without label" }}>
-                      <MenuItem value={10}>10</MenuItem>
-                      <MenuItem value={20}>20</MenuItem>
-                      <MenuItem value={30}>30</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Stack> */}
                 <Stack gap={2} alignItems="center">
                   <Button
                     variant="contained"
