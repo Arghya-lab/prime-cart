@@ -1,16 +1,16 @@
 const mongoose = require("mongoose");
 
-const cartItemSchema = new mongoose.Schema(
+const cartProductSchema = new mongoose.Schema(
   {
     productId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Product",
       required: true,
     },
-    variantId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product.variant",
-    },
+    // variantId: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "Product.variant",
+    // },
     quantity: {
       type: Number,
       required: true,
@@ -28,7 +28,10 @@ const cartSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    items: [cartItemSchema],
+    products: {
+      type: [cartProductSchema],
+      default: [],
+    },
   },
   { timestamps: true }
 );

@@ -5,6 +5,7 @@ const connectToDb = require("./db");
 const productsRoutes = require("./routes/product");
 const authRoutes = require("./routes/auth");
 const wishListRoutes = require("./routes/wishList");
+const cartRoutes = require("./routes/cart");
 
 const app = express();
 const port = process.env.PORT;
@@ -25,6 +26,8 @@ app.use("/api/products", productsRoutes);
 app.use("/api/auth", authRoutes);
 //  WishList
 app.use("/api/wishList", wishListRoutes);
+//  cart
+app.use('/api/cart', cartRoutes);
 
 /* START SERVER */
 app.listen(port, () => {

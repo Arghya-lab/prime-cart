@@ -1,15 +1,6 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import {
-  Box,
-  Button,
-  FormControl,
-  MenuItem,
-  Rating,
-  Select,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Box, Button, Rating, Stack, Typography } from "@mui/material";
 import {
   LocalShippingOutlined,
   LocationOnOutlined,
@@ -25,12 +16,15 @@ import { setWishList } from "../features/additionalInfo/additionalInfoSlice";
 
 function ProductOverviewPage() {
   const { productId } = useParams();
-  const dispatch = useDispatch()
-  const token = useSelector(state=>state.auth.token)
-  const wishList = useSelector(state=>state.additionalInfo.wishList)
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+  const wishList = useSelector((state) => state.additionalInfo.wishList);
 
   const [data, setData] = useState(null);
-  const [isWishListProduct, setIsWishListProduct] = useState(false)
+  const [isWishListProduct, setIsWishListProduct] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -41,7 +35,7 @@ function ProductOverviewPage() {
       if (json.success) {
         console.log(json.data);
         setData(json.data);
-        setIsWishListProduct(wishList.includes(json.data._id))
+        setIsWishListProduct(wishList.includes(json.data._id));
       } else {
         console.log(json.error);
       }
@@ -49,21 +43,27 @@ function ProductOverviewPage() {
   }, []);
 
   const handleWishList = () => {
+    // check if customer is logged in
+    if (!token) {
+      navigate("/login", { state: { from: location } }, { replace: true });
+      return;
+    }
     if (!isWishListProduct) {
       (async () => {
         const res = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/wishList/${productId}`,{
+          `${import.meta.env.VITE_API_BASE_URL}/wishList/${productId}`,
+          {
             method: "POST",
             headers: {
               Authorization: token,
-            }
+            },
           }
         );
         const json = await res.json();
         if (json.success) {
           console.log(json.data);
           dispatch(setWishList(json.data));
-          setIsWishListProduct(true)
+          setIsWishListProduct(true);
         } else {
           console.log(json.error);
         }
@@ -71,24 +71,50 @@ function ProductOverviewPage() {
     } else {
       (async () => {
         const res = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/wishList/${productId}`, {
+          `${import.meta.env.VITE_API_BASE_URL}/wishList/${productId}`,
+          {
             method: "DELETE",
             headers: {
               Authorization: token,
-            }
+            },
           }
         );
         const json = await res.json();
         if (json.success) {
           console.log(json.data);
           dispatch(setWishList(json.data));
-          setIsWishListProduct(false)
+          setIsWishListProduct(false);
         } else {
           console.log(json.error);
         }
       })();
     }
-  }
+  };
+
+  const handleAddToCart = () => {
+    // check if customer is logged in
+    if (!token) {
+      navigate("/login", { state: { from: location } }, { replace: true });
+      return;
+    }
+    (async () => {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/cart`, {
+        method: "POST",
+        headers: {
+          Authorization: token,
+        },
+        body: {
+          productId,
+        },
+      });
+      const json = await res.json();
+      if (json.success) {
+        console.log(json.data);
+      } else {
+        console.log(json.error);
+      }
+    })();
+  };
 
   return (
     <Box>
@@ -437,7 +463,7 @@ function ProductOverviewPage() {
                   alignItems: "center",
                   justifyContent: "space-evenly",
                 }}>
-                <Stack direction="row" alignItems="center" gap={2}>
+                {/* <Stack direction="row" alignItems="center" gap={2}>
                   <Typography variant="body1">Quantity</Typography>
                   <FormControl size="small">
                     <Select
@@ -450,7 +476,7 @@ function ProductOverviewPage() {
                       <MenuItem value={30}>30</MenuItem>
                     </Select>
                   </FormControl>
-                </Stack>
+                </Stack> */}
                 <Stack gap={2} alignItems="center">
                   <Button
                     variant="contained"
@@ -459,7 +485,8 @@ function ProductOverviewPage() {
                       color: "#0F1111",
                       width: "200px",
                       ":hover": { bgcolor: "#FFD018" },
-                    }}>
+                    }}
+                    onClick={handleAddToCart}>
                     Add to Cart
                   </Button>
                   <Button
@@ -475,7 +502,11 @@ function ProductOverviewPage() {
                 </Stack>
               </Box>
               <Stack alignItems="center" justifyContent="center">
-                <Button variant="outlined" onClick={handleWishList}>{isWishListProduct?"Remove from Wish List":"Add to Wish List"}</Button>
+                <Button variant="outlined" onClick={handleWishList}>
+                  {isWishListProduct
+                    ? "Remove from Wish List"
+                    : "Add to Wish List"}
+                </Button>
               </Stack>
             </Box>
           </Box>
