@@ -101,11 +101,10 @@ function ProductOverviewPage() {
       const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/cart`, {
         method: "POST",
         headers: {
+          "Content-Type": "application/json",
           Authorization: token,
         },
-        body: {
-          productId,
-        },
+        body: JSON.stringify({ productId }),
       });
       const json = await res.json();
       if (json.success) {

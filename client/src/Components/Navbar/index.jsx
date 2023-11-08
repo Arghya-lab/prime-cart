@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   IconButton,
   InputBase,
   Paper,
@@ -30,16 +29,16 @@ function Navbar() {
     setIsDropdownOpen(false);
   };
 
-  const handleSearch = (e)=>{
-    e.preventDefault()
-    const query = searchValue.trim()
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const query = searchValue.trim();
     if (query.length >= 3) {
-      navigate(`/search?query=${encodeURIComponent(searchValue)}`)
+      navigate(`/search?query=${encodeURIComponent(searchValue)}`);
     } else {
       console.log("query must be at least 3 char length");
     }
-    setSearchValue("")
-  }
+    setSearchValue("");
+  };
 
   return (
     <Stack
@@ -48,12 +47,20 @@ function Navbar() {
       bgcolor="#131921"
       justifyContent="space-between"
       px="2rem"
-      py="6px">
-      <Button onClick={() => navigate("/")}>
-        <Typography variant="h4" fontWeight="fontWeightBold" color="#fff">
-          Prime Cart
-        </Typography>
-      </Button>
+      py="6px"
+      height="60px">
+      <Typography
+        variant="h4"
+        fontWeight="fontWeightBold"
+        color="#fff"
+        sx={{
+          padding: "4px 6px",
+          cursor: "pointer",
+          ":hover": { border: "1px solid white", borderRadius: "2px" },
+        }}
+        onClick={() => navigate("/")}>
+        Prime Cart
+      </Typography>
       <Paper
         component="form"
         sx={{
@@ -71,7 +78,11 @@ function Navbar() {
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />
-        <IconButton type="submit" sx={{ p: "10px" }} aria-label="search" onClick={handleSearch}>
+        <IconButton
+          type="submit"
+          sx={{ p: "10px" }}
+          aria-label="search"
+          onClick={handleSearch}>
           <Search />
         </IconButton>
       </Paper>
@@ -84,7 +95,11 @@ function Navbar() {
         <Box
           onMouseEnter={handleViewItems}
           onMouseLeave={handleHideItems}
-          sx={{ position: "relative", display: "inline-block" }}>
+          sx={{
+            padding: "4px 6px",
+            cursor: "pointer",
+            ":hover": { border: "1px solid white", borderRadius: "2px" },
+          }}>
           <Typography
             sx={{
               color: "#fff",
@@ -113,7 +128,13 @@ function Navbar() {
           </Box>
           <DropDownWidget isDropdownOpen={isDropdownOpen} />
         </Box>
-        <Box>
+        <Box
+          sx={{
+            padding: "4px 6px",
+            cursor: "pointer",
+            ":hover": { border: "1px solid white", borderRadius: "2px" },
+          }}
+          onClick={() => navigate("/orders")}>
           <Typography
             sx={{
               color: "#fff",
@@ -134,7 +155,13 @@ function Navbar() {
             & Orders
           </Typography>
         </Box>
-        <Box>
+        <Box
+          sx={{
+            padding: "4px 6px",
+            cursor: "pointer",
+            ":hover": { border: "1px solid white", borderRadius: "2px" },
+          }}
+          onClick={() => navigate("/cart")}>
           <Typography
             variant="caption"
             display="block"

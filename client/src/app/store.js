@@ -13,6 +13,7 @@ import {
 import authSlice from "../features/auth/authSlice";
 import additionalInfoSlice from "../features/additionalInfo/additionalInfoSlice";
 import productSlice from "../features/product/productSlice";
+import cartSlice from "../features/cart/cartSlice";
 
 const persistConfig = {
   key: "prime-cart",
@@ -23,6 +24,7 @@ const reducers = combineReducers({
   auth: authSlice,
   additionalInfo: additionalInfoSlice,
   product: productSlice,
+  cart: cartSlice,
 });
 const persistedReducer = persistReducer(persistConfig, reducers);
 

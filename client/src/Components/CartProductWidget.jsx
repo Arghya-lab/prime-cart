@@ -1,6 +1,61 @@
+import PropTypes from "prop-types";
 import { Box, Divider, Stack, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  changeProductQuantity,
+  removeDeletedProduct,
+} from "../features/cart/cartSlice";
 
-function CartProductWidget() {
+function CartProductWidget({ id, name, imgUrl, price, quantity }) {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+
+  const handleQuantityChange = (e) => {
+    const value = Number(e.target.value);
+    //add loader
+    (async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/cart/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+          body: JSON.stringify({ quantity: value }),
+        }
+      );
+      const json = await res.json();
+      if (json.success) {
+        console.log(json.data);
+        dispatch(changeProductQuantity({ productId: id, quantity: value }));
+      } else {
+        console.log(json.error);
+      }
+    })();
+  };
+
+  const handleDeleteProduct = () => {
+    (async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/cart/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      const json = await res.json();
+      if (json.success) {
+        console.log(json.data);
+        dispatch(removeDeletedProduct(id));
+      } else {
+        console.log(json.error);
+      }
+    })();
+  };
+
   return (
     <Box
       padding="12px 0 12px 12px"
@@ -12,7 +67,9 @@ function CartProductWidget() {
         <Box>
           <img
             /* img url */
-            src="https://images.unsplash.com/photo-1530893609608-32a9af3aa95c?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            src={`${
+              import.meta.env.VITE_IMG_BASE_URL
+            }/assets/productImgs/${imgUrl}`}
             height="180px"
             width="180px"
             style={{ margin: "0 12px" }}
@@ -23,20 +80,23 @@ function CartProductWidget() {
             width: "100%",
           }}>
           <Box display="flex" justifyContent="space-between">
-            <Typography variant="h6">
-              Kraasa Sneakers for Men White UK 8
+            <Typography variant="h6" paddingRight={2}>
+              {/* name */}
+              {name}
             </Typography>
             <Box>
-            <Typography
+              <Typography
                 component="span"
                 variant="caption"
                 sx={{ position: "relative", top: "-0.3em", fontWeight: 600 }}>
                 ₹
               </Typography>
-              <Typography component="span" variant="h6" sx={{ fontWeight: 600 }}>
+              <Typography
+                component="span"
+                variant="h6"
+                sx={{ fontWeight: 600 }}>
                 {/* selling price */}
-                {/* {price.selling} */}
-                349.00
+                {price.selling}
               </Typography>
             </Box>
           </Box>
@@ -66,8 +126,8 @@ function CartProductWidget() {
               borderRadius: "4px",
             }}>
             {/* MRP-selling % */}
-            {/* {(((price.mrp - price.selling) / price.mrp) * 100).toFixed(0)} */}
-            76%&nbsp;off
+            {(((price.mrp - price.selling) / price.mrp) * 100).toFixed(0)}
+            %&nbsp;off
           </Typography>
           <Typography
             variant="subtitle2"
@@ -88,8 +148,7 @@ function CartProductWidget() {
               variant="body2"
               sx={{ color: "#565959", textDecoration: "line-through" }}>
               {/* MRP */}
-              Rs.499.00
-              {/* Rs.{price.mrp} */}
+              Rs.{price.mrp}
             </Typography>
           </Box>
           <Box
@@ -124,17 +183,19 @@ function CartProductWidget() {
                   lineHeight: "29px",
                 }}
                 name="quantity"
-                id="quantity">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
+                id="quantity"
+                value={quantity}
+                onChange={handleQuantityChange}>
+                <option value={1}>1</option>
+                <option value={2}>2</option>
+                <option value={3}>3</option>
+                <option value={4}>4</option>
+                <option value={5}>5</option>
+                <option value={6}>6</option>
+                <option value={7}>7</option>
+                <option value={8}>8</option>
+                <option value={9}>9</option>
+                <option value={10}>10</option>
               </select>
             </span>
             <Divider orientation="vertical" variant="middle" flexItem />
@@ -144,7 +205,8 @@ function CartProductWidget() {
                 color: "#007185",
                 cursor: "pointer",
                 ":hover": { color: "#C7511F", textDecoration: "underline" },
-              }}>
+              }}
+              onClick={handleDeleteProduct}>
               Delete
             </Typography>
             <Divider orientation="vertical" variant="middle" flexItem />
@@ -163,5 +225,13 @@ function CartProductWidget() {
     </Box>
   );
 }
+
+CartProductWidget.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  imgUrl: PropTypes.string.isRequired,
+  price: PropTypes.object.isRequired,
+  quantity: PropTypes.number.isRequired,
+};
 
 export default CartProductWidget;
