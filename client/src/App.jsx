@@ -13,6 +13,7 @@ import ProductCreatePage from "./Pages/ProductCreatePage";
 import CategoryProductPage from "./Pages/CategoryProductPage";
 import SearchProductPage from "./Pages/SearchProductPage";
 import ProductOverviewPage from "./Pages/ProductOverviewPage";
+import CheckoutPage from "./Pages/CheckoutPage";
 
 function App() {
   return (
@@ -36,6 +37,14 @@ function App() {
           element={
             <RequireAuth>
               <CartPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/checkout"
+          element={
+            <RequireAuth>
+              <CheckoutPage />
             </RequireAuth>
           }
         />
