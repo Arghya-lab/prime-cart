@@ -13,7 +13,7 @@ import PaymentSectionWidget from "../Components/PaymentSectionWidget";
 import ReviewItemSectionWidget from "../Components/ReviewItemSectionWidget";
 
 function CheckoutPage() {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState("1");
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -28,8 +28,8 @@ function CheckoutPage() {
             <Accordion
               elevation={0}
               disableGutters
-              expanded={expanded === "panel1"}
-              onChange={handleChange("panel1")}>
+              expanded={expanded === "1"}
+              onChange={handleChange("1")}>
               <AccordionSummary
                 expandIcon={<ExpandMore />}
                 aria-controls="panel1bh-content"
@@ -37,9 +37,9 @@ function CheckoutPage() {
                 <Typography
                   variant="h6"
                   fontWeight={600}
-                  color={expanded === "panel1" ? "#C45500" : "#565959"}>
+                  color={expanded === "1" ? "#C45500" : "#565959"}>
                   1&nbsp;&nbsp;&nbsp;
-                  {expanded === "panel1"
+                  {expanded === "1"
                     ? "Select a delivery address"
                     : "Delivery address"}
                 </Typography>
@@ -51,8 +51,8 @@ function CheckoutPage() {
             <Accordion
               elevation={0}
               disableGutters
-              expanded={expanded === "panel2"}
-              onChange={handleChange("panel2")}>
+              expanded={expanded === "2"}
+              onChange={handleChange("2")}>
               <AccordionSummary
                 expandIcon={<ExpandMore />}
                 aria-controls="panel2bh-content"
@@ -60,9 +60,9 @@ function CheckoutPage() {
                 <Typography
                   variant="h6"
                   fontWeight={600}
-                  color={expanded === "panel2" ? "#C45500" : "#565959"}>
+                  color={expanded === "2" ? "#C45500" : "#565959"}>
                   2&nbsp;&nbsp;&nbsp;
-                  {expanded === "panel2"
+                  {expanded === "2"
                     ? "Select a payment method"
                     : "Payment"}
                 </Typography>
@@ -74,8 +74,8 @@ function CheckoutPage() {
             <Accordion
               elevation={0}
               disableGutters
-              expanded={expanded === "panel3"}
-              onChange={handleChange("panel3")}>
+              expanded={expanded === "3"}
+              onChange={handleChange("3")}>
               <AccordionSummary
                 expandIcon={<ExpandMore />}
                 aria-controls="panel3bh-content"
@@ -83,7 +83,7 @@ function CheckoutPage() {
                 <Typography
                   variant="h6"
                   fontWeight={600}
-                  color={expanded === "panel3" ? "#C45500" : "#565959"}>
+                  color={expanded === "3" ? "#C45500" : "#565959"}>
                   3&nbsp;&nbsp;&nbsp;Items and delivery
                 </Typography>
               </AccordionSummary>
@@ -130,26 +130,27 @@ function CheckoutPage() {
               border="1px solid #D5D9D9"
               borderRadius="8px"
               padding="14px 18px">
-              <Typography variant="h6" fontWeight={600} margin="0 12px 0 4px">
+              <Typography variant="h6" fontWeight={600}>
                 Order Summary
               </Typography>
-              <table>
+              <table style={{ width: "100%"}}>
                 <tbody>
                   <tr>
                     <td>Items:</td>
-                    <td>₹2,160.00</td>
+                    <td style={{textAlign: "right"}}>₹2,160.00</td>
                   </tr>
                   <tr>
                     <td>Delivery:</td>
-                    <td>₹200.00</td>
+                    <td style={{textAlign: "right"}}>₹200.00</td>
                   </tr>
-                  <tr>
-                    <td>Total:</td>
-                    <td>₹2,360.00</td>
+                  <tr style={{ padding: "10px"}}>
+                  <td colSpan="2" style={{height: "1px", background: "#BBBFBF" }} >
+                    <hr/>
+                  </td>
                   </tr>
-                  <tr>
+                  <tr style={{ fontSize: "18px", color: "#B12704", fontWeight: 700}}>
                     <td>Order Total:</td>
-                    <td>₹2,160.00</td>
+                    <td style={{textAlign: "right"}}>₹2,160.00</td>
                   </tr>
                 </tbody>
               </table>

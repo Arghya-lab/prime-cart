@@ -1,12 +1,21 @@
 import { Add } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
 import { useState } from "react";
+import CreateAddressModal from "./CreateAddressModal";
 
 function AddressSelectionWidget() {
   const [selected, setSelected] = useState("2stOpt");
 
   const handleChange = (event) => {
     setSelected(event.target.value);
+  };
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -96,9 +105,11 @@ function AddressSelectionWidget() {
                   color: "#C7511F",
                   textDecoration: "underline",
                 },
-              }}>
+              }}
+              onClick={handleOpen}>
               Add new address
             </Typography>
+            <CreateAddressModal open={open} handleClose={handleClose} />
           </Box>
         </Box>
       </Box>

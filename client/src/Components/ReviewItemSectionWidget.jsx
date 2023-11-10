@@ -14,11 +14,11 @@ function ReviewItemSectionWidget() {
                   component="span"
                   variant="h6"
                   fontWeight={600}
-                  color="#green">
+                  color="#007600">
                   12 Nov 2023
                 </Typography>
               </Typography>
-              <Typography variant="body2" color="#grey">
+              <Typography variant="body2" color="#565959">
                 If you order in the next 7 hours and 22 minutes
               </Typography>
               <Stack direction="row" paddingY="12px">
@@ -51,7 +51,7 @@ function ReviewItemSectionWidget() {
                     <Typography
                       component="span"
                       variant="body2"
-                      sx={{ color: "#565959", textDecoration: "line-through" }}>
+                      sx={{ textDecoration: "line-through" }}>
                       {/* MRP */}
                       {/* ₹{price.mrp} */}₹145.00
                     </Typography>
@@ -59,6 +59,7 @@ function ReviewItemSectionWidget() {
                     <Typography
                       component="span"
                       variant="body2"
+                      color="#B12704"
                       sx={{ fontWeight: 600 }}>
                       {/* selling price */}₹134.00
                     </Typography>
