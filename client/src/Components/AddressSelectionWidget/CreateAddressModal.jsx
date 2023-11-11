@@ -1,4 +1,4 @@
-import { Close } from "@mui/icons-material";
+import PropTypes from "prop-types";
 import {
   Box,
   Button,
@@ -9,6 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { Close } from "@mui/icons-material";
 
 function CreateAddressModal({ open, handleClose }) {
   return (
@@ -121,5 +122,11 @@ function CreateAddressModal({ open, handleClose }) {
     </Modal>
   );
 }
+
+
+CreateAddressModal.propTypes = {
+  open: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+};
 
 export default CreateAddressModal;
