@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   wishList: [],
+  addresses: [],
+  expendedCheckoutAccordion: "address",
 };
 
 export const additionalInfoSlice = createSlice({
@@ -11,12 +13,18 @@ export const additionalInfoSlice = createSlice({
     setWishList: (state, action) => {
       state.wishList = action.payload;
     },
-    eraseAdditionalInfo: (state) => {
-      state.wishList = [];
+    setAddresses: (state, action) => {
+      state.addresses = action.payload;
+    },
+    addNewAddress: (state, action) => {
+      state.addresses.push(action.payload);
+    },
+    setExpendedCheckoutAccordion: (state, action) => {
+      state.expendedCheckoutAccordion = action.payload;
     },
   },
 });
 
-export const { setWishList, eraseAdditionalInfo } = additionalInfoSlice.actions;
+export const { setWishList, setAddresses, addNewAddress, setExpendedCheckoutAccordion } = additionalInfoSlice.actions;
 
 export default additionalInfoSlice.reducer;

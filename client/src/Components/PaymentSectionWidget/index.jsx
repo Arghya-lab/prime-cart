@@ -1,15 +1,20 @@
 import { useState } from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Checkbox, Typography } from "@mui/material";
 import CardPaymentForm from "./CardPaymentForm";
+import { useDispatch } from "react-redux";
+import { setPaymentMethod } from "../../features/checkout/checkoutSlice";
+import { setExpendedCheckoutAccordion } from "../../features/additionalInfo/additionalInfoSlice";
 
 function PaymentSectionWidget() {
-  const [paymentOptionSelected, setPaymentOptionSelected] = useState("1stOpt");
+  const dispatch = useDispatch();
+  const [paymentOptionSelected, setPaymentOptionSelected] = useState("card");
   const [open, setOpen] = useState(false);
   const handleOpenPayWithCards = () => setOpen(true);
   const handleClosePayWithCards = () => setOpen(false);
 
-  const handleChangePaymentOption = (event) => {
-    setPaymentOptionSelected(event.target.value);
+  const handleSubmitPaymentMethod = () => {
+    dispatch(setPaymentMethod(paymentOptionSelected));
+    dispatch(setExpendedCheckoutAccordion("preview"));
   };
 
   return (
@@ -32,39 +37,21 @@ function PaymentSectionWidget() {
           <Box
             padding="9px"
             border={`1px solid ${
-              paymentOptionSelected === "1stOpt" ? "#FBD8B4" : "#FFF"
+              paymentOptionSelected === "card" ? "#FBD8B4" : "#FFF"
             }`}
             borderRadius="5px"
-            bgcolor={paymentOptionSelected === "1stOpt" ? "#FCF5EE" : "#FFF"}>
-            <label
-              style={{
-                paddingLeft: "15px",
-                display: "flex",
-              }}>
-              <Box
-                sx={{
-                  height: "16px",
-                  width: "16px",
-                }}>
-                <input
-                  type="radio"
-                  id="huey"
-                  name="drone"
-                  value="1stOpt"
-                  checked={paymentOptionSelected === "1stOpt"}
-                  onChange={handleChangePaymentOption}
-                  style={{
-                    verticalAlign: "top",
-                    position: "relative",
-                    bottom: "-3px",
-                  }}
-                />
-              </Box>
+            bgcolor={paymentOptionSelected === "card" ? "#FCF5EE" : "#FFF"}
+            onClick={() => setPaymentOptionSelected("card")}>
+            <Box paddingLeft="15px" display="flex" alignItems="center">
+              <Checkbox
+                checked={paymentOptionSelected === "card"}
+                size="small"
+              />
               <Box paddingLeft="10px">
-                <Typography variant="body1" fontWeight={600} paragraph>
+                <Typography variant="body1" fontWeight={600}>
                   Credit or debit card
                 </Typography>
-                {paymentOptionSelected === "1stOpt" ? (
+                {paymentOptionSelected === "card" ? (
                   <>
                     <Typography
                       component="span"
@@ -83,47 +70,36 @@ function PaymentSectionWidget() {
                     <Typography component="span">
                       Prime Cart accepts all major credit & cards
                     </Typography>
-                    <CardPaymentForm open={open} handleClosePayWithCards={handleClosePayWithCards} />
+                    <CardPaymentForm
+                      open={open}
+                      handleClosePayWithCards={handleClosePayWithCards}
+                    />
                   </>
-                ) : null}
+                ) : undefined}
               </Box>
-            </label>
+            </Box>
           </Box>
           <Box
             padding="9px"
             border={`1px solid ${
-              paymentOptionSelected === "2ndOpt" ? "#FBD8B4" : "#FFF"
+              paymentOptionSelected === "cod" ? "#FBD8B4" : "#FFF"
             }`}
             borderRadius="5px"
-            bgcolor={paymentOptionSelected === "2ndOpt" ? "#FCF5EE" : "#FFF"}>
-            <label
-              style={{
-                paddingLeft: "15px",
-                display: "flex",
-              }}>
-              <Box
-                sx={{
-                  height: "16px",
-                  width: "16px",
-                }}>
-                <input
-                  type="radio"
-                  id="huey"
-                  name="drone"
-                  value="2ndOpt"
-                  checked={paymentOptionSelected === "2ndOpt"}
-                  onChange={handleChangePaymentOption}
-                  style={{
-                    verticalAlign: "top",
-                    position: "relative",
-                    bottom: "-3px",
-                  }}
-                />
-              </Box>
-              <Typography variant="body1" fontWeight={600} paddingLeft="10px">
+            bgcolor={paymentOptionSelected === "cod" ? "#FCF5EE" : "#FFF"}
+            onClick={() => setPaymentOptionSelected("cod")}>
+            <Box paddingLeft="15px" display="flex" alignItems="center">
+              <Checkbox
+                checked={paymentOptionSelected === "cod"}
+                size="small"
+              />
+              <Typography
+                variant="body1"
+                fontWeight={600}
+                paddingLeft="10px"
+                align="">
                 Cash on Delivery/Pay on Delivery
               </Typography>
-            </label>
+            </Box>
           </Box>
         </Box>
       </Box>
@@ -137,7 +113,8 @@ function PaymentSectionWidget() {
             color: "#0F1111",
             bgcolor: "#FFD814",
             ":hover": { bgcolor: "#FCD200" },
-          }}>
+          }}
+          onClick={handleSubmitPaymentMethod}>
           use this address
         </Button>
       </Box>

@@ -4,6 +4,7 @@ const cors = require("cors");
 const connectToDb = require("./db");
 const productsRoutes = require("./routes/product");
 const authRoutes = require("./routes/auth");
+const addressRoutes = require("./routes/address");
 const wishListRoutes = require("./routes/wishList");
 const cartRoutes = require("./routes/cart");
 
@@ -24,9 +25,11 @@ connectToDb();
 app.use("/api/products", productsRoutes);
 //  Auth
 app.use("/api/auth", authRoutes);
+//  Address
+app.use("/api/address", addressRoutes);
 //  WishList
 app.use("/api/wishList", wishListRoutes);
-//  cart
+//  Cart
 app.use('/api/cart', cartRoutes);
 
 /* START SERVER */

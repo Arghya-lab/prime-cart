@@ -1,13 +1,20 @@
 import { Add } from "@mui/icons-material";
-import { Box, Button, Typography } from "@mui/material";
-import { useState } from "react";
+import { Box, Button, Checkbox, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import CreateAddressModal from "./CreateAddressModal";
+import { useDispatch, useSelector } from "react-redux";
+import { setDeliveryAddress } from "../../features/checkout/checkoutSlice";
+import { setAddresses, setExpendedCheckoutAccordion } from "../../features/additionalInfo/additionalInfoSlice";
 
 function AddressSelectionWidget() {
-  const [selected, setSelected] = useState("2stOpt");
+  const token = useSelector((state) => state.auth.token);
+  const addresses = useSelector((state) => state.additionalInfo.addresses);
+  const dispatch = useDispatch()
 
-  const handleChange = (event) => {
-    setSelected(event.target.value);
+  const [selectedAddress, setSelectedAddress] = useState(null);
+
+  const handleChangeDeliveryAddress = (id) => {
+    setSelectedAddress(id);
   };
 
   const [open, setOpen] = useState(false);
@@ -18,6 +25,41 @@ function AddressSelectionWidget() {
     setOpen(false);
   };
 
+  useEffect(() => {
+    (async () => {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/address`, {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+      });
+      const json = await res.json();
+      if (json.success) {
+        console.log(json.data);
+        dispatch(setAddresses(json.data))
+      } else {
+        console.log(json.error);
+      }
+    })();
+    console.log(addresses);
+  }, []);
+
+  useEffect(()=>{
+    addresses.forEach(address=> {
+      if (address.isDefault) {
+        setSelectedAddress(address._id)
+      }
+    });
+  },[addresses])
+
+  const handleAddressSelect = () => {
+    if (!selectedAddress) {
+      console.log("Select a delivery address.");
+    } else {
+      dispatch(setDeliveryAddress(selectedAddress))
+      dispatch(setExpendedCheckoutAccordion("payment"))
+    }
+  }
   return (
     <Box marginLeft="35px">
       <Box
@@ -34,98 +76,85 @@ function AddressSelectionWidget() {
           Your addresses
         </Typography>
         <Box>
-          {/* apply address.map func */}
-          {
-            <Box
-              padding="9px"
-              border={`1px solid ${selected === "1stOpt" ? "#FBD8B4" : "#FFF"}`}
-              borderRadius="5px"
-              bgcolor={selected === "1stOpt" ? "#FCF5EE" : "#FFF"}>
-              <label
-                style={{
-                  paddingLeft: "15px",
-                  display: "flex",
-                }}>
-                <Box
-                  sx={{
-                    height: "16px",
-                    width: "16px",
-                  }}>
-                  <input
-                    type="radio"
-                    id="huey"
-                    name="drone"
-                    value="1stOpt"
-                    checked={selected === "1stOpt"}
-                    onChange={handleChange}
-                    style={{
-                      verticalAlign: "top",
-                      position: "relative",
-                      bottom: "-3px",
-                    }}
-                  />
+          <Box>
+            {addresses.map((address) => (<Box
+                key={address._id}
+                padding="9px"
+                border={`1px solid ${
+                  selectedAddress === address._id ? "#FBD8B4" : "#FFF"
+                }`}
+                borderRadius="5px"
+                bgcolor={selectedAddress === address._id ? "#FCF5EE" : "#FFF"}
+                onClick={() => handleChangeDeliveryAddress(address._id)}>
+                <Box paddingLeft="15px" display="flex">
+                  <Checkbox checked={selectedAddress === address._id} size="small" />
+                  <Box>
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      fontWeight={600}>
+                      {address.fullName}
+                    </Typography>
+                    &nbsp;
+                    <Typography component="span" variant="body2">
+                      {`${address.landmark} ${address.area} ${address.city} ${address.state} ${address.pinCode}`}
+                    </Typography>
+                    &nbsp;
+                    <Typography
+                      color="#007185"
+                      component="span"
+                      variant="body2"
+                      sx={{
+                        cursor: "pointer",
+                        ":hover": {
+                          color: "#C7511F",
+                          textDecoration: "underline",
+                        },
+                      }}>
+                      Edit address
+                    </Typography>
+                  </Box>
                 </Box>
-                <Box paddingLeft="10px">
-                  <Typography component="span" variant="body2" fontWeight={600}>
-                    Arghya Maity
-                  </Typography>
-                  &nbsp;
-                  <Typography component="span" variant="body2">
-                    Shreyosi medical hall ( Drug store ), maity
-                  </Typography>
-                  &nbsp;
-                  <Typography
-                    color="#007185"
-                    component="span"
-                    variant="body2"
-                    sx={{
-                      cursor: "pointer",
-                      ":hover": {
-                        color: "#C7511F",
-                        textDecoration: "underline",
-                      },
-                    }}>
-                    Edit address
-                  </Typography>
-                </Box>
-              </label>
+              </Box>
+            ))}
+            <Box display="flex" alignItems="center" marginY="8px">
+              <Box color="#e4e4e4">
+                <Add />
+              </Box>
+              <Typography
+                component="span"
+                variant="body1"
+                color="#007185"
+                sx={{
+                  cursor: "pointer",
+                  ":hover": {
+                    color: "#C7511F",
+                    textDecoration: "underline",
+                  },
+                }}
+                onClick={handleOpen}>
+                Add new address
+              </Typography>
+              <CreateAddressModal open={open} handleClose={handleClose} />
             </Box>
-          }
-          <Box display="flex" alignItems="center">
-            <Box color="#e4e4e4">
-              <Add />
-            </Box>
-            <Typography
-              component="span"
-              variant="body1"
-              color="#007185"
-              sx={{
-                cursor: "pointer",
-                ":hover": {
-                  color: "#C7511F",
-                  textDecoration: "underline",
-                },
-              }}
-              onClick={handleOpen}>
-              Add new address
-            </Typography>
-            <CreateAddressModal open={open} handleClose={handleClose} />
           </Box>
         </Box>
-      </Box>
-      <Box
-        borderRadius="0 0 8px 8px"
-        border="1px #D5D9D9 solid"
-        padding="12px 18px 11px"
-        bgcolor="#F0F2F2">
-        <Button
-          sx={{
-            color: "#0F1111",
-            bgcolor: "#FFD814",
-            ":hover": { bgcolor: "#FCD200" },
-          }}>
-          use this address
-        </Button>
+        <Box
+          borderRadius="0 0 8px 8px"
+          border="1px #D5D9D9 solid"
+          padding="12px 18px 11px"
+          bgcolor="#F0F2F2">
+          <Button
+            sx={{
+              color: "#0F1111",
+              bgcolor: "#FFD814",
+              ":hover": { bgcolor: "#FCD200" },
+            }}
+            onClick={handleAddressSelect}
+            >
+            use this address
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

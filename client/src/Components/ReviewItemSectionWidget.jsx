@@ -31,7 +31,6 @@ function ReviewItemSectionWidget() {
                     src={`http://localhost:5173/categoryImgs/Fuji_Dash_Beauty.jpg`}
                     height="100px"
                     width="100px"
-                    // style={{ margin: "0 12px" }}
                   />
                 </Box>
                 <Box
@@ -65,47 +64,12 @@ function ReviewItemSectionWidget() {
                     </Typography>
                   </Box>
                   <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      width: "fit-content",
-                      borderRadius: 1,
-                      gap: "8px",
-                    }}>
-                    <span
-                      style={{
-                        border: "1px solid #D5D9D9",
-                        borderRadius: "6px",
-                        backgroundColor: "#F0F2F2",
-                        boxShadow: "0 2px 5px 0 rgba(213,217,217,.5)",
-                        padding: "2px 5px",
-                      }}>
-                      <Typography variant="caption">Qty:</Typography>
-                      <select
-                        style={{
-                          cursor: "pointer",
-                          borderColor: "transparent",
-                          background: "transparent",
-                          fontSize: "10px",
-                          // lineHeight: "29px",
-                        }}
-                        name="quantity"
-                        id="quantity"
-                        // value={quantity}
-                        // onChange={handleQuantityChange}
-                      >
-                        <option value={1}>1</option>
-                        <option value={2}>2</option>
-                        <option value={3}>3</option>
-                        <option value={4}>4</option>
-                        <option value={5}>5</option>
-                        <option value={6}>6</option>
-                        <option value={7}>7</option>
-                        <option value={8}>8</option>
-                        <option value={9}>9</option>
-                        <option value={10}>10</option>
-                      </select>
-                    </span>
+                    component="span"
+                    border="1px solid #D5D9D9"
+                    borderRadius="6px"
+                    boxShadow="0 2px 5px 0 rgba(213,217,217,.5)"
+                    padding="2px 5px">
+                    <Typography variant="caption">Qty: 3</Typography>
                   </Box>
                 </Box>
               </Stack>
@@ -129,8 +93,8 @@ function ReviewItemSectionWidget() {
             Place your order
           </Button>
           <Typography variant="body2" marginTop="8px">
-            You&apos;ll be securely redirected to to enter your password and complete
-            your purchase.
+            You&apos;ll be securely redirected to to enter your password and
+            complete your purchase.
           </Typography>
         </Box>
         <Box width="40%">
@@ -138,8 +102,8 @@ function ReviewItemSectionWidget() {
             Order Total: ₹2,158.00
           </Typography>
           <Typography variant="body2">
-            By placing your order, you agree to Prime Cart&apos;s privacy notice and
-            conditions of use.
+            By placing your order, you agree to Prime Cart&apos;s privacy notice
+            and conditions of use.
           </Typography>
         </Box>
       </Box>
