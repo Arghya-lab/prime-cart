@@ -95,8 +95,7 @@ function PaymentSectionWidget() {
               <Typography
                 variant="body1"
                 fontWeight={600}
-                paddingLeft="10px"
-                align="">
+                paddingLeft="10px">
                 Cash on Delivery/Pay on Delivery
               </Typography>
             </Box>

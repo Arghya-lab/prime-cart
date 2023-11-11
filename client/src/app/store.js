@@ -1,24 +1,22 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { combineReducers } from "redux";
-import storage from "redux-persist/lib/storage";
-import {
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from "redux-persist";
+import { combineReducers } from "@reduxjs/toolkit";
 import authSlice from "../features/auth/authSlice";
 import additionalInfoSlice from "../features/additionalInfo/additionalInfoSlice";
 import productSlice from "../features/product/productSlice";
 import cartSlice from "../features/cart/cartSlice";
 import checkoutSlice from "../features/checkout/checkoutSlice";
 
-const persistConfig = {
-  key: "prime-cart",
-  storage,
+const loadStateFromLocalStorage = () => {
+  try {
+    const authState = localStorage.getItem("primeCart");
+    if (authState === null) {
+      return undefined;
+    }
+    return JSON.parse(authState);
+  } catch (error) {
+    console.error("Error while loading auth info.");
+    return undefined;
+  }
 };
 
 const reducers = combineReducers({
@@ -28,14 +26,20 @@ const reducers = combineReducers({
   cart: cartSlice,
   checkout: checkoutSlice,
 });
-const persistedReducer = persistReducer(persistConfig, reducers);
 
-export default configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
+const store = configureStore({
+  reducer: reducers,
+  preloadedState: { auth: loadStateFromLocalStorage() },
 });
+
+// Subscribe to Redux store changes and save the state to local storage
+store.subscribe(() => {
+  const state = store.getState().auth;
+  try {
+    localStorage.setItem("primeCart", JSON.stringify(state));
+  } catch (error) {
+    console.error("Error while saving auth info.");
+  }
+});
+
+export default store;
