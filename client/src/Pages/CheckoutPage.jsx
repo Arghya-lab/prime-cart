@@ -12,7 +12,7 @@ import { ExpandMore } from "@mui/icons-material";
 import CheckoutHeader from "../Components/CheckoutHeader";
 import AddressSelectionWidget from "../Components/AddressSelectionWidget";
 import PaymentSectionWidget from "../Components/PaymentSectionWidget";
-import ReviewItemSectionWidget from "../Components/ReviewItemSectionWidget";
+import PreviewItemSectionWidget from "../Components/PreviewItemSectionWidget";
 
 
 function CheckoutPage() {
@@ -109,7 +109,7 @@ function CheckoutPage() {
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <ReviewItemSectionWidget />
+                <PreviewItemSectionWidget />
               </AccordionDetails>
             </Accordion>
             <Box borderTop="2px solid #BBBFBF" marginTop={4}>

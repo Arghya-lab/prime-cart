@@ -32,13 +32,22 @@ export const checkoutSlice = createSlice({
     },
     setPayment: (state, action) => {
       const { paymentMethod, paymentId } = action.payload;
-      state.paymentMethod = paymentMethod
-      state.paymentMethod = paymentId
+      state.paymentMethod = paymentMethod;
+      state.paymentId = paymentId;
+    },
+    resetCheckout: (state) => {
+      state.products = [];
+      state.productIds = [];
+      state.totalProductsPrice = 0;
+      state.totalDeliveryCharge = 0;
+      state.deliveryAddress = null;
+      state.paymentMethod = null;
+      state.paymentId = null;
     },
   },
 });
 
-export const { setProducts, setDeliveryAddress, setPayment } =
+export const { setProducts, setDeliveryAddress, setPayment, resetCheckout } =
   checkoutSlice.actions;
 
 export default checkoutSlice.reducer;

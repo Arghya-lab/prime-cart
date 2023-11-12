@@ -8,33 +8,67 @@ import { setPayment } from "../../features/checkout/checkoutSlice";
 function PaymentSectionWidget() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
+  const { products, deliveryAddress, paymentId } = useSelector(
+    (state) => state.checkout
+  );
   const [paymentOptionSelected, setPaymentOptionSelected] = useState("card");
 
   const [open, setOpen] = useState(false);
   const handleOpenPayWithCards = () => setOpen(true);
   const handleClosePayWithCards = () => setOpen(false);
-  
-  const handlePayment = async() => {
+
+  const handlePayment = async () => {
     console.log("payment Processing");
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/payment`, {
+    const paymentRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/payment`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      body: JSON.stringify({ type: paymentOptionSelected }),
+    });
+    const paymentResponse = await paymentRes.json();
+    if (!paymentResponse.success) {
+      console.log(paymentResponse.error);
+    } else {
+      console.log(paymentResponse.data);
+      console.log("Payment successful.");
+      dispatch(
+        setPayment({
+          paymentMethod: paymentOptionSelected,
+          paymentId: paymentResponse.data._id,
+        })
+      );
+      // Place the order
+
+      const values = {
+        productsInfo: products.map((product) => {
+          return {
+            id: product.productId,
+            sellingPrice: product.price.selling,
+            quantity: product.quantity,
+          };
+        }),
+        addressId: deliveryAddress,
+        paymentId,
+      };
+
+      const orderRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: token,
         },
-        body: JSON.stringify({type: paymentOptionSelected}),
+        body: JSON.stringify(values),
       });
-      const json = await res.json();
+      const json = await orderRes.json();
       if (json.success) {
         console.log(json.data);
-        console.log("Payment successful.");
-        dispatch(setPayment({ paymentMethod: paymentOptionSelected, paymentId: json.data._id }));
         dispatch(setExpendedCheckoutAccordion("preview"));
       } else {
         console.log(json.error);
       }
-
-
+    }
   };
 
   const [cardDetails, setCardDetails] = useState(null);
@@ -62,8 +96,7 @@ function PaymentSectionWidget() {
               paymentOptionSelected === "card" ? "#FBD8B4" : "#FFF"
             }`}
             borderRadius="5px"
-            bgcolor={paymentOptionSelected === "card" ? "#FCF5EE" : "#FFF"}
-            >
+            bgcolor={paymentOptionSelected === "card" ? "#FCF5EE" : "#FFF"}>
             <Box paddingLeft="15px" display="flex" alignItems="center">
               <Checkbox
                 size="small"
@@ -117,10 +150,7 @@ function PaymentSectionWidget() {
                 checked={paymentOptionSelected === "cod"}
                 size="small"
               />
-              <Typography
-                variant="body1"
-                fontWeight={600}
-                paddingLeft="10px">
+              <Typography variant="body1" fontWeight={600} paddingLeft="10px">
                 Cash on Delivery/Pay on Delivery
               </Typography>
             </Box>
@@ -140,7 +170,7 @@ function PaymentSectionWidget() {
             ":hover": { bgcolor: "#FCD200" },
           }}
           onClick={handlePayment}>
-          use this address
+          Confirm Order
         </Button>
       </Box>
     </Box>

@@ -1,12 +1,19 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Box, Button, Stack, Typography } from "@mui/material";
+import { resetCheckout } from "../features/checkout/checkoutSlice";
 
-function ReviewItemSectionWidget() {
-  const { products, totalProductsPrice } = useSelector((state) => state.checkout);
-  
-  const handlePlaceOrder =()=>{
-    console.log("placed order");
-  }
+function PreviewItemSectionWidget() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { products, totalProductsPrice } = useSelector(
+    (state) => state.checkout
+  );
+
+  const handleRedirectToOrderPage = () => {
+    dispatch(resetCheckout());
+    navigate("/orders");
+  };
 
   return (
     <Box marginLeft="35px">
@@ -57,8 +64,7 @@ function ReviewItemSectionWidget() {
                       component="span"
                       variant="body2"
                       sx={{ textDecoration: "line-through" }}>
-                      {/* MRP */}
-                      ₹{product.price.mrp}
+                      {/* MRP */}₹{product.price.mrp}
                     </Typography>
                     &nbsp;
                     <Typography
@@ -66,8 +72,7 @@ function ReviewItemSectionWidget() {
                       variant="body2"
                       color="#B12704"
                       sx={{ fontWeight: 600 }}>
-                      {/* selling price */}
-                      ₹{product.price.selling}
+                      {/* selling price */}₹{product.price.selling}
                     </Typography>
                   </Box>
                   <Box
@@ -99,8 +104,8 @@ function ReviewItemSectionWidget() {
               bgcolor: "#FFD814",
               ":hover": { bgcolor: "#FCD200" },
             }}
-            onClick={handlePlaceOrder}>
-            Place your order
+            onClick={handleRedirectToOrderPage}>
+            Go to order page
           </Button>
           <Typography variant="body2" marginTop="8px">
             You&apos;ll be securely redirected to to enter your password and
@@ -121,4 +126,4 @@ function ReviewItemSectionWidget() {
   );
 }
 
-export default ReviewItemSectionWidget;
+export default PreviewItemSectionWidget;

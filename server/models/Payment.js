@@ -12,6 +12,7 @@ const paymentSchema = new mongoose.Schema(
       required: true,
       enum: [ "cod", "card" ]
     },
+    // add amount, name, product ids
   },
   { timestamps: true }
 );
