@@ -30,6 +30,11 @@ const orderSchema = new mongoose.Schema(
       enum: ["pending", "processing", "shipped", "delivered"],
       default: "pending",
     },
+    paymentId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Payment",
+      required: true,
+    },
     shippingAddressId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Address",

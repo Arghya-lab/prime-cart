@@ -1,13 +1,20 @@
+import { useSelector } from "react-redux";
 import { Box, Button, Stack, Typography } from "@mui/material";
 
 function ReviewItemSectionWidget() {
+  const { products, totalProductsPrice } = useSelector((state) => state.checkout);
+  
+  const handlePlaceOrder =()=>{
+    console.log("placed order");
+  }
+
   return (
     <Box marginLeft="35px">
       <Box border="1px solid #D5D9D9" borderRadius="8px" padding="14px 18px">
         <Box>
           {/* use products.map */}
-          {
-            <Box>
+          {products.map((product) => (
+            <Box key={product.productId}>
               <Typography variant="h6" fontWeight={600}>
                 Delivery date:&nbsp;
                 <Typography
@@ -25,10 +32,11 @@ function ReviewItemSectionWidget() {
                 <Box height="120px" width="120px" margin="0 20px">
                   <img
                     /* img url */
-                    // src={`${
-                    //   import.meta.env.VITE_IMG_BASE_URL
-                    // }/assets/productImgs/${imgUrl}`}
-                    src={`http://localhost:5173/categoryImgs/Fuji_Dash_Beauty.jpg`}
+                    src={`${
+                      import.meta.env.VITE_IMG_BASE_URL
+                    }/assets/productImgs/${
+                      product.imgUrls[product.imgUrls.length - 1]
+                    }`}
                     height="100px"
                     width="100px"
                   />
@@ -42,9 +50,7 @@ function ReviewItemSectionWidget() {
                     fontWeight={600}
                     paddingRight={2}>
                     {/* name */}
-                    {/* {name} */}
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Iusto, possimus.
+                    {product.name}
                   </Typography>
                   <Box>
                     <Typography
@@ -52,7 +58,7 @@ function ReviewItemSectionWidget() {
                       variant="body2"
                       sx={{ textDecoration: "line-through" }}>
                       {/* MRP */}
-                      {/* ₹{price.mrp} */}₹145.00
+                      ₹{product.price.mrp}
                     </Typography>
                     &nbsp;
                     <Typography
@@ -60,7 +66,8 @@ function ReviewItemSectionWidget() {
                       variant="body2"
                       color="#B12704"
                       sx={{ fontWeight: 600 }}>
-                      {/* selling price */}₹134.00
+                      {/* selling price */}
+                      ₹{product.price.selling}
                     </Typography>
                   </Box>
                   <Box
@@ -69,12 +76,14 @@ function ReviewItemSectionWidget() {
                     borderRadius="6px"
                     boxShadow="0 2px 5px 0 rgba(213,217,217,.5)"
                     padding="2px 5px">
-                    <Typography variant="caption">Qty: 3</Typography>
+                    <Typography variant="caption">
+                      Qty: {product.quantity}
+                    </Typography>
                   </Box>
                 </Box>
               </Stack>
             </Box>
-          }
+          ))}
         </Box>
       </Box>
       <Box
@@ -89,7 +98,8 @@ function ReviewItemSectionWidget() {
               color: "#0F1111",
               bgcolor: "#FFD814",
               ":hover": { bgcolor: "#FCD200" },
-            }}>
+            }}
+            onClick={handlePlaceOrder}>
             Place your order
           </Button>
           <Typography variant="body2" marginTop="8px">
@@ -99,7 +109,7 @@ function ReviewItemSectionWidget() {
         </Box>
         <Box width="40%">
           <Typography variant="h6" fontWeight={600} color="#B12704">
-            Order Total: ₹2,158.00
+            Order Total: ₹{totalProductsPrice}
           </Typography>
           <Typography variant="body2">
             By placing your order, you agree to Prime Cart&apos;s privacy notice

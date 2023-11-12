@@ -8,24 +8,25 @@ import "react-credit-cards-2/dist/es/styles-compiled.css";
 
 const validationSchema = yup.object({
   number: yup
-    .number("Enter your card number.")
+    .string("Enter your card number.")
     .required("Card number is required."),
   name: yup
     .string("Enter your full name.")
     .min(3, "Must be 3 char.")
     .max(20, "Maximum 20 char is allowed.")
     .required("Full name is required."),
-  expiry: yup.number("Enter your exp date.").required("Exp date is required."),
+  expiry: yup.string("Enter your exp date.")
+    .required("Exp date is required."),
   cvc: yup
-    .number("Enter your cvv/cvc number.")
+    .string("Enter your cvv/cvc number.")
     .min(3, "Must be 3 digit.")
     .max(4, "Maximum 4 digit is allowed.")
-    .required("Email is required."),
+    .required("cvv/cvc is required."),
 });
 
-function CardPaymentForm({ open, handleClosePayWithCards }) {
-  const [focus, setFocus] = useState(null);
 
+function CardPaymentForm({ open, handleClosePayWithCards, setCardDetails }) {
+  const [focus, setFocus] = useState(null);
   const handleInputFocus = (event) => {
     setFocus(event.target.name);
   };
@@ -38,8 +39,13 @@ function CardPaymentForm({ open, handleClosePayWithCards }) {
       cvc: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      //  start loader
+      setTimeout(() => {
+        setCardDetails(values)
+        handleClosePayWithCards()
+        //  end loader
+      }, 2500);
     },
   });
 
@@ -169,7 +175,8 @@ function CardPaymentForm({ open, handleClosePayWithCards }) {
               color: "#0F1111",
               bgcolor: "#FFD814",
               ":hover": { bgcolor: "#FCD200" },
-            }}>
+            }}
+            onClick={formik.handleSubmit}>
             Enter card details
           </Button>
         </Box>
@@ -181,6 +188,7 @@ function CardPaymentForm({ open, handleClosePayWithCards }) {
 CardPaymentForm.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClosePayWithCards: PropTypes.func.isRequired,
+  setCardDetails: PropTypes.func.isRequired,
 };
 
 export default CardPaymentForm;

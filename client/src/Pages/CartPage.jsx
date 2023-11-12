@@ -1,4 +1,6 @@
-import { styled } from "@mui/material/styles";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -7,13 +9,13 @@ import {
   Typography,
   linearProgressClasses,
 } from "@mui/material";
+import { CheckCircle } from "@mui/icons-material";
+import { styled } from "@mui/material/styles";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import CartProductWidget from "../Components/CartProductWidget";
-import { CheckCircle } from "@mui/icons-material";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import { setCartProduct } from "../features/cart/cartSlice";
+import { setProducts } from "../features/checkout/checkoutSlice";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 13,
@@ -30,6 +32,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 function CartPage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
   const { products, totalPrice, totalCount } = useSelector(
     (state) => state.cart
@@ -59,6 +62,11 @@ function CartPage() {
     } else {
       return Math.floor((totalPrice / 499) * 100);
     }
+  };
+
+  const handleBuyCartProducts = () => {
+    dispatch(setProducts(products));
+    navigate("/checkout")
   };
 
   return (
@@ -238,8 +246,7 @@ function CartPage() {
                 width: "200px",
                 ":hover": { bgcolor: "#FFD018" },
               }}
-              // onClick={handleAddToCart}
-            >
+              onClick={handleBuyCartProducts}>
               Proceed to Buy
             </Button>
           </Box>

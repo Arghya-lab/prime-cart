@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import {
   Accordion,
   AccordionDetails,
@@ -10,12 +13,23 @@ import CheckoutHeader from "../Components/CheckoutHeader";
 import AddressSelectionWidget from "../Components/AddressSelectionWidget";
 import PaymentSectionWidget from "../Components/PaymentSectionWidget";
 import ReviewItemSectionWidget from "../Components/ReviewItemSectionWidget";
-import { useSelector } from "react-redux";
+
 
 function CheckoutPage() {
+  const navigate = useNavigate()
+
   const expendedCheckoutAccordion = useSelector(
     (state) => state.additionalInfo.expendedCheckoutAccordion
   );
+  const { totalProductsPrice, totalDeliveryCharge } = useSelector(
+    (state) => state.checkout
+  );
+  useEffect(() => {
+    if (totalProductsPrice === 0) {
+      navigate("/cart")
+    }
+  }, [])
+  
 
   return (
     <Box>
@@ -144,11 +158,15 @@ function CheckoutPage() {
                 <tbody>
                   <tr>
                     <td>Items:</td>
-                    <td style={{ textAlign: "right" }}>₹2,160.00</td>
+                    <td style={{ textAlign: "right" }}>
+                      ₹{totalProductsPrice}
+                    </td>
                   </tr>
                   <tr>
                     <td>Delivery:</td>
-                    <td style={{ textAlign: "right" }}>₹200.00</td>
+                    <td style={{ textAlign: "right" }}>
+                      ₹{totalDeliveryCharge}
+                    </td>
                   </tr>
                   <tr style={{ padding: "10px" }}>
                     <td

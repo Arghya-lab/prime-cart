@@ -7,6 +7,7 @@ const authRoutes = require("./routes/auth");
 const addressRoutes = require("./routes/address");
 const wishListRoutes = require("./routes/wishList");
 const cartRoutes = require("./routes/cart");
+const paymentRoutes = require("./routes/payment");
 
 const app = express();
 const port = process.env.PORT;
@@ -31,6 +32,8 @@ app.use("/api/address", addressRoutes);
 app.use("/api/wishList", wishListRoutes);
 //  Cart
 app.use('/api/cart', cartRoutes);
+//  Payment
+app.use('/api/payment', paymentRoutes);
 
 /* START SERVER */
 app.listen(port, () => {

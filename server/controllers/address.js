@@ -89,13 +89,13 @@ const updateAddress = async (req, res) => {
     // if updated address is default, then update all other addresses to non-default
     if (isDefault) {
       await Address.updateMany(
-        { userId, _id: { $ne: addressId } },
+        { customerId, _id: { $ne: addressId } },
         { isDefault: false }
       );
     }
-
     res.status(201).json({ success: true, data: updatedAddress });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .json({ success: false, error: "Failed while updating address." });

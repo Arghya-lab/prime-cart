@@ -1,28 +1,27 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Add } from "@mui/icons-material";
 import { Box, Button, Checkbox, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
-import CreateAddressModal from "./CreateAddressModal";
-import { useDispatch, useSelector } from "react-redux";
 import { setDeliveryAddress } from "../../features/checkout/checkoutSlice";
-import { setAddresses, setExpendedCheckoutAccordion } from "../../features/additionalInfo/additionalInfoSlice";
+import {
+  setAddressToUpdate,
+  setAddresses,
+  setExpendedCheckoutAccordion,
+} from "../../features/additionalInfo/additionalInfoSlice";
 
 function AddressSelectionWidget() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   const addresses = useSelector((state) => state.additionalInfo.addresses);
-  const dispatch = useDispatch()
 
   const [selectedAddress, setSelectedAddress] = useState(null);
 
   const handleChangeDeliveryAddress = (id) => {
     setSelectedAddress(id);
-  };
-
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
   };
 
   useEffect(() => {
@@ -36,30 +35,30 @@ function AddressSelectionWidget() {
       const json = await res.json();
       if (json.success) {
         console.log(json.data);
-        dispatch(setAddresses(json.data))
+        dispatch(setAddresses(json.data));
       } else {
         console.log(json.error);
       }
     })();
-    console.log(addresses);
   }, []);
 
-  useEffect(()=>{
-    addresses.forEach(address=> {
+  useEffect(() => {
+    addresses.forEach((address) => {
       if (address.isDefault) {
-        setSelectedAddress(address._id)
+        setSelectedAddress(address._id);
       }
     });
-  },[addresses])
+  }, [addresses]);
 
   const handleAddressSelect = () => {
     if (!selectedAddress) {
       console.log("Select a delivery address.");
     } else {
-      dispatch(setDeliveryAddress(selectedAddress))
-      dispatch(setExpendedCheckoutAccordion("payment"))
+      dispatch(setDeliveryAddress(selectedAddress));
+      dispatch(setExpendedCheckoutAccordion("payment"));
     }
-  }
+  };
+
   return (
     <Box marginLeft="35px">
       <Box
@@ -77,17 +76,22 @@ function AddressSelectionWidget() {
         </Typography>
         <Box>
           <Box>
-            {addresses.map((address) => (<Box
+            {addresses.map((address) => (
+              <Box
                 key={address._id}
                 padding="9px"
                 border={`1px solid ${
                   selectedAddress === address._id ? "#FBD8B4" : "#FFF"
                 }`}
                 borderRadius="5px"
-                bgcolor={selectedAddress === address._id ? "#FCF5EE" : "#FFF"}
-                onClick={() => handleChangeDeliveryAddress(address._id)}>
+                bgcolor={selectedAddress === address._id ? "#FCF5EE" : "#FFF"}>
                 <Box paddingLeft="15px" display="flex">
-                  <Checkbox checked={selectedAddress === address._id} size="small" />
+                  <Checkbox
+                    size="small"
+                    disableRipple
+                    checked={selectedAddress === address._id}
+                    onClick={() => handleChangeDeliveryAddress(address._id)}
+                  />
                   <Box>
                     <Typography
                       component="span"
@@ -97,7 +101,7 @@ function AddressSelectionWidget() {
                     </Typography>
                     &nbsp;
                     <Typography component="span" variant="body2">
-                      {`${address.landmark} ${address.area} ${address.city} ${address.state} ${address.pinCode}`}
+                      {`${address.landmark}, ${address.area}, ${address.city}, ${address.state}, ${address.pinCode}`}
                     </Typography>
                     &nbsp;
                     <Typography
@@ -110,6 +114,12 @@ function AddressSelectionWidget() {
                           color: "#C7511F",
                           textDecoration: "underline",
                         },
+                      }}
+                      onClick={() => {
+                        dispatch(setAddressToUpdate(address._id));
+                        navigate(`/addresses/edit/${address._id}`, {
+                          state: { from: location },
+                        });
                       }}>
                       Edit address
                     </Typography>
@@ -132,10 +142,11 @@ function AddressSelectionWidget() {
                     textDecoration: "underline",
                   },
                 }}
-                onClick={handleOpen}>
+                onClick={() =>
+                  navigate("/addresses/create", { state: { from: location } })
+                }>
                 Add new address
               </Typography>
-              <CreateAddressModal open={open} handleClose={handleClose} />
             </Box>
           </Box>
         </Box>
@@ -150,8 +161,7 @@ function AddressSelectionWidget() {
               bgcolor: "#FFD814",
               ":hover": { bgcolor: "#FCD200" },
             }}
-            onClick={handleAddressSelect}
-            >
+            onClick={handleAddressSelect}>
             use this address
           </Button>
         </Box>

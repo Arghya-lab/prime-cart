@@ -18,6 +18,7 @@ function ProductOverviewPage() {
   const { productId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+  console.log(location);
 
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);

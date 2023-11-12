@@ -14,6 +14,7 @@ import CategoryProductPage from "./Pages/CategoryProductPage";
 import SearchProductPage from "./Pages/SearchProductPage";
 import ProductOverviewPage from "./Pages/ProductOverviewPage";
 import CheckoutPage from "./Pages/CheckoutPage";
+import CustomerAddressFormPage from "./Pages/CustomerAddressFormPage";
 
 function App() {
   return (
@@ -61,6 +62,22 @@ function App() {
           element={
             <RequireAuth>
               <ProfilePage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/addresses/create"
+          element={
+            <RequireAuth>
+              <CustomerAddressFormPage pageType={"create"} />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/addresses/edit/:addressId"
+          element={
+            <RequireAuth>
+              <CustomerAddressFormPage pageType={"edit"} />
             </RequireAuth>
           }
         />
