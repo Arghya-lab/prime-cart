@@ -55,7 +55,7 @@ function WishListProductWidget({
         sx={{
           width: "100%",
           height: "1.5px",
-          bgcolor: "#BBBFBF",
+          bgcolor: "grey.600",
         }}></Box>
       <Stack direction="row">
         <Box
@@ -91,9 +91,9 @@ function WishListProductWidget({
               component="p"
               variant="subtitle2"
               sx={{
-                color: "#007185",
+                color: "success.dark",
                 fontWeight: 600,
-                ":hover": { cursor: "pointer", color: "#C7511F" },
+                ":hover": { cursor: "pointer", color: "secondary.main" },
               }}>
               {/* name */}
               {name}
@@ -109,8 +109,8 @@ function WishListProductWidget({
                 component="p"
                 variant="body1"
                 sx={{
-                  color: "#007185",
-                  ":hover": { cursor: "pointer", color: "#C7511F" },
+                  color: "success.dark",
+                  ":hover": { cursor: "pointer", color: "secondary.main" },
                 }}>
                 {/* rating count */}
                 {ratingCount}
@@ -123,7 +123,7 @@ function WishListProductWidget({
                 sx={{
                   fontWeight: 600,
                   color: "white",
-                  backgroundColor: "#CC0C39",
+                  backgroundColor: "error.light",
                   padding: "4px 6px 4px 6px",
                   borderRadius: "4px",
                 }}>
@@ -136,7 +136,7 @@ function WishListProductWidget({
                 component="span"
                 variant="caption"
                 sx={{
-                  color: "#CC0C39",
+                  color: "error.light",
                   fontWeight: 600,
                 }}>
                 Sale
@@ -162,13 +162,13 @@ function WishListProductWidget({
               <Typography
                 component="span"
                 variant="body2"
-                sx={{ color: "#565959" }}>
+                sx={{ color: "grey.800" }}>
                 M.R.P.:&nbsp;
               </Typography>
               <Typography
                 component="span"
                 variant="body2"
-                sx={{ color: "#565959", textDecoration: "line-through" }}>
+                sx={{ color: "grey.800", textDecoration: "line-through" }}>
                 {/* MRP */}
                 Rs.{price.mrp}
               </Typography>
@@ -178,11 +178,11 @@ function WishListProductWidget({
             <Button
               variant="contained"
               sx={{
-                bgcolor: "#FFD814",
+                bgcolor: "warning.light",
                 color: "#0F1111",
                 width: "200px",
                 marginY: "8px",
-                ":hover": { bgcolor: "#FFD018" },
+                ":hover": { bgcolor: "warning.main" },
               }}>
               Add to Cart
             </Button>

@@ -51,7 +51,7 @@ function CheckoutPage() {
                   color={
                     expendedCheckoutAccordion === "address"
                       ? "#C45500"
-                      : "#565959"
+                      : "grey.800"
                   }>
                   1&nbsp;&nbsp;&nbsp;
                   {expendedCheckoutAccordion === "address"
@@ -77,7 +77,7 @@ function CheckoutPage() {
                   color={
                     expendedCheckoutAccordion === "payment"
                       ? "#C45500"
-                      : "#565959"
+                      : "grey.800"
                   }>
                   2&nbsp;&nbsp;&nbsp;
                   {expendedCheckoutAccordion === "payment"
@@ -103,7 +103,7 @@ function CheckoutPage() {
                   color={
                     expendedCheckoutAccordion === "preview"
                       ? "#C45500"
-                      : "#565959"
+                      : "grey.800"
                   }>
                   3&nbsp;&nbsp;&nbsp;Items and delivery
                 </Typography>
@@ -112,7 +112,7 @@ function CheckoutPage() {
                 <PreviewItemSectionWidget />
               </AccordionDetails>
             </Accordion>
-            <Box borderTop="2px solid #BBBFBF" marginTop={4}>
+            <Box borderTop="2px solid grey.600" marginTop={4}>
               <Typography
                 component="p"
                 variant="caption"
@@ -148,7 +148,7 @@ function CheckoutPage() {
               position="fixed"
               width="inherit"
               top="88px"
-              border="1px solid #D5D9D9"
+              border="1px solid grey.500"
               borderRadius="8px"
               padding="14px 18px">
               <Typography variant="h6" fontWeight={600}>
@@ -171,14 +171,14 @@ function CheckoutPage() {
                   <tr style={{ padding: "10px" }}>
                     <td
                       colSpan="2"
-                      style={{ height: "1px", background: "#BBBFBF" }}>
+                      style={{ height: "1px", background: "grey.600" }}>
                       <hr />
                     </td>
                   </tr>
                   <tr
                     style={{
                       fontSize: "18px",
-                      color: "#B12704",
+                      color: "error.main",
                       fontWeight: 700,
                     }}>
                     <td>Order Total:</td>

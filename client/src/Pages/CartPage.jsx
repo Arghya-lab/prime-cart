@@ -26,7 +26,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
   [`& .${linearProgressClasses.bar}`]: {
     borderRadius: 0,
-    backgroundColor: theme.palette.mode === "light" ? "#009674" : "#308fe8",
+    backgroundColor: theme.palette.mode === "light" ? "success.light" : "#308fe8",
   },
 }));
 
@@ -70,7 +70,7 @@ function CartPage() {
   };
 
   return (
-    <Box sx={{ bgcolor: "#eaeded" }}>
+    <Box sx={{ bgcolor: "grey.200" }}>
       <Navbar />
       {products && products.length !== 0 ? (
         <Box
@@ -92,7 +92,7 @@ function CartPage() {
               component="span"
               variant="subtitle2"
               sx={{
-                color: "#007185",
+                color: "success.dark",
                 cursor: "pointer",
                 ":hover": {
                   textDecoration: "underline",
@@ -103,9 +103,9 @@ function CartPage() {
             <Typography
               variant="body2"
               sx={{
-                color: "#565959",
+                color: "grey.800",
                 textAlign: "right",
-                borderBottom: "1px solid #DDD",
+                borderBottom: "1px solid grey.400",
               }}>
               Price
             </Typography>
@@ -153,13 +153,13 @@ function CartPage() {
             </Stack>
             {totalPrice >= 499 ? (
               <Stack direction="row">
-                <CheckCircle sx={{ color: "#009674" }} />
+                <CheckCircle sx={{ color: "success.light" }} />
                 <Box>
                   <Typography
                     component="span"
                     variant="caption"
                     sx={{
-                      color: "#009674",
+                      color: "success.light",
                       fontWeight: 600,
                     }}>
                     Your order is eligible for FREE Delivery.
@@ -171,7 +171,7 @@ function CartPage() {
                     component="span"
                     variant="caption"
                     sx={{
-                      color: "#009674",
+                      color: "success.light",
                     }}>
                     FREE Delivery.
                   </Typography>
@@ -190,7 +190,7 @@ function CartPage() {
                   component="span"
                   variant="body2"
                   sx={{
-                    color: "#B12704",
+                    color: "error.main",
                   }}>
                   ₹365.00
                 </Typography>
@@ -203,7 +203,7 @@ function CartPage() {
                   component="span"
                   variant="body2"
                   sx={{
-                    color: "#007185",
+                    color: "success.dark",
                   }}>
                   FREE Delivery
                 </Typography>
@@ -211,9 +211,9 @@ function CartPage() {
                   component="p"
                   variant="body2"
                   sx={{
-                    color: "#007185",
+                    color: "success.dark",
                     cursor: "pointer",
-                    ":hover": { color: "#B12704", textDecoration: "underLine" },
+                    ":hover": { color: "error.main", textDecoration: "underLine" },
                   }}>
                   View Products ›
                 </Typography>
@@ -241,10 +241,10 @@ function CartPage() {
             <Button
               variant="contained"
               sx={{
-                bgcolor: "#FFD814",
+                bgcolor: "warning.light",
                 color: "#0F1111",
                 width: "200px",
-                ":hover": { bgcolor: "#FFD018" },
+                ":hover": { bgcolor: "warning.main" },
               }}
               onClick={handleBuyCartProducts}>
               Proceed to Buy

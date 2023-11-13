@@ -19,7 +19,7 @@ function CategoryWidget({ url, name, value }) {
         <Box
           sx={{
             color: "#007171",
-            ":hover": { cursor: "pointer", color: "#710000" },
+            ":hover": { cursor: "pointer", color: "error.dark" },
           }}
           onClick={fetchCategoryProducts}
           >

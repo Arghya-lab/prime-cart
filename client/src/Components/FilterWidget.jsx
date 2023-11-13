@@ -99,7 +99,7 @@ function FilterWidget() {
   return (
     <Box
       sx={{
-        borderRight: "2px solid #ddd",
+        borderRight: "2px solid grey.400",
         wordBreak: "break-word",
         width: "256px",
         padding: "16px 16px 6px",
@@ -127,9 +127,9 @@ function FilterWidget() {
                 display: "flex",
                 alignItems: "center",
                 padding: "2px",
-                border: rating === 4 ? "solid 2px #ddd" : null,
-                color: rating === 4 ? "#710000" : null,
-                ":hover": { cursor: "pointer", color: "#710000" },
+                border: rating === 4 ? "solid 2px grey.400" : null,
+                color: rating === 4 ? "error.dark" : null,
+                ":hover": { cursor: "pointer", color: "error.dark" },
               }}
               onClick={() => {
                 setRating(4);
@@ -155,9 +155,9 @@ function FilterWidget() {
                 display: "flex",
                 alignItems: "center",
                 padding: "2px",
-                border: rating === 3 ? "solid 2px #ddd" : null,
-                color: rating === 3 ? "#710000" : null,
-                ":hover": { cursor: "pointer", color: "#710000" },
+                border: rating === 3 ? "solid 2px grey.400" : null,
+                color: rating === 3 ? "error.dark" : null,
+                ":hover": { cursor: "pointer", color: "error.dark" },
               }}
               onClick={() => setRating(3)}>
               {/* single rating box */}
@@ -181,9 +181,9 @@ function FilterWidget() {
                 display: "flex",
                 alignItems: "center",
                 padding: "2px",
-                border: rating === 2 ? "solid 2px #ddd" : null,
-                color: rating === 2 ? "#710000" : null,
-                ":hover": { cursor: "pointer", color: "#710000" },
+                border: rating === 2 ? "solid 2px grey.400" : null,
+                color: rating === 2 ? "error.dark" : null,
+                ":hover": { cursor: "pointer", color: "error.dark" },
               }}
               onClick={() => setRating(2)}>
               {/* single rating box */}
@@ -207,9 +207,9 @@ function FilterWidget() {
                 display: "flex",
                 alignItems: "center",
                 padding: "2px",
-                border: rating === 1 ? "solid 2px #ddd" : null,
-                color: rating === 1 ? "#710000" : null,
-                ":hover": { cursor: "pointer", color: "#710000" },
+                border: rating === 1 ? "solid 2px grey.400" : null,
+                color: rating === 1 ? "error.dark" : null,
+                ":hover": { cursor: "pointer", color: "error.dark" },
               }}
               onClick={() => setRating(1)}>
               {/* single rating box */}

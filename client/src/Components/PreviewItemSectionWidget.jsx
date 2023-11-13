@@ -17,7 +17,7 @@ function PreviewItemSectionWidget() {
 
   return (
     <Box marginLeft="35px">
-      <Box border="1px solid #D5D9D9" borderRadius="8px" padding="14px 18px">
+      <Box border="1px solid grey.500" borderRadius="8px" padding="14px 18px">
         <Box>
           {/* use products.map */}
           {products.map((product) => (
@@ -28,11 +28,11 @@ function PreviewItemSectionWidget() {
                   component="span"
                   variant="h6"
                   fontWeight={600}
-                  color="#007600">
+                  color="success.main">
                   12 Nov 2023
                 </Typography>
               </Typography>
-              <Typography variant="body2" color="#565959">
+              <Typography variant="body2" color="grey.800">
                 If you order in the next 7 hours and 22 minutes
               </Typography>
               <Stack direction="row" paddingY="12px">
@@ -70,14 +70,14 @@ function PreviewItemSectionWidget() {
                     <Typography
                       component="span"
                       variant="body2"
-                      color="#B12704"
+                      color="error.main"
                       sx={{ fontWeight: 600 }}>
                       {/* selling price */}₹{product.price.selling}
                     </Typography>
                   </Box>
                   <Box
                     component="span"
-                    border="1px solid #D5D9D9"
+                    border="1px solid grey.500"
                     borderRadius="6px"
                     boxShadow="0 2px 5px 0 rgba(213,217,217,.5)"
                     padding="2px 5px">
@@ -93,7 +93,7 @@ function PreviewItemSectionWidget() {
       </Box>
       <Box
         marginTop="16px"
-        border="1px solid #D5D9D9"
+        border="1px solid grey.500"
         borderRadius="8px"
         padding="14px 18px"
         display="flex">
@@ -101,8 +101,8 @@ function PreviewItemSectionWidget() {
           <Button
             sx={{
               color: "#0F1111",
-              bgcolor: "#FFD814",
-              ":hover": { bgcolor: "#FCD200" },
+              bgcolor: "warning.light",
+              ":hover": { bgcolor: "warning.dark" },
             }}
             onClick={handleRedirectToOrderPage}>
             Go to order page
@@ -113,7 +113,7 @@ function PreviewItemSectionWidget() {
           </Typography>
         </Box>
         <Box width="40%">
-          <Typography variant="h6" fontWeight={600} color="#B12704">
+          <Typography variant="h6" fontWeight={600} color="error.main">
             Order Total: ₹{totalProductsPrice}
           </Typography>
           <Typography variant="body2">

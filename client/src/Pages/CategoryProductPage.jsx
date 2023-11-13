@@ -56,7 +56,7 @@ function CategoryProductPage() {
           </Typography>
           <Box
             sx={{
-              border: "1px solid #d5d9d9",
+              border: "1px solid grey.500",
               borderRadius: "8px",
               padding: "14px 18px",
               marginY: "20px",

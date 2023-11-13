@@ -30,37 +30,37 @@ function OrderProductWidget({
         display="flex"
         justifyContent="space-between"
         borderRadius="8px 8px 0 0"
-        borderBottom="1px solid #D5D9D9"
-        bgcolor="#F0F2F2">
+        borderBottom="1px solid grey.500"
+        bgcolor="grey.100">
         <Box display="flex" justifyContent="flex-start">
           <Box paddingRight="16px">
-            <Typography variant="body2" color="#565959" noWrap>
+            <Typography variant="body2" color="grey.800" noWrap>
               ORDER PLACED
             </Typography>
-            <Typography variant="subtitle2" color="#565959">
+            <Typography variant="subtitle2" color="grey.800">
               {orderPlacedTime}
             </Typography>
           </Box>
           <Box>
-            <Typography variant="body2" color="#565959">
+            <Typography variant="body2" color="grey.800">
               TOTAL
             </Typography>
-            <Typography variant="subtitle2" color="#565959">
+            <Typography variant="subtitle2" color="grey.800">
               ₹{totalPrice}
             </Typography>
           </Box>
         </Box>
         <Box textAlign="right">
-          <Typography variant="subtitle2" color="#565959">
+          <Typography variant="subtitle2" color="grey.800">
             ORDER #&nbsp;{orderId}
           </Typography>
           <Typography
             variant="subtitle2"
-            color="#007185"
+            color="success.dark"
             sx={{
               cursor: "pointer",
               ":hover": {
-                color: "#C7511F",
+                color: "secondary.main",
                 textDecoration: "underline",
               },
             }}
@@ -85,10 +85,10 @@ function OrderProductWidget({
               width: "100%",
               maxWidth: "448px",
             }}>
-            <Typography variant="body1" color="#007185" sx={{
+            <Typography variant="body1" color="success.dark" sx={{
               cursor: "pointer",
               ":hover": {
-                color: "#C7511F",
+                color: "secondary.main",
                 textDecoration: "underline",
               },
             }}

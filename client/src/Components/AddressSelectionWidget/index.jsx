@@ -62,7 +62,7 @@ function AddressSelectionWidget() {
   return (
     <Box marginLeft="35px">
       <Box
-        border="1px solid #D5D9D9"
+        border="1px solid grey.500"
         borderRadius="8px 8px 0 0"
         padding="14px 18px">
         <Typography
@@ -70,7 +70,7 @@ function AddressSelectionWidget() {
           fontSize="18px"
           lineHeight="24px"
           fontWeight={600}
-          borderBottom="1px solid #D5D9D9"
+          borderBottom="1px solid grey.500"
           marginBottom="19px">
           Your addresses
         </Typography>
@@ -81,10 +81,10 @@ function AddressSelectionWidget() {
                 key={address._id}
                 padding="9px"
                 border={`1px solid ${
-                  selectedAddress === address._id ? "#FBD8B4" : "#FFF"
+                  selectedAddress === address._id ? "primary.dark" : "#FFF"
                 }`}
                 borderRadius="5px"
-                bgcolor={selectedAddress === address._id ? "#FCF5EE" : "#FFF"}>
+                bgcolor={selectedAddress === address._id ? "primary.main" : "#FFF"}>
                 <Box paddingLeft="15px" display="flex">
                   <Checkbox
                     size="small"
@@ -105,13 +105,13 @@ function AddressSelectionWidget() {
                     </Typography>
                     &nbsp;
                     <Typography
-                      color="#007185"
+                      color="success.dark"
                       component="span"
                       variant="body2"
                       sx={{
                         cursor: "pointer",
                         ":hover": {
-                          color: "#C7511F",
+                          color: "secondary.main",
                           textDecoration: "underline",
                         },
                       }}
@@ -128,17 +128,17 @@ function AddressSelectionWidget() {
               </Box>
             ))}
             <Box display="flex" alignItems="center" marginY="8px">
-              <Box color="#e4e4e4">
+              <Box color="grey.300">
                 <Add />
               </Box>
               <Typography
                 component="span"
                 variant="body1"
-                color="#007185"
+                color="success.dark"
                 sx={{
                   cursor: "pointer",
                   ":hover": {
-                    color: "#C7511F",
+                    color: "secondary.main",
                     textDecoration: "underline",
                   },
                 }}
@@ -152,14 +152,14 @@ function AddressSelectionWidget() {
         </Box>
         <Box
           borderRadius="0 0 8px 8px"
-          border="1px #D5D9D9 solid"
+          border="1px grey.500 solid"
           padding="12px 18px 11px"
-          bgcolor="#F0F2F2">
+          bgcolor="grey.100">
           <Button
             sx={{
               color: "#0F1111",
-              bgcolor: "#FFD814",
-              ":hover": { bgcolor: "#FCD200" },
+              bgcolor: "warning.light",
+              ":hover": { bgcolor: "warning.dark" },
             }}
             onClick={handleAddressSelect}>
             use this address

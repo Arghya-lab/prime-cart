@@ -15,6 +15,7 @@ import SearchProductPage from "./Pages/SearchProductPage";
 import ProductOverviewPage from "./Pages/ProductOverviewPage";
 import CheckoutPage from "./Pages/CheckoutPage";
 import CustomerAddressFormPage from "./Pages/CustomerAddressFormPage";
+import OrderDetailsPage from "./Pages/OrderDetailsPage";
 
 function App() {
   return (
@@ -54,6 +55,14 @@ function App() {
           element={
             <RequireAuth>
               <OrdersPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/orderDetails"
+          element={
+            <RequireAuth>
+              <OrderDetailsPage />
             </RequireAuth>
           }
         />

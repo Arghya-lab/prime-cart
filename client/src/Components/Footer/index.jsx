@@ -6,7 +6,7 @@ function Footer() {
     <Box>
       <Box
         sx={{
-          background: "#37475a",
+          background: "info.light",
           color: "white",
           cursor: "pointer",
           width: "100%",
@@ -20,7 +20,7 @@ function Footer() {
         }}>
         Back to top
       </Box>
-      <Box sx={{ bgcolor: "#232f3e" }}>
+      <Box sx={{ bgcolor: "info.main" }}>
         <Box
           sx={{
             width: "100%",
@@ -63,7 +63,7 @@ function Footer() {
                     <Link
                       href={e.redirect}
                       sx={{
-                        color: "#DDD",
+                        color: "grey.500",
                         textDecoration: "none",
                         whiteSpace: "normal",
                         cursor: "pointer",
@@ -93,7 +93,7 @@ function Footer() {
           }}></Box>
         <Box sx={{ height: "68px" }}></Box>
       </Box>
-      <Box sx={{ bgcolor: "#131a22" }}>
+      <Box sx={{ bgcolor: "info.dark" }}>
         <Box
           sx={{
             display: "grid",
@@ -109,7 +109,7 @@ function Footer() {
               sx={{ width: "115px", p: "10px" }}>
               <Typography
                 sx={{
-                  color: "#ddd",
+                  color: "grey.500",
                   textAlign: "left",
                   lineHeight: "115%",
                   fontSize: "12px",
@@ -134,7 +134,7 @@ function Footer() {
             fontSize: "12px",
             padding: "10px 0 30px",
             textAlign: "center",
-            color: "#DDD",
+            color: "grey.500",
             lineHeight: "18px",
             whiteSpace: "nowrap",
             width: "auto",

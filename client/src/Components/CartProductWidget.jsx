@@ -60,7 +60,7 @@ function CartProductWidget({ id, name, imgUrl, price, quantity }) {
     <Box
       padding="12px 0 12px 12px"
       sx={{
-        borderBottom: "1px solid #DDD",
+        borderBottom: "1px solid grey.400",
         color: "#0F1111",
       }}>
       <Stack direction="row">
@@ -103,7 +103,7 @@ function CartProductWidget({ id, name, imgUrl, price, quantity }) {
           <Typography
             variant="caption"
             sx={{
-              color: "#007600",
+              color: "success.main",
               fontWeight: 600,
             }}>
             In stock
@@ -132,7 +132,7 @@ function CartProductWidget({ id, name, imgUrl, price, quantity }) {
           <Typography
             variant="subtitle2"
             sx={{
-              color: "#565959",
+              color: "grey.800",
             }}>
             Eligible for FREE Shipping
           </Typography>
@@ -140,13 +140,13 @@ function CartProductWidget({ id, name, imgUrl, price, quantity }) {
             <Typography
               component="span"
               variant="body2"
-              sx={{ color: "#565959" }}>
+              sx={{ color: "grey.800" }}>
               M.R.P.:&nbsp;
             </Typography>
             <Typography
               component="span"
               variant="body2"
-              sx={{ color: "#565959", textDecoration: "line-through" }}>
+              sx={{ color: "grey.800", textDecoration: "line-through" }}>
               {/* MRP */}
               Rs.{price.mrp}
             </Typography>
@@ -167,9 +167,9 @@ function CartProductWidget({ id, name, imgUrl, price, quantity }) {
             }}>
             <span
               style={{
-                border: "1px solid #D5D9D9",
+                border: "1px solid grey.500",
                 borderRadius: "8px",
-                backgroundColor: "#F0F2F2",
+                backgroundColor: "grey.100",
                 boxShadow: "0 2px 5px 0 rgba(213,217,217,.5)",
                 padding: "3px",
               }}>
@@ -202,9 +202,9 @@ function CartProductWidget({ id, name, imgUrl, price, quantity }) {
             <Typography
               variant="body2"
               sx={{
-                color: "#007185",
+                color: "success.dark",
                 cursor: "pointer",
-                ":hover": { color: "#C7511F", textDecoration: "underline" },
+                ":hover": { color: "secondary.main", textDecoration: "underline" },
               }}
               onClick={handleDeleteProduct}>
               Delete
@@ -213,9 +213,9 @@ function CartProductWidget({ id, name, imgUrl, price, quantity }) {
             <Typography
               variant="body2"
               sx={{
-                color: "#007185",
+                color: "success.dark",
                 cursor: "pointer",
-                ":hover": { color: "#C7511F", textDecoration: "underline" },
+                ":hover": { color: "secondary.main", textDecoration: "underline" },
               }}>
               Share
             </Typography>

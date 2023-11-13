@@ -21,7 +21,7 @@ function ProductWidget({ id, name, imgUrl, rating, ratingCount, price }) {
       sx={{
         padding: "2px 6px 6px 0",
         width: "350px",
-        bgcolor: "#f9f9f9",
+        bgcolor: "primary.light",
         color: "#0F1111",
       }}>
       <Box
@@ -83,7 +83,7 @@ function ProductWidget({ id, name, imgUrl, rating, ratingCount, price }) {
           <Typography
             variant="body1"
             sx={{
-              color: "#007185",
+              color: "success.dark",
             }}>
             {/* rating count */}
             {ratingCount}
@@ -113,7 +113,7 @@ function ProductWidget({ id, name, imgUrl, rating, ratingCount, price }) {
           <Box
             component="span"
             sx={{
-              color: "#565959",
+              color: "grey.800",
             }}>
             <Typography component="span" variant="body1">
               New Price:

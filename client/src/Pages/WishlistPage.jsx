@@ -37,8 +37,8 @@ function WishlistPage() {
         <Box marginBottom="2rem">
           <Typography
             variant="h5"
+            color="success.dark"
             sx={{
-              color: "#007185",
               fontWeight: 700,
               padding: "1rem",
               textAlign: "center",
@@ -49,12 +49,12 @@ function WishlistPage() {
             sx={{
               width: "10rem",
               height: "4px",
-              bgcolor: "#007185",
+              bgcolor: "success.dark",
               marginX: "auto",
             }}></Box>
         </Box>
         <Box
-          border="1px solid #BBBFBF"
+          border="1px solid grey.600"
           borderRadius="2px"
           sx={{
             maxWidth: "1366px",

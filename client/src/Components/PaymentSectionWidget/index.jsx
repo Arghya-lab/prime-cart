@@ -76,7 +76,7 @@ function PaymentSectionWidget() {
   return (
     <Box marginLeft="35px">
       <Box
-        border="1px solid #D5D9D9"
+        border="1px solid grey.500"
         borderRadius="8px 8px 0 0"
         padding="14px 18px">
         <Typography
@@ -84,7 +84,7 @@ function PaymentSectionWidget() {
           fontSize="18px"
           lineHeight="24px"
           fontWeight={600}
-          borderBottom="1px solid #D5D9D9"
+          borderBottom="1px solid grey.500"
           gutterBottom
           marginBottom="19px">
           Available payment methods
@@ -93,10 +93,10 @@ function PaymentSectionWidget() {
           <Box
             padding="9px"
             border={`1px solid ${
-              paymentOptionSelected === "card" ? "#FBD8B4" : "#FFF"
+              paymentOptionSelected === "card" ? "primary.dark" : "#FFF"
             }`}
             borderRadius="5px"
-            bgcolor={paymentOptionSelected === "card" ? "#FCF5EE" : "#FFF"}>
+            bgcolor={paymentOptionSelected === "card" ? "primary.main" : "#FFF"}>
             <Box paddingLeft="15px" display="flex" alignItems="center">
               <Checkbox
                 size="small"
@@ -112,11 +112,11 @@ function PaymentSectionWidget() {
                   <>
                     <Typography
                       component="span"
-                      color="#007185"
+                      color="success.dark"
                       sx={{
                         cursor: "pointer",
                         ":hover": {
-                          color: "#C7511F",
+                          color: "secondary.main",
                           textDecoration: "underline",
                         },
                       }}
@@ -140,10 +140,10 @@ function PaymentSectionWidget() {
           <Box
             padding="9px"
             border={`1px solid ${
-              paymentOptionSelected === "cod" ? "#FBD8B4" : "#FFF"
+              paymentOptionSelected === "cod" ? "primary.dark" : "#FFF"
             }`}
             borderRadius="5px"
-            bgcolor={paymentOptionSelected === "cod" ? "#FCF5EE" : "#FFF"}
+            bgcolor={paymentOptionSelected === "cod" ? "primary.main" : "#FFF"}
             onClick={() => setPaymentOptionSelected("cod")}>
             <Box paddingLeft="15px" display="flex" alignItems="center">
               <Checkbox
@@ -159,15 +159,15 @@ function PaymentSectionWidget() {
       </Box>
       <Box
         borderRadius="0 0 8px 8px"
-        border="1px #D5D9D9 solid"
+        border="1px grey.500 solid"
         padding="12px 18px 11px"
-        bgcolor="#F0F2F2">
+        bgcolor="grey.100">
         <Button
           disabled={paymentOptionSelected === "card" && !cardDetails}
           sx={{
             color: "#0F1111",
-            bgcolor: "#FFD814",
-            ":hover": { bgcolor: "#FCD200" },
+            bgcolor: "warning.light",
+            ":hover": { bgcolor: "warning.dark" },
           }}
           onClick={handlePayment}>
           Confirm Order

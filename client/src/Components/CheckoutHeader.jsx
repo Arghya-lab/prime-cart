@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 
 function CheckoutHeader() {
   return (
-    <Box borderBottom="1px solid #DDD" sx={{backgroundImage: "linear-gradient(to bottom, #fff, #f2f2f2)"}}>
+    <Box borderBottom="1px solid grey.400" sx={{backgroundImage: "linear-gradient(to bottom, #fff, #f2f2f2)"}}>
       <Box
         height="60px"
         
@@ -34,7 +34,7 @@ function CheckoutHeader() {
           display="flex"
           justifyContent="center"
           alignItems="center"
-          color="#999999"
+          color="grey.700"
           sx={{
             paddingLeft: "14px",
             overflow: "visible",

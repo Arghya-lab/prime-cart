@@ -161,10 +161,10 @@ function ProductOverviewPage() {
             <Typography
               variant="body1"
               sx={{
-                color: "#007185",
+                color: "success.dark",
                 ":hover": {
                   cursor: "pointer",
-                  color: "#C7511F",
+                  color: "secondary.main",
                   textDecoration: "underline",
                 },
               }}>
@@ -190,10 +190,10 @@ function ProductOverviewPage() {
                 variant="body1"
                 sx={{
                   marginLeft: "1rem",
-                  color: "#007185",
+                  color: "success.dark",
                   ":hover": {
                     cursor: "pointer",
-                    color: "#C7511F",
+                    color: "secondary.main",
                     textDecoration: "underline",
                   },
                 }}>
@@ -205,7 +205,7 @@ function ProductOverviewPage() {
               sx={{
                 height: "1px",
                 width: "100%",
-                bgcolor: "#BBBFBF",
+                bgcolor: "grey.600",
                 marginTop: "5px",
                 marginBottom: "14px",
               }}></Box>
@@ -213,7 +213,7 @@ function ProductOverviewPage() {
               variant="body2"
               sx={{
                 color: "white",
-                backgroundColor: "#CC0C39",
+                backgroundColor: "error.light",
                 padding: "4px 8px 4px 8px",
                 borderRadius: "4px",
                 display: "inline-block",
@@ -227,7 +227,7 @@ function ProductOverviewPage() {
                 component="span"
                 variant="h5"
                 sx={{
-                  color: "#CC0C39",
+                  color: "error.light",
                 }}>
                 {/* discount % */}
                 {(
@@ -255,7 +255,7 @@ function ProductOverviewPage() {
             </Box>
             <Box
               sx={{
-                color: "#565959",
+                color: "grey.800",
               }}>
               <Typography component="span" variant="body2">
                 M.R.P.:
@@ -275,7 +275,7 @@ function ProductOverviewPage() {
               sx={{
                 height: "1px",
                 width: "100%",
-                bgcolor: "#BBBFBF",
+                bgcolor: "grey.600",
                 marginTop: "5px",
                 marginBottom: "14px",
               }}></Box>
@@ -295,7 +295,7 @@ function ProductOverviewPage() {
                 <Typography
                   variant="body2"
                   sx={{
-                    color: "#007185",
+                    color: "success.dark",
                   }}>
                   Free Delivery
                 </Typography>
@@ -310,7 +310,7 @@ function ProductOverviewPage() {
                 <Typography
                   variant="body2"
                   sx={{
-                    color: "#007185",
+                    color: "success.dark",
                   }}>
                   Pay on Delivery
                 </Typography>
@@ -325,7 +325,7 @@ function ProductOverviewPage() {
                 <Typography
                   variant="body2"
                   sx={{
-                    color: "#007185",
+                    color: "success.dark",
                   }}>
                   Prime Delivered
                 </Typography>
@@ -335,7 +335,7 @@ function ProductOverviewPage() {
               sx={{
                 height: "1px",
                 width: "100%",
-                bgcolor: "#BBBFBF",
+                bgcolor: "grey.600",
                 marginTop: "5px",
                 marginBottom: "14px",
               }}></Box>
@@ -344,14 +344,14 @@ function ProductOverviewPage() {
               sx={{
                 height: "1px",
                 width: "100%",
-                bgcolor: "#BBBFBF",
+                bgcolor: "grey.600",
                 marginTop: "5px",
                 marginBottom: "14px",
               }}></Box> */}
             <Typography
               variant="h6"
               sx={{
-                color: "#007185",
+                color: "success.dark",
               }}>
               Highlights
             </Typography>
@@ -366,27 +366,27 @@ function ProductOverviewPage() {
               sx={{
                 height: "1px",
                 width: "100%",
-                bgcolor: "#BBBFBF",
+                bgcolor: "grey.600",
                 marginTop: "5px",
                 marginBottom: "14px",
               }}></Box>
             <Typography
               variant="h6"
               sx={{
-                color: "#007185",
+                color: "success.dark",
               }}>
               Product Description
             </Typography>
             <Typography variant="body2">{data?.description}</Typography>
             <Box
               sx={{
-                border: "1px solid #d5d9d9",
+                border: "1px solid grey.500",
                 borderRadius: "8px",
                 padding: "14px 18px",
                 marginY: "20px",
               }}>
               <Box>
-                <Typography component="span" sx={{ color: "#007185" }}>
+                <Typography component="span" sx={{ color: "success.dark" }}>
                   FREE delivery
                 </Typography>
                 &nbsp;
@@ -402,7 +402,7 @@ function ProductOverviewPage() {
                   Tomorrow, 3 November
                 </Typography>
                 <Typography component="span">. Order within</Typography>&nbsp;
-                <Typography component="span" sx={{ color: "#007600" }}>
+                <Typography component="span" sx={{ color: "success.main" }}>
                   4 hrs 34 mins.
                 </Typography>
               </Box>
@@ -416,16 +416,16 @@ function ProductOverviewPage() {
                 <Typography
                   variant="body2"
                   sx={{
-                    color: "#007185",
+                    color: "success.dark",
                     ":hover": {
                       cursor: "pointer",
-                      color: "#C7511F",
+                      color: "secondary.main",
                     },
                   }}>
                   Deliver to Arghya - Koala 718951‌
                 </Typography>
               </Box>
-              <Typography component="p" variant="h6" sx={{ color: "#007600" }}>
+              <Typography component="p" variant="h6" sx={{ color: "success.main" }}>
                 In Stock
               </Typography>
               <Typography variant="body2">
@@ -433,10 +433,10 @@ function ProductOverviewPage() {
                 <Typography
                   component="span"
                   sx={{
-                    color: "#007185",
+                    color: "success.dark",
                     ":hover": {
                       cursor: "pointer",
-                      color: "#C7511F",
+                      color: "secondary.main",
                       textDecoration: "underline",
                     },
                   }}>
@@ -446,10 +446,10 @@ function ProductOverviewPage() {
                 <Typography
                   component="span"
                   sx={{
-                    color: "#007185",
+                    color: "success.dark",
                     ":hover": {
                       cursor: "pointer",
-                      color: "#C7511F",
+                      color: "secondary.main",
                       textDecoration: "underline",
                     },
                   }}>
@@ -467,10 +467,10 @@ function ProductOverviewPage() {
                   <Button
                     variant="contained"
                     sx={{
-                      bgcolor: "#FFD814",
+                      bgcolor: "warning.light",
                       color: "#0F1111",
                       width: "200px",
-                      ":hover": { bgcolor: "#FFD018" },
+                      ":hover": { bgcolor: "warning.main" },
                     }}
                     onClick={handleAddToCart}>
                     Add to Cart
@@ -481,7 +481,7 @@ function ProductOverviewPage() {
                       bgcolor: "#FFA41C",
                       color: "#0F1111",
                       width: "200px",
-                      ":hover": { bgcolor: "#FFAA1D" },
+                      ":hover": { bgcolor: "secondary.light" },
                     }}>
                     Buy Now
                   </Button>

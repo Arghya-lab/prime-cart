@@ -66,15 +66,15 @@ function CardPaymentForm({ open, handleClosePayWithCards, setCardDetails }) {
           transform: "translate(-50%, -50%)",
           width: 700,
           bgcolor: "background.paper",
-          border: "1px solid #D5D9D9",
+          border: "1px solid grey.500",
           borderRadius: "8px",
           boxShadow: 24,
         }}>
         <Box
           sx={{
-            borderBottom: "1px solid #D5D9D9",
+            borderBottom: "1px solid grey.500",
             borderRadius: "8px 8px 0 0",
-            backgroundColor: "#F0F2F2",
+            backgroundColor: "grey.100",
             padding: "16px 24px",
           }}>
           <Typography id="modal-modal-title" fontWeight={600}>
@@ -146,9 +146,9 @@ function CardPaymentForm({ open, handleClosePayWithCards, setCardDetails }) {
         </Box>
         <Box
           sx={{
-            borderTop: "1px solid #D5D9D9",
+            borderTop: "1px solid grey.500",
             borderRadius: "0 0 8px 8px",
-            backgroundColor: "#F0F2F2",
+            backgroundColor: "grey.100",
             padding: "10px 16px",
             display: "flex",
             justifyContent: "flex-end",
@@ -159,8 +159,8 @@ function CardPaymentForm({ open, handleClosePayWithCards, setCardDetails }) {
             sx={{
               color: "#0F1111",
               bgcolor: "#FFF",
-              border: "1px solid #D5D9D9",
-              ":hover": { bgcolor: "#F0F0F0" },
+              border: "1px solid grey.500",
+              ":hover": { bgcolor: "grey.50" },
             }}
             onClick={()=>{
               handleClosePayWithCards();
@@ -173,8 +173,8 @@ function CardPaymentForm({ open, handleClosePayWithCards, setCardDetails }) {
             type="submit"
             sx={{
               color: "#0F1111",
-              bgcolor: "#FFD814",
-              ":hover": { bgcolor: "#FCD200" },
+              bgcolor: "warning.light",
+              ":hover": { bgcolor: "warning.dark" },
             }}
             onClick={formik.handleSubmit}>
             Enter card details

@@ -37,7 +37,7 @@ function SearchProductPage() {
         <Box margin="1rem">
           <Box
             sx={{
-              border: "1px solid #d5d9d9",
+              border: "1px solid grey.500",
               borderRadius: "8px",
               padding: "14px 18px",
               marginY: "20px",
@@ -54,10 +54,10 @@ function SearchProductPage() {
             &nbsp;
             <Typography
               component="span"
+              color="secondary.dark"
               sx={{
                 fontSize: "14px",
                 lineHeight: "20px",
-                color: "#c45500",
                 fontWeight: "600",
               }}>
               Electronics

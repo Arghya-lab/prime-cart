@@ -25,7 +25,7 @@ const properties = {
         width: "5rem",
         marginTop: "50px",
         marginBottom: "350px",
-        ":hover": { border: "2px solid #007185", borderRadius: "6px" },
+        ":hover": { border: "2px solid success.dark", borderRadius: "6px" },
       }}>
       <ArrowBackIos fontSize="large" />
     </Button>
@@ -41,7 +41,7 @@ const properties = {
         width: "5rem",
         marginTop: "50px",
         marginBottom: "350px",
-        ":hover": { border: "2px solid #007185", borderRadius: "6px" },
+        ":hover": { border: "2px solid success.dark", borderRadius: "6px" },
       }}>
       <ArrowForwardIos fontSize="large" />
     </Button>

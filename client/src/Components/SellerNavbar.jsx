@@ -118,7 +118,7 @@ function SellerNavbar() {
                 width: "100%",
                 height: "48px",
                 padding: "8px 16px",
-                ":hover": { bgcolor: "#ddd" },
+                ":hover": { bgcolor: "grey.400" },
               }}>
               <Link style={{ textDecoration: "none" }} to="/profile">
                 <Box
@@ -138,7 +138,7 @@ function SellerNavbar() {
                 width: "100%",
                 height: "48px",
                 padding: "8px 16px",
-                ":hover": { bgcolor: "#ddd" },
+                ":hover": { bgcolor: "grey.400" },
               }}>
               <Box
                 sx={{

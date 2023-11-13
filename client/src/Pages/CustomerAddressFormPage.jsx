@@ -168,8 +168,8 @@ function CustomerAddressFormPage({ pageType }) {
             paddingY="16px"
             display="flex"
             justifyContent="space-between"
-            borderBottom="1px solid #D5D9D9"
-            bgcolor="#F0F2F2"
+            borderBottom="1px solid grey.500"
+            bgcolor="grey.100"
             borderRadius="8px 8px 0 0">
             <Typography fontWeight={600}>
               Enter a new delivery address
@@ -320,14 +320,14 @@ function CustomerAddressFormPage({ pageType }) {
             paddingY="16px"
             display="flex"
             justifyContent="space-between"
-            borderTop="1px solid #D5D9D9"
-            bgcolor="#F0F2F2"
+            borderTop="1px solid grey.500"
+            bgcolor="grey.100"
             borderRadius="0 0 8px 8px">
             <Button
               sx={{
                 color: "#0F1111",
-                bgcolor: "#FFD814",
-                ":hover": { bgcolor: "#FCD200" },
+                bgcolor: "warning.light",
+                ":hover": { bgcolor: "warning.dark" },
               }}
               type="submit"
               onClick={formik.handleSubmit}>
