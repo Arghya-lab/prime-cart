@@ -5,8 +5,8 @@ function Footer() {
   return (
     <Box>
       <Box
+      bgcolor="info.light"
         sx={{
-          background: "info.light",
           color: "white",
           cursor: "pointer",
           width: "100%",

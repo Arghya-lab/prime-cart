@@ -14,7 +14,7 @@ function OrderProductWidget({
   const navigate = useNavigate()
 
   const handleShowOrderDetail = () => {
-    console.log("order detail show");
+    navigate(`/orderDetails/${orderId}`)
   }
   const handleShowProduct = () => {
     navigate(`/product/${productId}`)

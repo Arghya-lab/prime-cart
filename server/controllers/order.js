@@ -1,5 +1,7 @@
 const Order = require("../models/Order");
 const Product = require("../models/Product");
+const Payment = require("../models/Payment");
+const Address = require("../models/Address");
 
 const createOrder = async (req, res) => {
   try {
@@ -45,7 +47,7 @@ const getAllOrder = async (req, res) => {
           quantity: info.quantity,
           totalPrice: info.totalPrice,
           orderPlacedTime: info.createdAt,
-        }
+        };
       })
     );
     res.status(201).json({ success: true, data: orders });
@@ -53,6 +55,46 @@ const getAllOrder = async (req, res) => {
     res.status(500).json({
       success: false,
       error: "Error occurred while fetching orders.",
+    });
+  }
+};
+
+const getOrderDetails = async (req, res) => {
+  try {
+    const { customerId } = req.customer;
+    const { orderId } = req.params;
+    const orderInfo = await Order.findById(orderId);
+    if (customerId !== orderInfo.customerId.toString()) {
+      return res
+        .status(401)
+        .json({
+          success: false,
+          error: "Please authenticate using a valid token",
+        });
+    }
+    const paymentInfo = await Payment.findOne({_id: orderInfo.paymentId, customerId })
+    const shippingAddressInfo = await Address.findOne({_id: orderInfo.shippingAddressId, customerId }).select("fullName pinCode landmark area city state")
+    const productDetails = await Product.findById(orderInfo.productId);
+    res.status(201).json({
+      success: true,
+      data: {
+        _id: orderInfo._id,
+        productId: orderInfo.productId,
+        name: productDetails.name,
+        imgUrl: productDetails.imgUrls[0],
+        quantity: orderInfo.quantity,
+        price: orderInfo.totalPrice,
+        //add delivery charges
+        paymentType: paymentInfo.type,
+        shippingAddress: shippingAddressInfo,
+        orderPlacedTime: orderInfo.createdAt,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      error: "Failed to fetch order detail.",
     });
   }
 };
@@ -70,5 +112,6 @@ const CancelOrder = async (req, res) => {
 module.exports = {
   createOrder,
   getAllOrder,
+  getOrderDetails,
   CancelOrder,
 };

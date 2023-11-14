@@ -59,7 +59,7 @@ function App() {
           }
         />
         <Route
-          path="/orderDetails"
+          path="/orderDetails/:orderId"
           element={
             <RequireAuth>
               <OrderDetailsPage />
