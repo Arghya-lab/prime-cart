@@ -98,15 +98,15 @@ function FilterWidget() {
 
   return (
     <Box
-      sx={{
-        borderRight: "2px solid grey.400",
-        wordBreak: "break-word",
-        width: "256px",
-        padding: "16px 16px 6px",
-        color: "#0F1111",
-        fontSize: "14px",
-        lineHeight: "20px",
-      }}>
+        borderRight= "2px solid"
+        
+        borderColor= "grey.500"
+        wordBreak= "break-word"
+        width= "256px"
+        padding= "16px 16px 6px"
+        fontSize= "14px"
+        lineHeight= "20px"
+        >
       <Box sx={{ width: "100%" }}>
         <Box
           sx={{
@@ -123,14 +123,14 @@ function FilterWidget() {
           <Box>
             {/* rating container box */}
             <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                padding: "2px",
-                border: rating === 4 ? "solid 2px grey.400" : null,
-                color: rating === 4 ? "error.dark" : null,
-                ":hover": { cursor: "pointer", color: "error.dark" },
-              }}
+                display= "flex"
+                alignItems= "center"
+                padding= "2px"
+                border= {rating === 4 ? "solid 2px" : null}
+                borderColor={rating === 4 ? "grey.400" : null}
+                color= {rating === 4 ? "error.dark" : null}
+                sx={{
+                ":hover": { cursor: "pointer", color: "error.dark" }}}
               onClick={() => {
                 setRating(4);
               }}>
@@ -141,9 +141,8 @@ function FilterWidget() {
               </Box>
               <Typography
                 component="span"
+                variant="caption"
                 sx={{
-                  fontSize: "12px",
-                  lineHeight: "16px",
                   paddingLeft: "4px",
                 }}>
                 & Up
@@ -151,14 +150,14 @@ function FilterWidget() {
             </Box>
             {/* rating container box */}
             <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                padding: "2px",
-                border: rating === 3 ? "solid 2px grey.400" : null,
-                color: rating === 3 ? "error.dark" : null,
-                ":hover": { cursor: "pointer", color: "error.dark" },
-              }}
+                display= "flex"
+                alignItems= "center"
+                padding= "2px"
+                border= {rating === 3 ? "solid 2px" : null}
+                borderColor={rating === 3 ? "grey.400" : null}
+                color= {rating === 3 ? "error.dark" : null}
+                sx={{
+                ":hover": { cursor: "pointer", color: "error.dark" }}}
               onClick={() => setRating(3)}>
               {/* single rating box */}
               <Box component="span">
@@ -167,9 +166,8 @@ function FilterWidget() {
               </Box>
               <Typography
                 component="span"
+                variant="caption"
                 sx={{
-                  fontSize: "12px",
-                  lineHeight: "16px",
                   paddingLeft: "4px",
                 }}>
                 & Up
@@ -177,14 +175,14 @@ function FilterWidget() {
             </Box>
             {/* rating container box */}
             <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                padding: "2px",
-                border: rating === 2 ? "solid 2px grey.400" : null,
-                color: rating === 2 ? "error.dark" : null,
-                ":hover": { cursor: "pointer", color: "error.dark" },
-              }}
+                display= "flex"
+                alignItems= "center"
+                padding= "2px"
+                border= {rating === 2 ? "solid 2px" : null}
+                borderColor={rating === 2 ? "grey.400" : null}
+                color= {rating === 2 ? "error.dark" : null}
+                sx={{
+                ":hover": { cursor: "pointer", color: "error.dark" }}}
               onClick={() => setRating(2)}>
               {/* single rating box */}
               <Box component="span">
@@ -193,9 +191,8 @@ function FilterWidget() {
               </Box>
               <Typography
                 component="span"
+                variant="caption"
                 sx={{
-                  fontSize: "12px",
-                  lineHeight: "16px",
                   paddingLeft: "4px",
                 }}>
                 & Up
@@ -203,14 +200,14 @@ function FilterWidget() {
             </Box>
             {/* rating container box */}
             <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                padding: "2px",
-                border: rating === 1 ? "solid 2px grey.400" : null,
-                color: rating === 1 ? "error.dark" : null,
-                ":hover": { cursor: "pointer", color: "error.dark" },
-              }}
+                display= "flex"
+                alignItems= "center"
+                padding= "2px"
+                border= {rating === 1 ? "solid 2px" : null}
+                borderColor={rating === 1 ? "grey.400" : null}
+                color= {rating === 1 ? "error.dark" : null}
+                sx={{
+                ":hover": { cursor: "pointer", color: "error.dark" }}}
               onClick={() => setRating(1)}>
               {/* single rating box */}
               <Box component="span">
@@ -219,9 +216,8 @@ function FilterWidget() {
               </Box>
               <Typography
                 component="span"
+                variant="caption"
                 sx={{
-                  fontSize: "12px",
-                  lineHeight: "16px",
                   paddingLeft: "4px",
                 }}>
                 & Up

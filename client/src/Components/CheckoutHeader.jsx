@@ -3,22 +3,21 @@ import { Box, Typography } from "@mui/material";
 
 function CheckoutHeader() {
   return (
-    <Box borderBottom="1px solid grey.400" sx={{backgroundImage: "linear-gradient(to bottom, #fff, #f2f2f2)"}}>
+    <Box
+      borderBottom="1px solid"
+      borderColor="grey.500"
+      sx={{ backgroundImage: "linear-gradient(to bottom, #fff, #f2f2f2)" }}>
       <Box
         height="60px"
-        
-        sx={{
-          maxWidth: "1150px",
-          margin: "auto",
-          paddingY: "14px",
-          width: "100%",
-          height: "100%",
-          textAlign: "center",
-          display: "flex",
-          justifyContent: "space-between",
-        }}>
+        maxWidth="1150px"
+        margin="auto"
+        paddingY="14px"
+        width="100%"
+        textAlign="center"
+        display="flex"
+        justifyContent="space-between">
         <Typography
-          variant="h4"
+          variant="h1"
           fontWeight="fontWeightBold"
           width="17.43%"
           sx={{
@@ -28,16 +27,16 @@ function CheckoutHeader() {
           }}>
           Prime Cart
         </Typography>
-        <Typography variant="h4" color="#0f1111">Checkout</Typography>
+        <Typography variant="h1">Checkout</Typography>
         <Box
           width="17.43%"
           display="flex"
           justifyContent="center"
           alignItems="center"
           color="grey.700"
+          paddingLeft="14px"
+          overflow="visible"
           sx={{
-            paddingLeft: "14px",
-            overflow: "visible",
             cursor: "pointer",
           }}>
           <Lock />

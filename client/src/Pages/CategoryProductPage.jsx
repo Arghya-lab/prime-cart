@@ -35,59 +35,35 @@ function CategoryProductPage() {
       <Stack direction="row">
         <FilterWidget />
         <Box sx={{ width: "100%", color: "#0F1111", margin: "1rem" }}>
-          <Typography
-            variant="h1"
-            sx={{
-              fontWeight: "700",
-              fontSize: "28px",
-              lineHeight: "36px",
-              paddingBottom: "4px",
-            }}>
+          <Typography variant="h1" fontWeight={700} paddingBottom="4px">
             Electronics
           </Typography>
-          <Typography
-            sx={{
-              fontSize: "14px",
-              lineHeight: "20px",
-              marginBottom: "34px",
-            }}>
+          <Typography variant="subtitle1" marginBottom="34px">
             Shop home entertainment, TVs, home audio, headphones, cameras,
             accessories and more
           </Typography>
           <Box
-            sx={{
-              border: "1px solid grey.500",
-              borderRadius: "8px",
-              padding: "14px 18px",
-              marginY: "20px",
-            }}>
-            <Typography
-              component="span"
-              sx={{
-                paddingLeft: "20px",
-                fontSize: "14px",
-                lineHeight: "20px",
-              }}>
+            border="1px solid"
+            borderRadius="8px"
+            borderColor="grey.500"
+            padding="14px 18px"
+            marginY="20px">
+            <Typography component="span" variant="subtitle1" paddingLeft="20px">
               1-12 of over 60,000 results for
             </Typography>
             &nbsp;
             <Typography
               component="span"
-              sx={{
-                fontSize: "14px",
-                lineHeight: "20px",
-                color: "#c45500",
-                fontWeight: "600",
-              }}>
+              variant="subtitle1"
+              color="secondary.dark"
+              fontWeight={600}>
               Electronics
             </Typography>
           </Box>
           <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill,minmax(320px,auto))",
-              gap: "1rem",
-            }}>
+            display="grid"
+            gridTemplateColumns="repeat(auto-fill,minmax(320px,auto))"
+            gap="1rem">
             {data &&
               data.map((info) => (
                 <ProductWidget

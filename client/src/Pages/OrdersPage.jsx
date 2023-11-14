@@ -33,7 +33,8 @@ function OrdersPage() {
         <Typography
           variant="h4"
           paddingBottom="16px"
-          borderBottom="1.5px solid grey.400">
+          borderBottom="1.5px solid"
+          borderColor= "grey.400">
           Your Orders
         </Typography>
         <Stack gap="16px" marginY="36px">

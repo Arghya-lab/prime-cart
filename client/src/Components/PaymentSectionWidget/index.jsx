@@ -19,14 +19,17 @@ function PaymentSectionWidget() {
 
   const handlePayment = async () => {
     console.log("payment Processing");
-    const paymentRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/payment`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-      body: JSON.stringify({ type: paymentOptionSelected }),
-    });
+    const paymentRes = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/payment`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify({ type: paymentOptionSelected }),
+      }
+    );
     const paymentResponse = await paymentRes.json();
     if (!paymentResponse.success) {
       console.log(paymentResponse.error);
@@ -53,14 +56,17 @@ function PaymentSectionWidget() {
         paymentId,
       };
 
-      const orderRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/orders`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-        body: JSON.stringify(values),
-      });
+      const orderRes = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/orders`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+          body: JSON.stringify(values),
+        }
+      );
       const json = await orderRes.json();
       if (json.success) {
         console.log(json.data);
@@ -76,15 +82,15 @@ function PaymentSectionWidget() {
   return (
     <Box marginLeft="35px">
       <Box
-        border="1px solid grey.500"
+        border="1px solid"
+        borderColor="grey.500"
         borderRadius="8px 8px 0 0"
         padding="14px 18px">
         <Typography
-          variant="h6"
-          fontSize="18px"
-          lineHeight="24px"
+          variant="h4"
           fontWeight={600}
-          borderBottom="1px solid grey.500"
+          borderBottom="1px solid"
+          borderColor="grey.500"
           gutterBottom
           marginBottom="19px">
           Available payment methods
@@ -96,16 +102,19 @@ function PaymentSectionWidget() {
               paymentOptionSelected === "card" ? "primary.dark" : "#FFF"
             }`}
             borderRadius="5px"
-            bgcolor={paymentOptionSelected === "card" ? "primary.main" : "#FFF"}>
+            bgcolor={
+              paymentOptionSelected === "card" ? "primary.main" : "#FFF"
+            }>
             <Box paddingLeft="15px" display="flex" alignItems="center">
               <Checkbox
                 size="small"
+                color="success"
                 disableRipple
                 checked={paymentOptionSelected === "card"}
                 onClick={() => setPaymentOptionSelected("card")}
               />
               <Box paddingLeft="10px">
-                <Typography variant="body1" fontWeight={600}>
+                <Typography variant="subtitle1" fontWeight={600}>
                   Credit or debit card
                 </Typography>
                 {paymentOptionSelected === "card" ? (
@@ -149,8 +158,10 @@ function PaymentSectionWidget() {
               <Checkbox
                 checked={paymentOptionSelected === "cod"}
                 size="small"
+                
+                color="success"
               />
-              <Typography variant="body1" fontWeight={600} paddingLeft="10px">
+              <Typography variant="subtitle1" fontWeight={600} paddingLeft="10px">
                 Cash on Delivery/Pay on Delivery
               </Typography>
             </Box>
@@ -164,11 +175,8 @@ function PaymentSectionWidget() {
         bgcolor="grey.100">
         <Button
           disabled={paymentOptionSelected === "card" && !cardDetails}
-          sx={{
-            color: "#0F1111",
-            bgcolor: "warning.light",
-            ":hover": { bgcolor: "warning.dark" },
-          }}
+          variant="contained"
+          color="warning"
           onClick={handlePayment}>
           Confirm Order
         </Button>

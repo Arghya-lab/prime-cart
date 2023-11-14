@@ -102,7 +102,7 @@ function SellerAuthPage() {
           alignItems: "center",
           gap: "2rem",
         }}>
-        <Typography textAlign="center" p="2rem" variant="h5" gutterBottom>
+        <Typography textAlign="center" p="2rem" variant="h2" gutterBottom>
           {isCreateSellerPage ? "Seller registration form" : undefined}
         </Typography>
         {isCreateSellerPage ? (
@@ -117,6 +117,7 @@ function SellerAuthPage() {
               sx={{ m: 1 }}
               variant="outlined"
               fullWidth
+              color="grey"
               id="customerSupportEmail"
               name="customerSupportEmail"
               label="customer Support Email"
@@ -136,6 +137,7 @@ function SellerAuthPage() {
               sx={{ m: 1 }}
               variant="outlined"
               fullWidth
+              color="grey"
               id="panNo"
               name="panNo"
               label="Pan No."
@@ -150,6 +152,7 @@ function SellerAuthPage() {
               sx={{ m: 1 }}
               variant="outlined"
               fullWidth
+              color="grey"
               id="location"
               name="location"
               label="Location"

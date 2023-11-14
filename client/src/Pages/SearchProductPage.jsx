@@ -36,39 +36,32 @@ function SearchProductPage() {
       {data.length !== 0 ? (
         <Box margin="1rem">
           <Box
-            sx={{
-              border: "1px solid grey.500",
-              borderRadius: "8px",
-              padding: "14px 18px",
-              marginY: "20px",
-            }}>
+            border="1px solid"
+            borderColor="grey.500"
+            borderRadius="8px"
+            padding="14px 18px"
+            marginY="20px">
             <Typography
               component="span"
+              variant="subtitle1"
               sx={{
                 paddingLeft: "20px",
-                fontSize: "14px",
-                lineHeight: "20px",
               }}>
               1-12 of over 60,000 results for
             </Typography>
             &nbsp;
             <Typography
               component="span"
+              variant="subtitle1"
               color="secondary.dark"
-              sx={{
-                fontSize: "14px",
-                lineHeight: "20px",
-                fontWeight: "600",
-              }}>
+              fontWeight={600}>
               Electronics
             </Typography>
           </Box>
           <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill,minmax(320px,auto))",
-              gap: "1rem",
-            }}>
+            display="grid"
+            gridTemplateColumns="repeat(auto-fill,minmax(320px,auto))"
+            gap="1rem">
             {data.map((info) => (
               <ProductWidget
                 key={info._id}

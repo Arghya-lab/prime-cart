@@ -30,7 +30,9 @@ function OrderProductWidget({
         display="flex"
         justifyContent="space-between"
         borderRadius="8px 8px 0 0"
-        borderBottom="1px solid grey.500"
+        borderBottom="1px solid"
+        
+        borderColor= "grey.500"
         bgcolor="grey.100">
         <Box display="flex" justifyContent="flex-start">
           <Box paddingRight="16px">

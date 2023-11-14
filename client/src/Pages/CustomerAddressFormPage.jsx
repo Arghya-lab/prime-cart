@@ -18,7 +18,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Close } from "@mui/icons-material";
 import {
   addNewAddress,
   updateAddress,
@@ -161,32 +160,28 @@ function CustomerAddressFormPage({ pageType }) {
   return (
     <>
       <Navbar />
-      <Box margin="auto" maxWidth="688px" padding="24px 16px">
+      <Box margin="2rem auto" maxWidth="688px" padding="24px 16px">
         <Paper elevation={6}>
           <Box
             padding="0 24px"
             paddingY="16px"
             display="flex"
             justifyContent="space-between"
-            borderBottom="1px solid grey.500"
+            borderBottom="1px solid"
+            borderColor="grey.500"
             bgcolor="grey.100"
             borderRadius="8px 8px 0 0">
-            <Typography fontWeight={600}>
+            <Typography variant="h4" fontWeight={600}>
               Enter a new delivery address
             </Typography>
-            <Box sx={{ cursor: "pointer" }}>
-              <Close />
-            </Box>
           </Box>
           <Box padding="16px 24px">
-            <Typography variant="h5" fontWeight={700} gutterBottom>
-              Add a new address
-            </Typography>
             <form onSubmit={formik.handleSubmit}>
               <Stack gap={2} mt="16px">
                 <TextField
                   size="small"
                   fullWidth
+                  color="grey"
                   variant="outlined"
                   id="fullName"
                   label="Full name (First and Last name)"
@@ -202,6 +197,7 @@ function CustomerAddressFormPage({ pageType }) {
                 <TextField
                   size="small"
                   fullWidth
+                  color="grey"
                   variant="outlined"
                   id="mobileNumber"
                   label="Mobile number"
@@ -220,6 +216,7 @@ function CustomerAddressFormPage({ pageType }) {
                 <TextField
                   size="small"
                   fullWidth
+                  color="grey"
                   variant="outlined"
                   id="pinCode"
                   label="Pincode"
@@ -235,6 +232,7 @@ function CustomerAddressFormPage({ pageType }) {
                 <TextField
                   size="small"
                   fullWidth
+                  color="grey"
                   variant="outlined"
                   id="landmark"
                   label="Landmark"
@@ -250,6 +248,7 @@ function CustomerAddressFormPage({ pageType }) {
                 <TextField
                   size="small"
                   fullWidth
+                  color="grey"
                   variant="outlined"
                   id="area"
                   label="Area, Street, Sector, Village"
@@ -264,6 +263,7 @@ function CustomerAddressFormPage({ pageType }) {
                   <TextField
                     size="small"
                     fullWidth
+                    color="grey"
                     variant="outlined"
                     id="city"
                     label="City"
@@ -280,10 +280,11 @@ function CustomerAddressFormPage({ pageType }) {
                     error={
                       formik.touched.state && Boolean(formik.errors.state)
                     }>
-                    <InputLabel>State</InputLabel>
+                    <InputLabel color="grey">State</InputLabel>
                     <Select
                       id="state"
                       name="state"
+                      color="grey"
                       label="State"
                       value={formik.values.state}
                       onChange={formik.handleChange}
@@ -305,6 +306,7 @@ function CustomerAddressFormPage({ pageType }) {
                   control={
                     <Checkbox
                       id="isDefault"
+                      color="success"
                       name="isDefault"
                       checked={formik.values.isDefault}
                       onChange={formik.handleChange}
@@ -316,19 +318,17 @@ function CustomerAddressFormPage({ pageType }) {
             </form>
           </Box>
           <Box
-            padding="0 24px"
+            paddingX="24px"
             paddingY="16px"
             display="flex"
             justifyContent="space-between"
-            borderTop="1px solid grey.500"
+            borderTop="1px solid"
+            borderColor="grey.500"
             bgcolor="grey.100"
             borderRadius="0 0 8px 8px">
             <Button
-              sx={{
-                color: "#0F1111",
-                bgcolor: "warning.light",
-                ":hover": { bgcolor: "warning.dark" },
-              }}
+              color="warning"
+              variant="contained"
               type="submit"
               onClick={formik.handleSubmit}>
               Use this location

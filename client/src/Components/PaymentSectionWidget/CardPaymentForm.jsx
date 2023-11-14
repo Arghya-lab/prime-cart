@@ -15,15 +15,13 @@ const validationSchema = yup.object({
     .min(3, "Must be 3 char.")
     .max(20, "Maximum 20 char is allowed.")
     .required("Full name is required."),
-  expiry: yup.string("Enter your exp date.")
-    .required("Exp date is required."),
+  expiry: yup.string("Enter your exp date.").required("Exp date is required."),
   cvc: yup
     .string("Enter your cvv/cvc number.")
     .min(3, "Must be 3 digit.")
     .max(4, "Maximum 4 digit is allowed.")
     .required("cvv/cvc is required."),
 });
-
 
 function CardPaymentForm({ open, handleClosePayWithCards, setCardDetails }) {
   const [focus, setFocus] = useState(null);
@@ -42,44 +40,38 @@ function CardPaymentForm({ open, handleClosePayWithCards, setCardDetails }) {
     onSubmit: async (values) => {
       //  start loader
       setTimeout(() => {
-        setCardDetails(values)
-        handleClosePayWithCards()
+        setCardDetails(values);
+        handleClosePayWithCards();
         //  end loader
       }, 2500);
     },
   });
 
-  const resetFormData= ()=>{
-    formik.resetForm()
-  }
+  const resetFormData = () => {
+    formik.resetForm();
+  };
 
   return (
     <Modal
-      open={open}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description">
+      open={open}>
       <Box
-        sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: 700,
-          bgcolor: "background.paper",
-          border: "1px solid grey.500",
-          borderRadius: "8px",
-          boxShadow: 24,
-        }}>
+        position="absolute"
+        top="50%"
+        left="50%"
+        width={700}
+        bgcolor="background.paper"
+        border="1px solid"
+        borderColor="grey.500"
+        borderRadius="8px"
+        boxShadow={24}
+        sx={{transform: "translate(-50%, -50%)"}}>
         <Box
-          sx={{
-            borderBottom: "1px solid grey.500",
-            borderRadius: "8px 8px 0 0",
-            backgroundColor: "grey.100",
-            padding: "16px 24px",
-          }}>
-          <Typography id="modal-modal-title" fontWeight={600}>
-            Enter card details
-          </Typography>
+          borderBottom="1px solid"
+          borderColor="grey.500"
+          borderRadius="8px 8px 0 0"
+          backgroundColor="grey.100"
+          padding="16px 24px">
+          <Typography fontWeight={600} variant="h4">Enter card details</Typography>
         </Box>
         <Box padding="16px 24px" display="flex">
           <Cards
@@ -89,7 +81,14 @@ function CardPaymentForm({ open, handleClosePayWithCards, setCardDetails }) {
             cvc={formik.values.cvc}
             focused={focus}
           />
-          <form style={{ width: "50%", display: "flex",flexDirection: "column" , gap: "8px" }} onSubmit={formik.handleSubmit}>
+          <form
+            style={{
+              width: "50%",
+              display: "flex",
+              flexDirection: "column",
+              gap: "8px",
+            }}
+            onSubmit={formik.handleSubmit}>
             <TextField
               label="Card Number"
               variant="standard"
@@ -145,26 +144,25 @@ function CardPaymentForm({ open, handleClosePayWithCards, setCardDetails }) {
           </form>
         </Box>
         <Box
-          sx={{
-            borderTop: "1px solid grey.500",
-            borderRadius: "0 0 8px 8px",
-            backgroundColor: "grey.100",
-            padding: "10px 16px",
-            display: "flex",
-            justifyContent: "flex-end",
-            gap: "8px",
-          }}>
+          borderTop="1px solid"
+          borderColor="grey.500"
+          borderRadius="0 0 8px 8px"
+          backgroundColor="grey.100"
+          padding="10px 16px"
+          display="flex"
+          justifyContent="flex-end"
+          gap="8px">
           <Button
             size="small"
             sx={{
               color: "#0F1111",
               bgcolor: "#FFF",
-              border: "1px solid grey.500",
+              border: "1px solid",
               ":hover": { bgcolor: "grey.50" },
             }}
-            onClick={()=>{
+            onClick={() => {
               handleClosePayWithCards();
-              resetFormData()
+              resetFormData();
             }}>
             Cancel
           </Button>

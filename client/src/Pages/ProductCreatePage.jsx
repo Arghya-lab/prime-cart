@@ -100,7 +100,7 @@ function ProductCreatePage() {
     <Box>
       <SellerNavbar />
       <Paper elevation={8} sx={{ m: "2rem auto", maxWidth: "768px" }}>
-        <Typography textAlign="center" p="2rem" variant="h4" gutterBottom>
+        <Typography textAlign="center" p="2rem" variant="h2" gutterBottom>
           Fill product info
         </Typography>
         <Stack
@@ -117,6 +117,7 @@ function ProductCreatePage() {
             sx={{ m: 1 }}
             variant="outlined"
             fullWidth
+            color="grey"
             id="name"
             name="name"
             label="Product name"
@@ -203,6 +204,7 @@ function ProductCreatePage() {
             sx={{ m: 1 }}
             variant="outlined"
             fullWidth
+            color="grey"
             id="stock"
             name="stock"
             label="Stock"
@@ -216,6 +218,7 @@ function ProductCreatePage() {
             sx={{ m: 1 }}
             variant="outlined"
             fullWidth
+            color="grey"
             multiline
             rows={6}
             id="description"
@@ -233,6 +236,7 @@ function ProductCreatePage() {
             sx={{ m: 1 }}
             variant="outlined"
             fullWidth
+            color="grey"
             multiline
             rows={6}
             id="highlights"

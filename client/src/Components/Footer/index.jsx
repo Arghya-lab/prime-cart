@@ -5,9 +5,8 @@ function Footer() {
   return (
     <Box>
       <Box
-      bgcolor="info.light"
+        bgcolor="info.light"
         sx={{
-          color: "white",
           cursor: "pointer",
           width: "100%",
           height: "50px",
@@ -18,9 +17,11 @@ function Footer() {
         onClick={() => {
           window.scrollTo(0, 0);
         }}>
-        Back to top
+        <Typography variant="subtitle2" color="#fff">
+          Back to top
+        </Typography>
       </Box>
-      <Box sx={{ bgcolor: "info.main" }}>
+      <Box bgcolor="info.main">
         <Box
           sx={{
             width: "100%",
@@ -41,16 +42,12 @@ function Footer() {
                 gap: "0.25rem",
               }}>
               <Typography
-                variant="subtitle2"
-                color="text.secondary"
-                sx={{
-                  fontWeight: "700",
-                  color: "#FFF",
-                  fontSize: "16px",
-                  margin: "6px 0 14px 0",
-                  whiteSpace: "nowrap",
-                  lineHeight: "120%",
-                }}>
+                variant="h5"
+                color="#fff"
+                fontWeight={700}
+                lineHeight="120%"
+                margin="6px 0 14px 0"
+                whiteSpace="nowrap">
                 {elem.menu}
               </Typography>
               <List sx={{ listStyleType: "none", padding: 0 }}>
@@ -62,8 +59,8 @@ function Footer() {
                     }}>
                     <Link
                       href={e.redirect}
+                      color="grey.500"
                       sx={{
-                        color: "grey.500",
                         textDecoration: "none",
                         whiteSpace: "normal",
                         cursor: "pointer",
@@ -85,43 +82,39 @@ function Footer() {
           ))}
         </Box>
         <Box
-          sx={{
-            borderTop: "1px solid #3a4553",
-            marginTop: "40px",
-            display: "block",
-            height: "1px",
-          }}></Box>
-        <Box sx={{ height: "68px" }}></Box>
+          borderTop="1px solid #3a4553"
+          marginTop="40px"
+          display="block"
+          height="1px"
+        />
+        <Box height="68px" />
       </Box>
       <Box sx={{ bgcolor: "info.dark" }}>
         <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(7, 1fr)",
-            maxWidth: "1000px",
-            m: "0 auto",
-            p: "1rem",
-          }}>
+          display="grid"
+          gridTemplateColumns="repeat(7, 1fr)"
+          maxWidth="1000px"
+          margin="0 auto"
+          padding="1rem">
           {topNavData.map((info, index) => (
-            <Box
-              component="span"
-              key={index}
-              sx={{ width: "115px", p: "10px" }}>
+            <Box component="span" key={index} width="115px" padding="10px">
               <Typography
+                variant="caption"
+                color="grey.500"
+                textAlign="left"
+                lineHeight="115%"
+                fontWeight="600"
                 sx={{
-                  color: "grey.500",
-                  textAlign: "left",
-                  lineHeight: "115%",
-                  fontSize: "12px",
-                  fontWeight: "600",
+                  cursor: "pointer",
                   ":hover": { textDecoration: "underline" },
                 }}>
                 {info.title}
               </Typography>
               <Typography
+                variant="subtitle2"
+                color="grey.700"
                 sx={{
-                  fontSize: "13px",
-                  color: "#999",
+                  cursor: "pointer",
                   ":hover": { textDecoration: "underline" },
                 }}>
                 {info.description}
@@ -130,15 +123,12 @@ function Footer() {
           ))}
         </Box>
         <Box
-          sx={{
-            fontSize: "12px",
-            padding: "10px 0 30px",
-            textAlign: "center",
-            color: "grey.500",
-            lineHeight: "18px",
-            whiteSpace: "nowrap",
-            width: "auto",
-          }}>
+          padding="10px 0 30px"
+          textAlign="center"
+          color="grey.500"
+          lineHeight="18px"
+          whiteSpace="nowrap"
+          width="auto">
           <List
             sx={{
               display: "flex",
@@ -157,7 +147,9 @@ function Footer() {
                 wordWrap: "break-word",
                 ":hover": { textDecoration: "underline" },
               }}>
-              <Typography variant="body2">Conditions of Use</Typography>
+              <Typography variant="caption" fontWeight={600}>
+                Conditions of Use
+              </Typography>
             </ListItem>
             <ListItem
               sx={{
@@ -168,7 +160,9 @@ function Footer() {
                 wordWrap: "break-word",
                 ":hover": { textDecoration: "underline" },
               }}>
-              <Typography variant="body2">Privacy Notice</Typography>
+              <Typography variant="caption" fontWeight={600}>
+                Privacy Notice
+              </Typography>
             </ListItem>
             <ListItem
               sx={{
@@ -179,10 +173,12 @@ function Footer() {
                 wordWrap: "break-word",
                 ":hover": { textDecoration: "underline" },
               }}>
-              <Typography variant="body2">Your Ads Privacy Choices</Typography>
+              <Typography variant="caption" fontWeight={600}>
+                Your Ads Privacy Choices
+              </Typography>
             </ListItem>
           </List>
-          <Typography variant="body2">
+          <Typography variant="caption" fontWeight={600}>
             © 2023, Prime Cart, Inc. or its affiliates
           </Typography>
         </Box>

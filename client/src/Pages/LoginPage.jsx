@@ -123,16 +123,15 @@ function LoginPage() {
         <Typography
           textAlign="center"
           p="1rem"
-          variant="h4"
-          fontSize="2.5rem"
-          fontWeight="fontWeightBold"
+          variant="h1"
+          fontWeight={600}
           gutterBottom
-          color="whitesmoke">
+          color="#fff">
           Prime Cart
         </Typography>
       </Box>
       <Paper elevation={8} sx={{ m: "2rem auto", maxWidth: "768px" }}>
-        <Typography textAlign="center" p="2rem" variant="h4" gutterBottom>
+        <Typography textAlign="center" p="2rem" variant="h1" gutterBottom>
           {isLoginPage ? "Login" : "Signup"}
         </Typography>
         <Stack
@@ -148,8 +147,8 @@ function LoginPage() {
               fullWidth
               sx={{ m: 1, width: "100%" }}>
               <TextField
-                variant="outlined"
                 fullWidth
+                color="grey"
                 id="firstName"
                 name="firstName"
                 label="First Name"
@@ -162,7 +161,7 @@ function LoginPage() {
                 helperText={formik.touched.firstName && formik.errors.firstName}
               />
               <TextField
-                variant="outlined"
+                color="grey"
                 fullWidth
                 id="lastName"
                 name="lastName"
@@ -179,7 +178,7 @@ function LoginPage() {
           )}
           <TextField
             sx={{ m: 1 }}
-            variant="outlined"
+            color="grey"
             fullWidth
             id="email"
             name="email"
@@ -192,7 +191,7 @@ function LoginPage() {
           />
           <TextField
             sx={{ m: 1 }}
-            variant="outlined"
+            color="grey"
             fullWidth
             id="password"
             name="password"

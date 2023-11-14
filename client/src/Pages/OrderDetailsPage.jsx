@@ -41,9 +41,9 @@ function OrderDetailsPage() {
     <Box>
       <Navbar />
       <Box width="920px" padding="16px" margin="auto">
-        <Typography variant="h4">Order Details</Typography>
+        <Typography variant="h1">Order Details</Typography>
         <Box paddingY="10px">
-          <Typography component="span" variant="body2">
+          <Typography component="span" variant="h6">
             Ordered on&nbsp;{data?.orderPlacedTime}
           </Typography>
           <Divider
@@ -53,7 +53,7 @@ function OrderDetailsPage() {
             variant="middle"
             sx={{ marginX: "16px" }}
           />
-          <Typography component="span" variant="body2">
+          <Typography component="span" variant="h6">
             Order#&nbsp;{data?._id}
           </Typography>
         </Box>
@@ -67,33 +67,33 @@ function OrderDetailsPage() {
           justifyContent="space-between">
           <Box>
             <Typography
-              variant="subtitle2"
+              component="p" variant="h6"
               fontWeight={600}
               paddingBottom="5px">
               Shipping Address
             </Typography>
-            <Typography variant="body2">
+            <Typography component="div" variant="h6">
               {data?.shippingAddress?.fullName}
             </Typography>
-            <Typography variant="body2">
+            <Typography component="div" variant="h6">
               {data?.shippingAddress?.landmark}
             </Typography>
-            <Typography variant="body2">
+            <Typography component="div" variant="h6">
               {data?.shippingAddress?.landmark}
             </Typography>
-            <Typography variant="body2">
+            <Typography component="div" variant="h6">
               {data?.shippingAddress?.city.toUpperCase()},&nbsp;
               {data?.shippingAddress?.pinCode}
             </Typography>
-            <Typography variant="body2">
+            <Typography component="div" variant="h6">
               {data?.shippingAddress?.state.toUpperCase()}
             </Typography>
           </Box>
           <Box>
-            <Typography variant="subtitle2" fontWeight={600}>
+            <Typography component="p" variant="h6" fontWeight={600}>
               Payment Methods
             </Typography>
-            <Typography variant="body2">
+            <Typography component="div" variant="h6">
               {data?.paymentType === "cod"
                 ? "Pay on delivery"
                 : "Online Payment"}
@@ -101,24 +101,24 @@ function OrderDetailsPage() {
           </Box>
           <Box width="30%">
             <Typography
-              variant="subtitle2"
+              component="p" variant="h6"
               fontWeight={600}
               paddingBottom="5px">
               Order Summary
             </Typography>
             <Box display="flex" justifyContent="space-between">
-              <Typography variant="body2">Item(s) Subtotal:</Typography>
-              <Typography variant="body2">379.00</Typography>
+              <Typography component="div" variant="h6">Item(s) Subtotal:</Typography>
+              <Typography component="div" variant="h6">379.00</Typography>
             </Box>
             <Box display="flex" justifyContent="space-between">
               <Typography>Shipping:</Typography>
-              <Typography variant="body2">40.00</Typography>
+              <Typography component="div" variant="h6">40.00</Typography>
             </Box>
             <Box display="flex" justifyContent="space-between">
-              <Typography variant="subtitle2" fontWeight={600}>
+              <Typography component="p" variant="h6" fontWeight={600}>
                 Total:
               </Typography>
-              <Typography variant="subtitle2" fontWeight={600}>
+              <Typography component="p" variant="h6" fontWeight={600}>
                 {data?.price}
               </Typography>
             </Box>
@@ -148,7 +148,7 @@ function OrderDetailsPage() {
                   maxWidth: "448px",
                 }}>
                 <Typography
-                  variant="body1"
+                  variant="h5"
                   color="success.dark"
                   sx={{
                     cursor: "pointer",
@@ -161,10 +161,10 @@ function OrderDetailsPage() {
                   {/* name */}
                   {data?.name}
                 </Typography>
-                <Typography variant="body2" color="error" marginTop="8px">
+                <Typography component="div" variant="h6" color="error" marginTop="8px">
                   Rs.&nbsp;{data?.price}
                 </Typography>
-                <Typography variant="body2" marginTop="8px">
+                <Typography component="div" variant="h6" marginTop="8px">
                   Qty.&nbsp;{data?.quantity}
                 </Typography>
               </Box>

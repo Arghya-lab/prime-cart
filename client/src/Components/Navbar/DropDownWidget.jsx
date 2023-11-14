@@ -41,11 +41,10 @@ function DropDownWidget({ isDropdownOpen }) {
         }}>
         <Link style={{ textDecoration: "none" }} to="/profile">
           <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              color: "#222",
-            }}>
+              display= "flex"
+              alignItems= "center"
+              color= "grey.1000"
+              >
             <AccountCircle />
             <Typography
               px={1}
@@ -68,11 +67,9 @@ function DropDownWidget({ isDropdownOpen }) {
         }}>
         <Link style={{ textDecoration: "none" }} to="/wishlist">
           <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              color: "#222",
-            }}>
+              display= "flex"
+              alignItems= "center"
+              color= "grey.1000">
             <Favorite />
             <Typography
               px={1}
@@ -94,12 +91,10 @@ function DropDownWidget({ isDropdownOpen }) {
           padding: "8px 16px",
         }}>
         <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            color: "#222",
-            cursor: "pointer",
-          }}
+            display= "flex"
+            alignItems= "center"
+            color= "grey.1000"
+            cursor= "pointer"
           onClick={handleLogout}>
           <Logout />
           <Typography
@@ -119,12 +114,10 @@ function DropDownWidget({ isDropdownOpen }) {
         }}>
         {isSeller ? (
           <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              color: "#222",
-              cursor: "pointer",
-            }}
+              display= "flex"
+              alignItems= "center"
+              color= "grey.1000"
+              cursor= "pointer"
             onClick={() => navigate("/seller")}>
             <Storefront />
             <Typography
@@ -140,12 +133,10 @@ function DropDownWidget({ isDropdownOpen }) {
           </Box>
         ) : (
           <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              color: "#222",
-              cursor: "pointer",
-            }}
+              display= "flex"
+              alignItems= "center"
+              color= "grey.1000"
+              cursor= "pointer"
             onClick={() => navigate("/sellerAuth")}>
             <Storefront />
             <Typography

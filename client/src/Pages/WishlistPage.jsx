@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import Navbar from "../Components/Navbar";
-import WishListProductWidget from "../Components/wishListProductWidget";
+import WishListProductWidget from "../Components/WishListProductWidget";
 import { useDispatch, useSelector } from "react-redux";
 import { setWishListProducts } from "../features/product/productSlice";
 
@@ -36,30 +36,27 @@ function WishlistPage() {
       <Box marginY="15px" marginX="30px">
         <Box marginBottom="2rem">
           <Typography
-            variant="h5"
+            variant="h2"
             color="success.dark"
-            sx={{
-              fontWeight: 700,
-              padding: "1rem",
-              textAlign: "center",
-            }}>
+              fontWeight= {700}
+              padding= "1rem"
+              textAlign= "center"
+           >
             Wishlist
           </Typography>
           <Box
-            sx={{
-              width: "10rem",
-              height: "4px",
-              bgcolor: "success.dark",
-              marginX: "auto",
-            }}></Box>
+              width= "10rem"
+              height= "4px"
+              bgcolor= "success.dark"
+              marginX= "auto"
+            />
         </Box>
         <Box
           border="1px solid grey.600"
           borderRadius="2px"
-          sx={{
-            maxWidth: "1366px",
-            padding: "14px 18px",
-          }}>
+            maxWidth= "1366px"
+            padding= "14px 18px"
+          >
           {data &&
             data.map((info) => (
               <WishListProductWidget

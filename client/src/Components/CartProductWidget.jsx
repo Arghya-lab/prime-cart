@@ -59,10 +59,9 @@ function CartProductWidget({ id, name, imgUrl, price, quantity }) {
   return (
     <Box
       padding="12px 0 12px 12px"
-      sx={{
-        borderBottom: "1px solid grey.400",
-        color: "#0F1111",
-      }}>
+      borderBottom="1px solid"
+      borderColor="grey.400"
+      color="#0F1111">
       <Stack direction="row">
         <Box>
           <img
@@ -75,12 +74,9 @@ function CartProductWidget({ id, name, imgUrl, price, quantity }) {
             style={{ margin: "0 12px" }}
           />
         </Box>
-        <Box
-          sx={{
-            width: "100%",
-          }}>
+        <Box width="100%">
           <Box display="flex" justifyContent="space-between">
-            <Typography variant="h6" paddingRight={2}>
+            <Typography variant="h4" paddingRight={2}>
               {/* name */}
               {name}
             </Typography>
@@ -93,86 +89,61 @@ function CartProductWidget({ id, name, imgUrl, price, quantity }) {
               </Typography>
               <Typography
                 component="span"
-                variant="h6"
+                variant="h4"
                 sx={{ fontWeight: 600 }}>
                 {/* selling price */}
                 {price.selling}
               </Typography>
             </Box>
           </Box>
-          <Typography
-            variant="caption"
-            sx={{
-              color: "success.main",
-              fontWeight: 600,
-            }}>
+          <Typography variant="body1" color="success.main">
             In stock
           </Typography>
-          <Typography
-            variant="subtitle2"
-            sx={{
-              color: "#CC0C39",
-            }}>
+          <Typography variant="subtitle2" color="#CC0C39">
             Deal
           </Typography>
           <Typography
             component="span"
             variant="caption"
-            sx={{
-              fontWeight: 600,
-              color: "white",
-              backgroundColor: "#CC0C39",
-              padding: "4px 6px 4px 6px",
-              borderRadius: "4px",
-            }}>
+            fontWeight={600}
+            color="white"
+            backgroundColor="#CC0C39"
+            padding="4px 6px"
+            borderRadius="4px">
             {/* MRP-selling % */}
             {(((price.mrp - price.selling) / price.mrp) * 100).toFixed(0)}
             %&nbsp;off
           </Typography>
-          <Typography
-            variant="subtitle2"
-            sx={{
-              color: "grey.800",
-            }}>
+          <Typography variant="subtitle2" color="grey.800">
             Eligible for FREE Shipping
           </Typography>
           <Box>
-            <Typography
-              component="span"
-              variant="body2"
-              sx={{ color: "grey.800" }}>
+            <Typography component="span" variant="body2" color="grey.800">
               M.R.P.:&nbsp;
             </Typography>
             <Typography
               component="span"
               variant="body2"
-              sx={{ color: "grey.800", textDecoration: "line-through" }}>
+              color="grey.800"
+              textDecoration="line-through">
               {/* MRP */}
               Rs.{price.mrp}
             </Typography>
           </Box>
           <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              width: "fit-content",
-              borderRadius: 1,
-              "& svg": {
-                m: 1.5,
-              },
-              "& hr": {
-                mx: 0.5,
-              },
-              gap: "8px",
-            }}>
-            <span
-              style={{
-                border: "1px solid grey.500",
-                borderRadius: "8px",
-                backgroundColor: "grey.100",
-                boxShadow: "0 2px 5px 0 rgba(213,217,217,.5)",
-                padding: "3px",
-              }}>
+            display="flex"
+            alignItems="center"
+            width="fit-content"
+            borderRadius="1px"
+            gap="8px">
+            <Box
+              component="span"
+              border="1px solid"
+              borderRadius="8px"
+              borderColor="grey.500"
+              backgroundColor="grey.100"
+              boxShadow="0 2px 5px 0 rgba(213,217,217,.5)"
+              padding="3px">
               <span>Qty:</span>
               <select
                 style={{
@@ -197,14 +168,17 @@ function CartProductWidget({ id, name, imgUrl, price, quantity }) {
                 <option value={9}>9</option>
                 <option value={10}>10</option>
               </select>
-            </span>
+            </Box>
             <Divider orientation="vertical" variant="middle" flexItem />
             <Typography
               variant="body2"
+              color="success.dark"
+              cursor="pointer"
               sx={{
-                color: "success.dark",
-                cursor: "pointer",
-                ":hover": { color: "secondary.main", textDecoration: "underline" },
+                ":hover": {
+                  color: "secondary.main",
+                  textDecoration: "underline",
+                },
               }}
               onClick={handleDeleteProduct}>
               Delete
@@ -212,10 +186,13 @@ function CartProductWidget({ id, name, imgUrl, price, quantity }) {
             <Divider orientation="vertical" variant="middle" flexItem />
             <Typography
               variant="body2"
+              color="success.dark"
+              cursor="pointer"
               sx={{
-                color: "success.dark",
-                cursor: "pointer",
-                ":hover": { color: "secondary.main", textDecoration: "underline" },
+                ":hover": {
+                  color: "secondary.main",
+                  textDecoration: "underline",
+                },
               }}>
               Share
             </Typography>

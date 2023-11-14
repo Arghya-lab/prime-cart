@@ -17,7 +17,11 @@ function PreviewItemSectionWidget() {
 
   return (
     <Box marginLeft="35px">
-      <Box border="1px solid grey.500" borderRadius="8px" padding="14px 18px">
+      <Box
+        border="1px solid"
+        borderColor="grey.500"
+        borderRadius="8px"
+        padding="14px 18px">
         <Box>
           {/* use products.map */}
           {products.map((product) => (
@@ -77,7 +81,8 @@ function PreviewItemSectionWidget() {
                   </Box>
                   <Box
                     component="span"
-                    border="1px solid grey.500"
+                    border="1px solid"
+                    borderColor="grey.500"
                     borderRadius="6px"
                     boxShadow="0 2px 5px 0 rgba(213,217,217,.5)"
                     padding="2px 5px">
@@ -93,14 +98,14 @@ function PreviewItemSectionWidget() {
       </Box>
       <Box
         marginTop="16px"
-        border="1px solid grey.500"
+        border="1px solid"
+        borderColor="grey.500"
         borderRadius="8px"
         padding="14px 18px"
         display="flex">
         <Box width="60%" paddingRight="20px">
           <Button
             sx={{
-              color: "#0F1111",
               bgcolor: "warning.light",
               ":hover": { bgcolor: "warning.dark" },
             }}

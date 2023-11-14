@@ -14,9 +14,8 @@ import AddressSelectionWidget from "../Components/AddressSelectionWidget";
 import PaymentSectionWidget from "../Components/PaymentSectionWidget";
 import PreviewItemSectionWidget from "../Components/PreviewItemSectionWidget";
 
-
 function CheckoutPage() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const expendedCheckoutAccordion = useSelector(
     (state) => state.additionalInfo.expendedCheckoutAccordion
@@ -26,10 +25,9 @@ function CheckoutPage() {
   );
   useEffect(() => {
     if (totalProductsPrice === 0) {
-      navigate("/cart")
+      navigate("/cart");
     }
-  }, [])
-  
+  }, []);
 
   return (
     <Box>
@@ -41,12 +39,9 @@ function CheckoutPage() {
               elevation={0}
               disableGutters
               expanded={expendedCheckoutAccordion === "address"}>
-              <AccordionSummary
-                expandIcon={<ExpandMore />}
-                aria-controls="panel1bh-content"
-                id="panel1bh-header">
+              <AccordionSummary expandIcon={<ExpandMore />}>
                 <Typography
-                  variant="h6"
+                  variant="h4"
                   fontWeight={600}
                   color={
                     expendedCheckoutAccordion === "address"
@@ -67,12 +62,9 @@ function CheckoutPage() {
               elevation={0}
               disableGutters
               expanded={expendedCheckoutAccordion === "payment"}>
-              <AccordionSummary
-                expandIcon={<ExpandMore />}
-                aria-controls="panel2bh-content"
-                id="panel2bh-header">
+              <AccordionSummary expandIcon={<ExpandMore />}>
                 <Typography
-                  variant="h6"
+                  variant="h4"
                   fontWeight={600}
                   color={
                     expendedCheckoutAccordion === "payment"
@@ -98,7 +90,7 @@ function CheckoutPage() {
                 aria-controls="panel3bh-content"
                 id="panel3bh-header">
                 <Typography
-                  variant="h6"
+                  variant="h4"
                   fontWeight={600}
                   color={
                     expendedCheckoutAccordion === "preview"
@@ -112,15 +104,11 @@ function CheckoutPage() {
                 <PreviewItemSectionWidget />
               </AccordionDetails>
             </Accordion>
-            <Box borderTop="2px solid grey.600" marginTop={4}>
-              <Typography
-                component="p"
-                variant="caption"
-                paragraph
-                marginTop={3}>
+            <Box borderTop="2px solid" borderColor="grey.600" marginTop={4}>
+              <Typography component="p" variant="subtitle1" paragraph marginTop={3}>
                 Need help? Check our help pages or contact us
               </Typography>
-              <Typography component="p" variant="caption" paragraph>
+              <Typography component="p" variant="subtitle1" paragraph>
                 When your order is placed, we&apos;ll send you an e-mail message
                 acknowledging receipt of your order. If you choose to pay using
                 an electronic payment method (credit card, debit card or net
@@ -131,7 +119,7 @@ function CheckoutPage() {
                 (POD), you can pay using cash/card/net banking when you receive
                 your item.
               </Typography>
-              <Typography component="p" variant="caption" paragraph>
+              <Typography component="p" variant="subtitle1" paragraph>
                 Need to add more items to your order? Continue shopping on the
                 PrimeCart homepage.
               </Typography>
@@ -148,7 +136,8 @@ function CheckoutPage() {
               position="fixed"
               width="inherit"
               top="88px"
-              border="1px solid grey.500"
+              border="1px solid"
+              borderColor= "grey.500"
               borderRadius="8px"
               padding="14px 18px">
               <Typography variant="h6" fontWeight={600}>

@@ -61,9 +61,7 @@ const divStyle = {
 
 function HomePage() {
   return (
-    <Box
-      position="relative"
-      sx={{ bgcolor: "white", width: "100%", height: "100%" }}>
+    <Box position="relative" bgcolor="#fff" width="100%" height="100%">
       <Navbar />
       <Slide {...properties}>
         {slideHeroImages.map((slideHeroImage, index) => (
@@ -86,15 +84,17 @@ function HomePage() {
             "linear-gradient(to bottom, rgba(227, 230, 230, 0), rgba(227, 230, 230, 1) 25%)",
         }}>
         <Box
-        px="28px"
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: "20px",
-          }}>
+          px="28px"
+          display="grid"
+          gridTemplateColumns="repeat(4, 1fr)"
+          gap="20px">
           {categoryImgs.map((data) => (
             <Box key={data.name}>
-              <CategoryWidget url={data.url} name={data.name} value={data.value} />
+              <CategoryWidget
+                url={data.url}
+                name={data.name}
+                value={data.value}
+              />
             </Box>
           ))}
         </Box>

@@ -6,15 +6,15 @@ import {
   Rating,
   Typography,
 } from "@mui/material";
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 function ProductWidget({ id, name, imgUrl, rating, ratingCount, price }) {
-  const navigate = useNavigate()
-  
-  const handleCardClick = ()=> {
-    navigate(`/product/${id}`)
-  }
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/product/${id}`);
+  };
 
   return (
     <Card
@@ -25,18 +25,18 @@ function ProductWidget({ id, name, imgUrl, rating, ratingCount, price }) {
         color: "#0F1111",
       }}>
       <Box
-        sx={{
-          paddingTop: "100%",
-          position: "relative",
-          textAlign: "center",
-          cursor: "pointer",
-        }}
+        paddingTop="100%"
+        position="relative"
+        textAlign="center"
+        cursor="pointer"
         onClick={handleCardClick}>
         <CardMedia
           component="img"
           alt="Product Image"
           /* img url */
-          src={`${import.meta.env.VITE_IMG_BASE_URL}/assets/productImgs/${imgUrl}`}
+          src={`${
+            import.meta.env.VITE_IMG_BASE_URL
+          }/assets/productImgs/${imgUrl}`}
           sx={{
             position: "absolute",
             margin: "auto",
@@ -61,30 +61,14 @@ function ProductWidget({ id, name, imgUrl, rating, ratingCount, price }) {
           cursor: "pointer",
         }}
         onClick={handleCardClick}>
-        <Typography
-          variant="body2"
-          sx={{
-            fontSize: "15px",
-            lineHeight: "24px",
-            fontWeight: "600",
-          }}>
-            {/* name */}
-          { name }
+        <Typography variant="h6" fontWeight={600}>
+          {/* name */}
+          {name}
         </Typography>
-        <Box
-          sx={{
-            paddingTop: "4px",
-            display: "flex",
-            alignItems: "end",
-            gap: "6px",
-          }}>
-            {/* value = star count */}
+        <Box paddingTop="4px" display="flex" alignItems="end" gap="6px">
+          {/* value = star count */}
           <Rating name="read-only" value={rating} readOnly />
-          <Typography
-            variant="body1"
-            sx={{
-              color: "success.dark",
-            }}>
+          <Typography variant="body1" color="success.dark">
             {/* rating count */}
             {ratingCount}
           </Typography>
@@ -93,50 +77,35 @@ function ProductWidget({ id, name, imgUrl, rating, ratingCount, price }) {
           <Box component="span">
             <Typography
               component="span"
+              variant="subtitle1"
               sx={{
                 position: "relative",
                 top: "-0.75em",
-                fontSize: "14px",
               }}>
               ₹
             </Typography>
-            <Typography
-              component="span"
-              sx={{
-                fontSize: "28px",
-              }}>
-            {/* selling price */}
+            <Typography component="span" variant="h1">
+              {/* selling price */}
               {price.selling}
             </Typography>
           </Box>
           &nbsp;
-          <Box
-            component="span"
-            sx={{
-              color: "grey.800",
-            }}>
+          <Box component="span" color="grey.800">
             <Typography component="span" variant="body1">
               New Price:
             </Typography>
             &nbsp;
             <Typography
               component="span"
-              sx={{
-                fontSize: "13px",
-                textDecoration: "line-through",
-              }}>
-            {/* MRP */}
-              ₹{price.mrp}
+              variant="subtitle2"
+              textDecoration="line-through">
+              {/* MRP */}₹{price.mrp}
             </Typography>
             &nbsp;
-            <Typography
-              component="span"
-              variant="body1"
-              sx={{
-                fontSize: "15px",
-              }}>
-            {/* MRP-selling % */}
-              ({((price.mrp-price.selling)/price.mrp*100).toFixed(0)}% off)
+            <Typography component="span" variant="h6">
+              {/* MRP-selling % */}(
+              {(((price.mrp - price.selling) / price.mrp) * 100).toFixed(0)}%
+              off)
             </Typography>
           </Box>
         </Box>
@@ -145,11 +114,7 @@ function ProductWidget({ id, name, imgUrl, rating, ratingCount, price }) {
             paddingTop: "4px",
           }}>
           <Typography component="span">Get it By </Typography>
-          <Typography
-            component="span"
-            sx={{
-              fontWeight: "700",
-            }}>
+          <Typography component="span" fontWeight={700}>
             {/* delivery date */}
             Tuesday, 31 October
           </Typography>
@@ -161,12 +126,12 @@ function ProductWidget({ id, name, imgUrl, rating, ratingCount, price }) {
 }
 
 ProductWidget.propTypes = {
-  id : PropTypes.string.isRequired,
-  name : PropTypes.string.isRequired,
-  imgUrl : PropTypes.string.isRequired,
-  rating : PropTypes.number.isRequired,
-  ratingCount : PropTypes.number.isRequired,
-  price : PropTypes.object.isRequired,
-}
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  imgUrl: PropTypes.string.isRequired,
+  rating: PropTypes.number.isRequired,
+  ratingCount: PropTypes.number.isRequired,
+  price: PropTypes.object.isRequired,
+};
 
 export default ProductWidget;

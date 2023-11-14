@@ -46,11 +46,19 @@ function SellerNavbar() {
       justifyContent="space-between"
       px="2rem"
       py="6px">
-      <Button onClick={() => navigate("/")}>
-        <Typography variant="h4" fontWeight="fontWeightBold" color="whitesmoke">
-          Prime Cart
-        </Typography>
-      </Button>
+      <Typography
+        variant="h1"
+        fontSize={40}
+        fontWeight="fontWeightBold"
+        color="#fff"
+        padding="4px 6px"
+        cursor="pointer"
+        sx={{
+          ":hover": { border: "1px solid white", borderRadius: "2px" },
+        }}
+        onClick={() => navigate("/")}>
+        Prime Cart
+      </Typography>
       <Paper
         component="form"
         sx={{
@@ -79,12 +87,12 @@ function SellerNavbar() {
         width={450}
         justifyContent="space-between">
         <Button onClick={() => navigate("/createProduct")}>
-          <Typography variant="caption" display="block" color="whitesmoke">
+          <Typography variant="body2" display="block" color="#fff">
             Create New Product
           </Typography>
         </Button>
         <Button onClick={() => navigate("/sellerAuth")}>
-          <Typography variant="caption" display="block" color="whitesmoke">
+          <Typography variant="body2" display="block" color="#fff">
             Show my listed products
           </Typography>
         </Button>
@@ -93,15 +101,13 @@ function SellerNavbar() {
           onMouseLeave={handleHideItems}
           sx={{ position: "relative", display: "inline-block" }}>
           <Typography
-            variant="caption"
+            variant="body2"
             fontSize={16}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              padding: "6px 10px",
-              color: "whitesmoke",
-            }}>
-            Arghya{" "}
+            display="flex"
+            alignItems="center"
+            padding="6px 10px"
+            color="#FFF">
+            Arghya
             {isDropdownOpen ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
           </Typography>
           <Paper
@@ -109,7 +115,7 @@ function SellerNavbar() {
             sx={{
               p: 0,
               display: isDropdownOpen ? "block" : "none",
-              bgcolor: "whitesmoke",
+              bgcolor: "#fff",
               position: "absolute",
               minWidth: "184px",
             }}>
@@ -122,10 +128,10 @@ function SellerNavbar() {
               }}>
               <Link style={{ textDecoration: "none" }} to="/profile">
                 <Box
+                  display="flex"
+                  alignItems="center"
+                  color="grey.1000"
                   sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    color: "#222",
                     ":hover": { color: "#555" },
                   }}>
                   <AccountCircle />
@@ -141,11 +147,11 @@ function SellerNavbar() {
                 ":hover": { bgcolor: "grey.400" },
               }}>
               <Box
+                display="flex"
+                alignItems="center"
+                color="grey.1000"
+                cursor="pointer"
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  color: "#222",
-                  cursor: "pointer",
                   ":hover": { color: "#555" },
                 }}
                 onClick={handleLogout}>

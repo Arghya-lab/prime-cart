@@ -264,7 +264,7 @@ function ProductOverviewPage() {
               <Typography
                 component="span"
                 variant="body2"
-                sx={{ textDecoration: "line-through" }}>
+                textDecoration="line-through">
                 ₹{data?.price.mrp}
               </Typography>
             </Box>
@@ -272,13 +272,12 @@ function ProductOverviewPage() {
               Inclusive of all taxes
             </Typography>
             <Box
-              sx={{
-                height: "1px",
-                width: "100%",
-                bgcolor: "grey.600",
-                marginTop: "5px",
-                marginBottom: "14px",
-              }}></Box>
+              height="1px"
+              width="100%"
+              bgcolor="grey.600"
+              marginTop="5px"
+              marginBottom="14px"
+            />
             <Stack
               direction="row"
               spacing={6}
@@ -332,22 +331,20 @@ function ProductOverviewPage() {
               </Box>
             </Stack>
             <Box
-              sx={{
-                height: "1px",
-                width: "100%",
-                bgcolor: "grey.600",
-                marginTop: "5px",
-                marginBottom: "14px",
-              }}></Box>
+              height="1px"
+              width="100%"
+              bgcolor="grey.600"
+              marginTop="5px"
+              marginBottom="14px"
+            />
             {/* variant info will be here */}
             {/* <Box
-              sx={{
-                height: "1px",
-                width: "100%",
-                bgcolor: "grey.600",
-                marginTop: "5px",
-                marginBottom: "14px",
-              }}></Box> */}
+                height= "1px"
+                width= "100%"
+                bgcolor= "grey.600"
+                marginTop= "5px"
+                marginBottom= "14px"
+              /> */}
             <Typography
               variant="h6"
               sx={{
@@ -363,13 +360,12 @@ function ProductOverviewPage() {
               ))}
             </Box>
             <Box
-              sx={{
-                height: "1px",
-                width: "100%",
-                bgcolor: "grey.600",
-                marginTop: "5px",
-                marginBottom: "14px",
-              }}></Box>
+              height="1px"
+              width="100%"
+              bgcolor="grey.600"
+              marginTop="5px"
+              marginBottom="14px"
+            />
             <Typography
               variant="h6"
               sx={{
@@ -379,18 +375,17 @@ function ProductOverviewPage() {
             </Typography>
             <Typography variant="body2">{data?.description}</Typography>
             <Box
-              sx={{
-                border: "1px solid grey.500",
-                borderRadius: "8px",
-                padding: "14px 18px",
-                marginY: "20px",
-              }}>
+              border="1px solid"
+              borderColor="grey.500"
+              borderRadius="8px"
+              padding="14px 18px"
+              marginY="20px">
               <Box>
-                <Typography component="span" sx={{ color: "success.dark" }}>
+                <Typography component="span" color="success.dark">
                   FREE delivery
                 </Typography>
                 &nbsp;
-                <Typography component="span" sx={{ fontWeight: "600" }}>
+                <Typography component="span" fontWeight={600}>
                   Saturday, 4 November
                 </Typography>
                 &nbsp;
@@ -398,20 +393,15 @@ function ProductOverviewPage() {
                   on orders dispatched by Amazon over ₹499. Or fastest delivery
                 </Typography>
                 &nbsp;
-                <Typography component="span" sx={{ fontWeight: "600" }}>
+                <Typography component="span" fontWeight={600}>
                   Tomorrow, 3 November
                 </Typography>
                 <Typography component="span">. Order within</Typography>&nbsp;
-                <Typography component="span" sx={{ color: "success.main" }}>
+                <Typography component="span" color="success.main">
                   4 hrs 34 mins.
                 </Typography>
               </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  paddingY: "4px",
-                }}>
+              <Box display="flex" alignItems="center" paddingY="4px">
                 <LocationOnOutlined />
                 <Typography
                   variant="body2"
@@ -425,7 +415,7 @@ function ProductOverviewPage() {
                   Deliver to Arghya - Koala 718951‌
                 </Typography>
               </Box>
-              <Typography component="p" variant="h6" sx={{ color: "success.main" }}>
+              <Typography component="p" variant="h6" color="success.main">
                 In Stock
               </Typography>
               <Typography variant="body2">

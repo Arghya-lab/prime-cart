@@ -240,12 +240,12 @@ function CartPage() {
             </Box>
             <Button
               variant="contained"
-              sx={{
-                bgcolor: "warning.light",
-                color: "#0F1111",
-                width: "200px",
-                ":hover": { bgcolor: "warning.main" },
-              }}
+              // sx={{
+              //   bgcolor: "warning.light",
+              //   color: "#0F1111",
+              //   width: "200px",
+              //   ":hover": { bgcolor: "warning.main" },
+              // }}
               onClick={handleBuyCartProducts}>
               Proceed to Buy
             </Button>

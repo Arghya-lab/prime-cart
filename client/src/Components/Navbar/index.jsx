@@ -50,11 +50,12 @@ function Navbar() {
       py="6px"
       height="60px">
       <Typography
-        variant="h4"
+        variant="h1"
+        fontSize={40}
         fontWeight="fontWeightBold"
         color="#fff"
+        padding="4px 6px"
         sx={{
-          padding: "4px 6px",
           cursor: "pointer",
           ":hover": { border: "1px solid white", borderRadius: "2px" },
         }}
@@ -68,7 +69,7 @@ function Navbar() {
           p: "2px 4px",
           display: "flex",
           alignItems: "center",
-          width: 640,
+          width: "640px",
         }}
         onSubmit={handleSearch}>
         <InputBase
@@ -90,38 +91,25 @@ function Navbar() {
         direction="row"
         spacing={3}
         alignItems="center"
-        px={3}
+        paddingX={3}
         justifyContent="space-between">
         <Box
-          onMouseEnter={handleViewItems}
-          onMouseLeave={handleHideItems}
+          padding="4px 6px"
           sx={{
-            padding: "4px 6px",
             cursor: "pointer",
             ":hover": { border: "1px solid white", borderRadius: "2px" },
-          }}>
-          <Typography
-            sx={{
-              color: "#fff",
-              fontSize: "12px",
-              lineHeight: "14px",
-              fontWeight: "400",
-            }}>
+          }}
+          onMouseEnter={handleViewItems}
+          onMouseLeave={handleHideItems}>
+          <Typography variant="caption" color="#fff">
             Hello, sign in
           </Typography>
           <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              color: "#fff",
-            }}>
-            <Typography
-              sx={{
-                fontSize: "14px",
-                lineHeight: "15px",
-                fontWeight: "700",
-              }}>
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            color="#fff">
+            <Typography variant="subtitle1"fontWeight={600}>
               Account & Lists
             </Typography>
             {isDropdownOpen ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
@@ -135,47 +123,35 @@ function Navbar() {
             ":hover": { border: "1px solid white", borderRadius: "2px" },
           }}
           onClick={() => navigate("/orders")}>
-          <Typography
-            sx={{
-              color: "#fff",
-              fontSize: "12px",
-              lineHeight: "14px",
-              fontWeight: "400",
-            }}>
+          <Typography variant="caption" color="#fff">
             Returns
           </Typography>
           <Typography
-            sx={{
-              display: "flex",
-              color: "#fff",
-              fontSize: "14px",
-              lineHeight: "15px",
-              fontWeight: "700",
-            }}>
+            variant="subtitle1"
+            color="#fff"
+            lineHeight="15px"
+            fontWeight={600}>
             & Orders
           </Typography>
         </Box>
         <Box
+          padding="4px 6px"
           sx={{
-            padding: "4px 6px",
             cursor: "pointer",
             ":hover": { border: "1px solid white", borderRadius: "2px" },
           }}
           onClick={() => navigate("/cart")}>
           <Typography
             variant="caption"
-            display="block"
             color="#fff"
-            sx={{ display: "flex", alignItems: "center" }}>
+            display="flex"
+            alignItems="flex-end">
             <ShoppingCart fontSize="large" />
             <Typography
-              sx={{
-                display: "flex",
-                color: "#fff",
-                fontSize: "14px",
-                lineHeight: "15px",
-                fontWeight: "700",
-              }}>
+              variant="subtitle1"
+              color="#fff"
+              lineHeight="15px"
+              fontWeight={600}>
               Cart
             </Typography>
           </Typography>

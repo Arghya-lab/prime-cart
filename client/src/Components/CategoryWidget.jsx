@@ -4,25 +4,24 @@ import { Box, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 function CategoryWidget({ url, name, value }) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const fetchCategoryProducts = async()=>{
-    navigate(`/category/${value}`)
-  }
-  
+  const fetchCategoryProducts = async () => {
+    navigate(`/category/${value}`);
+  };
+
   return (
     <Paper square sx={{ width: 350, padding: "16px" }}>
       <Box width={300} mx="auto">
-        <Typography variant="h6" fontWeight="bold" gutterBottom>
+        <Typography variant="h4" fontWeight={600} gutterBottom>
           {name}
         </Typography>
         <Box
+          color="#007171"
           sx={{
-            color: "#007171",
             ":hover": { cursor: "pointer", color: "error.dark" },
           }}
-          onClick={fetchCategoryProducts}
-          >
+          onClick={fetchCategoryProducts}>
           <img
             height={310}
             width={300}
