@@ -67,7 +67,8 @@ function OrderDetailsPage() {
           justifyContent="space-between">
           <Box>
             <Typography
-              component="p" variant="h6"
+              component="p"
+              variant="h6"
               fontWeight={600}
               paddingBottom="5px">
               Shipping Address
@@ -79,7 +80,7 @@ function OrderDetailsPage() {
               {data?.shippingAddress?.landmark}
             </Typography>
             <Typography component="div" variant="h6">
-              {data?.shippingAddress?.landmark}
+              {data?.shippingAddress?.area}
             </Typography>
             <Typography component="div" variant="h6">
               {data?.shippingAddress?.city.toUpperCase()},&nbsp;
@@ -101,18 +102,25 @@ function OrderDetailsPage() {
           </Box>
           <Box width="30%">
             <Typography
-              component="p" variant="h6"
+              component="p"
+              variant="h6"
               fontWeight={600}
               paddingBottom="5px">
               Order Summary
             </Typography>
             <Box display="flex" justifyContent="space-between">
-              <Typography component="div" variant="h6">Item(s) Subtotal:</Typography>
-              <Typography component="div" variant="h6">379.00</Typography>
+              <Typography component="div" variant="h6">
+                Item(s) Subtotal:
+              </Typography>
+              <Typography component="div" variant="h6">
+                379.00
+              </Typography>
             </Box>
             <Box display="flex" justifyContent="space-between">
               <Typography>Shipping:</Typography>
-              <Typography component="div" variant="h6">40.00</Typography>
+              <Typography component="div" variant="h6">
+                40.00
+              </Typography>
             </Box>
             <Box display="flex" justifyContent="space-between">
               <Typography component="p" variant="h6" fontWeight={600}>
@@ -161,7 +169,11 @@ function OrderDetailsPage() {
                   {/* name */}
                   {data?.name}
                 </Typography>
-                <Typography component="div" variant="h6" color="error" marginTop="8px">
+                <Typography
+                  component="div"
+                  variant="h6"
+                  color="error"
+                  marginTop="8px">
                   Rs.&nbsp;{data?.price}
                 </Typography>
                 <Typography component="div" variant="h6" marginTop="8px">

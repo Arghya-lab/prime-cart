@@ -4,11 +4,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Add } from "@mui/icons-material";
 import { Box, Button, Checkbox, Typography } from "@mui/material";
 import { setDeliveryAddress } from "../../features/checkout/checkoutSlice";
+import { setExpendedCheckoutAccordion } from "../../features/additionalInfo/additionalInfoSlice";
 import {
   setAddressToUpdate,
   setAddresses,
-  setExpendedCheckoutAccordion,
-} from "../../features/additionalInfo/additionalInfoSlice";
+} from "../../features/address/addressSlice";
 
 function AddressSelectionWidget() {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ function AddressSelectionWidget() {
 
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
-  const addresses = useSelector((state) => state.additionalInfo.addresses);
+  const addresses = useSelector((state) => state.address.addresses);
 
   const [selectedAddress, setSelectedAddress] = useState(null);
 
@@ -85,7 +85,9 @@ function AddressSelectionWidget() {
                   selectedAddress === address._id ? "primary.dark" : "#fff"
                 }
                 borderRadius="5px"
-                bgcolor={selectedAddress === address._id ? "primary.main" : "#FFF"}>
+                bgcolor={
+                  selectedAddress === address._id ? "primary.main" : "#FFF"
+                }>
                 <Box paddingLeft="15px" display="flex">
                   <Checkbox
                     size="small"
@@ -159,8 +161,8 @@ function AddressSelectionWidget() {
           padding="12px 18px 11px"
           bgcolor="grey.100">
           <Button
-          color="warning"
-          variant="contained"
+            color="warning"
+            variant="contained"
             onClick={handleAddressSelect}>
             use this address
           </Button>

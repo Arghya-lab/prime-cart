@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "@reduxjs/toolkit";
 import authSlice from "../features/auth/authSlice";
 import additionalInfoSlice from "../features/additionalInfo/additionalInfoSlice";
+import addressSlice from "../features/address/addressSlice";
 import productSlice from "../features/product/productSlice";
 import cartSlice from "../features/cart/cartSlice";
 import checkoutSlice from "../features/checkout/checkoutSlice";
@@ -22,6 +23,7 @@ const loadStateFromLocalStorage = () => {
 const reducers = combineReducers({
   auth: authSlice,
   additionalInfo: additionalInfoSlice,
+  address: addressSlice,
   product: productSlice,
   cart: cartSlice,
   checkout: checkoutSlice,

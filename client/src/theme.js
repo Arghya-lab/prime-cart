@@ -86,36 +86,5 @@ export const themeSettings = {
       fontSize: "0.937rem",
       lineHeight: 1.57,
     },
-    subtitle1: {
-      fontFamily: ["Arial", "sans-serif"].join(","),
-      fontWeight: 400,
-      // fontSize: "14px",
-      fontSize: "0.875rem",
-      lineHeight: "1.25rem",
-    },
-    subtitle2: {
-      fontFamily: ["Arial", "sans-serif"].join(","),
-      fontWeight: 400,
-      fontSize: "13px",
-      lineHeight: "19px",
-    },
-    body1: {
-      fontFamily: ["Arial", "sans-serif"].join(","),
-      fontWeight: 400,
-      fontSize: "0.875rem",
-      lineHeight: "1.875rem",
-    },
-    body2: {
-      fontFamily: ["Arial", "sans-serif"].join(","),
-      fontWeight: 400,
-      fontSize: "13px",
-      lineHeight: "26px",
-    },
-    caption: {
-      fontFamily: ["Arial", "sans-serif"].join(","),
-      fontWeight: 400,
-      fontSize: "0.75rem",
-      lineHeight: "1rem",
-    },
   },
 };

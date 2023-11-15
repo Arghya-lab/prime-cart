@@ -18,10 +18,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import {
-  addNewAddress,
-  updateAddress,
-} from "../features/additionalInfo/additionalInfoSlice";
+import { addNewAddress, updateAddress } from "../features/address/addressSlice";
 import Navbar from "../Components/Navbar";
 
 const indianStates = [
@@ -95,7 +92,7 @@ function CustomerAddressFormPage({ pageType }) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   const initialEditPageFormValues = useSelector(
-    (state) => state.additionalInfo.addressToUpdate
+    (state) => state.address.addressToUpdate
   );
 
   const handleCreateAddress = async (values) => {

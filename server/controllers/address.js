@@ -38,7 +38,9 @@ const createAddress = async (req, res) => {
 const getAddresses = async (req, res) => {
   try {
     const { customerId } = req.customer;
-    const addresses = await Address.find({ customerId });
+    const addresses = await Address.find({ customerId }).sort({
+      createdAt: -1,
+    });
     res.status(201).json({ success: true, data: addresses });
   } catch (error) {
     res
@@ -55,6 +57,23 @@ const getAddressById = async (req, res) => {
     res.status(201).json({ success: true, data: address });
   } catch (error) {
     res.status(500).json({ success: false, error: "Failed to fetch address." });
+  }
+};
+const setToDefaultAddress = async (req, res) => {
+  try {
+    const { customerId } = req.customer;
+    const { addressId } = req.params;
+    await Address.updateMany({ customerId }, { isDefault: false });
+    const address = await Address.findOneAndUpdate(
+      { _id: addressId, customerId },
+      { isDefault: false },
+      { new: true }
+    );
+    res.status(201).json({ success: true, data: address });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, error: "Failed to set as default address." });
   }
 };
 
@@ -128,6 +147,7 @@ module.exports = {
   createAddress,
   getAddresses,
   getAddressById,
+  setToDefaultAddress,
   updateAddress,
   deleteAddress,
 };

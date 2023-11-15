@@ -5,7 +5,6 @@ import HomePage from "./Pages/HomePage";
 import WishlistPage from "./Pages/WishlistPage";
 import CartPage from "./Pages/CartPage";
 import OrdersPage from "./Pages/OrdersPage";
-import ProfilePage from "./Pages/ProfilePage";
 import SellerAuthPage from "./Pages/SellerAuthPage";
 import SellerPage from "./Pages/SellerPage";
 import NotfoundPage from "./Pages/NotfoundPage";
@@ -16,6 +15,7 @@ import ProductOverviewPage from "./Pages/ProductOverviewPage";
 import CheckoutPage from "./Pages/CheckoutPage";
 import CustomerAddressFormPage from "./Pages/CustomerAddressFormPage";
 import OrderDetailsPage from "./Pages/OrderDetailsPage";
+import AddressPage from "./Pages/AddressPage";
 
 function App() {
   return (
@@ -67,10 +67,10 @@ function App() {
           }
         />
         <Route
-          path="/profile"
+          path="/addresses"
           element={
             <RequireAuth>
-              <ProfilePage />
+              <AddressPage />
             </RequireAuth>
           }
         />
