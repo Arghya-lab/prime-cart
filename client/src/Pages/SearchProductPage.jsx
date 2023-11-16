@@ -1,34 +1,47 @@
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Typography } from "@mui/material";
+import { Box, Pagination, Typography } from "@mui/material";
 import Navbar from "../Components/Navbar";
 import ProductWidget from "../Components/ProductWidget";
 import Footer from "../Components/Footer";
 import { setSearchProducts } from "../features/product/productSlice";
+import { SentimentVeryDissatisfied } from "@mui/icons-material";
 
 function SearchProductPage() {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const query = decodeURIComponent(queryParams.get("query"));
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = decodeURIComponent(searchParams.get("query"));
+  const currentPage = decodeURIComponent(searchParams.get("page") || 1);
+  const productLimit = decodeURIComponent(searchParams.get("limit") || 15);
 
   const dispatch = useDispatch();
   const data = useSelector((state) => state.product.searchProducts);
 
+  const [totalResult, setTotalResult] = useState(0);
+
   useEffect(() => {
     (async () => {
       const res = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/products?query=${query}`
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/products?query=${query}&page=${currentPage}&limit=${productLimit}`
       );
       const json = await res.json();
       if (json.success) {
         console.log(json.data);
-        dispatch(setSearchProducts(json.data));
+        dispatch(setSearchProducts(json.data.products));
+        setTotalResult(json.data.totalProducts);
       } else {
         console.log(json.error);
       }
     })();
-  }, [query]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
+  const handlePageChange = (event, page) => {
+    setSearchParams({ page: page, limit: productLimit });
+    window.scrollTo(0, 0);
+  };
 
   return (
     <Box>
@@ -47,7 +60,7 @@ function SearchProductPage() {
               sx={{
                 paddingLeft: "20px",
               }}>
-              1-12 of over 60,000 results for
+              Total {totalResult} results for
             </Typography>
             &nbsp;
             <Typography
@@ -55,7 +68,7 @@ function SearchProductPage() {
               variant="subtitle1"
               color="secondary.dark"
               fontWeight={600}>
-              Electronics
+              {query}
             </Typography>
           </Box>
           <Box
@@ -74,10 +87,33 @@ function SearchProductPage() {
               />
             ))}
           </Box>
+          {totalResult / productLimit > 1 ? (
+            <Box display="flex" justifyContent="center" mt={2}>
+              <Pagination
+                count={Math.ceil(totalResult / productLimit)}
+                siblingCount={1}
+                variant="outlined"
+                shape="rounded"
+                onChange={handlePageChange}
+                sx={{
+                  margin: "1rem 0",
+                }}
+              />
+            </Box>
+          ) : null}
         </Box>
       ) : (
-        //  customize this and add styles
-        <Typography>No product available</Typography>
+        <Box
+          width="100%"
+          height="100%"
+          paddingY="15rem"
+          display="flex"
+          justifyContent="center">
+          <Typography variant="h1" gutterBottom>
+            Sorry, no product available for your request.
+          </Typography>
+          <SentimentVeryDissatisfied fontSize="large" />
+        </Box>
       )}
       <Footer />
     </Box>

@@ -49,7 +49,7 @@ const createProduct = async (req, res) => {
 const getSearchProducts = async (req, res) => {
   try {
     //  add pagination
-    const { query } = req.query;
+    const { page = 1, limit = 15, query } = req.query;
     //  $or operator allows you to specify multiple conditions and returns documents that match any of the specified conditions.
     //  $regex is a regular expression pattern match.
     //  ($options: 'i') performing a case-insensitive search
@@ -59,8 +59,9 @@ const getSearchProducts = async (req, res) => {
         { name: { $regex: query, $options: "i" } },
       ],
     };
-    const products = await Product.find(match);
-    res.status(200).json({ success: true, data: products });
+    const products = await Product.find(match).skip((page-1)*limit).limit(limit).lean(); // for read-only operations
+    const totalProducts = await Product.find(match).countDocuments()
+    res.status(200).json({ success: true, data: { products, totalProducts } });
   } catch (error) {
     res
       .status(500)
@@ -73,7 +74,14 @@ const getSearchProducts = async (req, res) => {
 const getCategoryProducts = async (req, res) => {
   try {
     const { category } = req.params;
-    const { rating = null, minPrice = null, maxPrice = null } = req.query;
+    const {
+      page = 1,
+      limit = 15,
+      rating = null,
+      minPrice = null,
+      maxPrice = null,
+    } = req.query;
+
     let query = { category };
     if (rating !== null) {
       query.rating = { $gte: rating };
@@ -87,11 +95,14 @@ const getCategoryProducts = async (req, res) => {
     if (maxPrice !== null) {
       query["price.selling"].$lte = maxPrice;
     }
-    const products = await Product.find(query).select(
-      "_id name imgUrls rating ratingCount price"
-    );
+    const products = await Product.find(query)
+      .select("_id name imgUrls rating ratingCount price")
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .lean();
+    const totalProducts = await Product.find(query).countDocuments();
 
-    res.status(200).json({ success: true, data: products });
+    res.status(200).json({ success: true, data: { products, totalProducts } });
   } catch (error) {
     res
       .status(500)

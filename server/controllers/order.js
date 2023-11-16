@@ -33,12 +33,16 @@ const createOrder = async (req, res) => {
 const getAllOrder = async (req, res) => {
   try {
     const { customerId } = req.customer;
-    const data = await Order.find({ customerId })
+    const { page = 1, limit = 5 } = req.query;
+    const orders = await Order.find({ customerId })
       .sort({ createdAt: -1 })
-      .select("productId quantity totalPrice createdAt");
-    const orders = await Promise.all(
-      data.map(async (info) => {
-        const productDetails = await Product.findById(info.productId);
+      .select("productId quantity totalPrice createdAt")
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .lean();
+    const products = await Promise.all(
+      orders.map(async (info) => {
+        const productDetails = await Product.findById(info.productId).lean();
         return {
           _id: info._id,
           productId: info.productId,
@@ -50,7 +54,8 @@ const getAllOrder = async (req, res) => {
         };
       })
     );
-    res.status(201).json({ success: true, data: orders });
+    const totalProducts = await Order.find({ customerId }).countDocuments();
+    res.status(201).json({ success: true, data: { products, totalProducts } });
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -65,15 +70,19 @@ const getOrderDetails = async (req, res) => {
     const { orderId } = req.params;
     const orderInfo = await Order.findById(orderId);
     if (customerId !== orderInfo.customerId.toString()) {
-      return res
-        .status(401)
-        .json({
-          success: false,
-          error: "Please authenticate using a valid token",
-        });
+      return res.status(401).json({
+        success: false,
+        error: "Please authenticate using a valid token",
+      });
     }
-    const paymentInfo = await Payment.findOne({_id: orderInfo.paymentId, customerId })
-    const shippingAddressInfo = await Address.findOne({_id: orderInfo.shippingAddressId, customerId }).select("fullName pinCode landmark area city state")
+    const paymentInfo = await Payment.findOne({
+      _id: orderInfo.paymentId,
+      customerId,
+    });
+    const shippingAddressInfo = await Address.findOne({
+      _id: orderInfo.shippingAddressId,
+      customerId,
+    }).select("fullName pinCode landmark area city state");
     const productDetails = await Product.findById(orderInfo.productId);
     res.status(201).json({
       success: true,

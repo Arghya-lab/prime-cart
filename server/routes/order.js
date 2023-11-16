@@ -11,7 +11,7 @@ const router = express.Router();
 
 // Create a order of a customer using : POST /api/orders  =>  require token
 router.post("/", fetchCustomer, createOrder);
-// Get all orders of a customer using : GET /api/orders  =>  require token
+// Get all orders of a customer using : GET /api/orders  =>  require token  *
 router.get("/", fetchCustomer, getAllOrder);
 // Get all order details of a order using : GET /api/orders/:orderId  =>  require token
 router.get("/:orderId", fetchCustomer, getOrderDetails);

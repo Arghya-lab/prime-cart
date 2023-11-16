@@ -107,7 +107,7 @@ function FilterWidget() {
         fontSize= "14px"
         lineHeight= "20px"
         >
-      <Box sx={{ width: "100%" }}>
+      <Box sx={{ width: "100%", marginBottom: "1rem" }}>
         <Box
           sx={{
             paddingY: "1rem",

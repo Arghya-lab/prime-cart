@@ -1,33 +1,52 @@
-import { Box, Stack, Typography } from "@mui/material";
-import FilterWidget from "../Components/FilterWidget";
-import ProductWidget from "../Components/ProductWidget";
+import { useEffect, useState } from "react";
+import { useParams, useSearchParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Box, Pagination, Stack, Typography } from "@mui/material";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import FilterWidget from "../Components/FilterWidget";
+import ProductWidget from "../Components/ProductWidget";
 import { setCategoryProducts } from "../features/product/productSlice";
+import { SentimentVeryDissatisfied } from "@mui/icons-material";
 
 function CategoryProductPage() {
   const { type } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = decodeURIComponent(searchParams.get("page") || 1);
+  const productLimit = decodeURIComponent(searchParams.get("limit") || 2);
 
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.product.categoryProducts);
+  const { categoryProducts } = useSelector((state) => state.product);
+
+  const [totalResult, setTotalResult] = useState(0);
 
   useEffect(() => {
     (async () => {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/products/category/${type}`
-      );
-      const json = await res.json();
-      if (json.success) {
-        console.log(json.data);
-        dispatch(setCategoryProducts(json.data));
-      } else {
-        console.log(json.error);
+      try {
+        const res = await fetch(
+          `${
+            import.meta.env.VITE_API_BASE_URL
+          }/products/category/${type}?page=${currentPage}&limit=${productLimit}`
+        );
+        const json = await res.json();
+        if (json.success) {
+          console.log(json.data);
+          dispatch(setCategoryProducts(json.data.products));
+          setTotalResult(json.data.totalProducts);
+        } else {
+          console.log(json.error);
+        }
+      } catch (error) {
+        console.log("clientSide error");
       }
     })();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
+  const handlePageChange = (event, page) => {
+    setSearchParams({ page: page, limit: productLimit });
+    window.scrollTo(0, 0);
+  };
 
   return (
     <>
@@ -42,41 +61,74 @@ function CategoryProductPage() {
             Shop home entertainment, TVs, home audio, headphones, cameras,
             accessories and more
           </Typography>
-          <Box
-            border="1px solid"
-            borderRadius="8px"
-            borderColor="grey.500"
-            padding="14px 18px"
-            marginY="20px">
-            <Typography component="span" variant="subtitle1" paddingLeft="20px">
-              1-12 of over 60,000 results for
-            </Typography>
-            &nbsp;
-            <Typography
-              component="span"
-              variant="subtitle1"
-              color="secondary.dark"
-              fontWeight={600}>
-              Electronics
-            </Typography>
-          </Box>
-          <Box
-            display="grid"
-            gridTemplateColumns="repeat(auto-fill,minmax(320px,auto))"
-            gap="1rem">
-            {data &&
-              data.map((info) => (
-                <ProductWidget
-                  key={info._id}
-                  id={info._id}
-                  name={info.name}
-                  imgUrl={info.imgUrls[info.imgUrls.length - 1]}
-                  rating={info.rating}
-                  ratingCount={info.ratingCount}
-                  price={info.price}
-                />
-              ))}
-          </Box>
+
+          {categoryProducts.length !== 0 ? (
+            <>
+              <Box
+                border="1px solid"
+                borderRadius="8px"
+                borderColor="grey.500"
+                padding="14px 18px"
+                marginY="20px">
+                <Typography
+                  component="span"
+                  variant="subtitle1"
+                  paddingLeft="20px">
+                  Total {totalResult} results for
+                </Typography>
+                &nbsp;
+                <Typography
+                  component="span"
+                  variant="subtitle1"
+                  color="secondary.dark"
+                  fontWeight={600}>
+                  Electronics
+                </Typography>
+              </Box>
+              <Box
+                display="grid"
+                gridTemplateColumns="repeat(auto-fill,minmax(320px,auto))"
+                gap="1rem">
+                {categoryProducts.map((info) => (
+                  <ProductWidget
+                    key={info._id}
+                    id={info._id}
+                    name={info.name}
+                    imgUrl={info.imgUrls[info.imgUrls.length - 1]}
+                    rating={info.rating}
+                    ratingCount={info.ratingCount}
+                    price={info.price}
+                  />
+                ))}
+              </Box>
+              {totalResult / productLimit > 1 ? (
+                <Box display="flex" justifyContent="center" mt={2}>
+                  <Pagination
+                    count={Math.ceil(totalResult / productLimit)}
+                    siblingCount={1}
+                    variant="outlined"
+                    shape="rounded"
+                    onChange={handlePageChange}
+                    sx={{
+                      margin: "1rem 0",
+                    }}
+                  />
+                </Box>
+              ) : null}
+            </>
+          ) : (
+            <Box
+              width="100%"
+              height="100%"
+              paddingTop="5rem"
+              display="flex"
+              justifyContent="center">
+              <Typography variant="h1" gutterBottom>
+                Sorry, no product available for your request.
+              </Typography>
+              <SentimentVeryDissatisfied fontSize="large" />
+            </Box>
+          )}
         </Box>
       </Stack>
       <Footer />

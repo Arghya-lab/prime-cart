@@ -4,6 +4,8 @@ const initialState = {
   categoryProducts: [],
   searchProducts: [],
   wishListProducts: [],
+  pageNo: 1,
+  hasMore: true,
 };
 
 export const productSlice = createSlice({
@@ -19,10 +21,21 @@ export const productSlice = createSlice({
     setWishListProducts: (state, action) => {
       state.wishListProducts = action.payload;
     },
+    setProductPageNo(state, action) {
+      state.pageNo = action.payload;
+    },
+    setHasMoreProduct(state, action) {
+      state.hasMore = action.payload;
+    },
   },
 });
 
-export const { setWishListProducts, setCategoryProducts, setSearchProducts } =
-  productSlice.actions;
+export const {
+  setWishListProducts,
+  setCategoryProducts,
+  setSearchProducts,
+  setProductPageNo,
+  setHasMoreProduct,
+} = productSlice.actions;
 
 export default productSlice.reducer;
