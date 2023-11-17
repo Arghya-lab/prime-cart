@@ -5,6 +5,7 @@ import {
   changeProductQuantity,
   removeDeletedProduct,
 } from "../features/cart/cartSlice";
+import { enqueueSnackbar } from "notistack";
 
 function CartProductWidget({ id, name, imgUrl, price, quantity }) {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ function CartProductWidget({ id, name, imgUrl, price, quantity }) {
         console.log(json.data);
         dispatch(changeProductQuantity({ productId: id, quantity: value }));
       } else {
-        console.log(json.error);
+        enqueueSnackbar(json.error, { variant: 'error' })
       }
     })();
   };
@@ -48,10 +49,10 @@ function CartProductWidget({ id, name, imgUrl, price, quantity }) {
       );
       const json = await res.json();
       if (json.success) {
-        console.log(json.data);
         dispatch(removeDeletedProduct(id));
+        enqueueSnackbar('Successfully remove from cart', { variant: 'success' })
       } else {
-        console.log(json.error);
+        enqueueSnackbar(json.error, { variant: 'error' })
       }
     })();
   };
@@ -173,8 +174,8 @@ function CartProductWidget({ id, name, imgUrl, price, quantity }) {
             <Typography
               variant="body2"
               color="success.dark"
-              cursor="pointer"
               sx={{
+                cursor: "pointer",
                 ":hover": {
                   color: "secondary.main",
                   textDecoration: "underline",
@@ -183,7 +184,7 @@ function CartProductWidget({ id, name, imgUrl, price, quantity }) {
               onClick={handleDeleteProduct}>
               Delete
             </Typography>
-            <Divider orientation="vertical" variant="middle" flexItem />
+            {/* <Divider orientation="vertical" variant="middle" flexItem />
             <Typography
               variant="body2"
               color="success.dark"
@@ -195,7 +196,7 @@ function CartProductWidget({ id, name, imgUrl, price, quantity }) {
                 },
               }}>
               Share
-            </Typography>
+            </Typography> */}
           </Box>
         </Box>
       </Stack>

@@ -20,6 +20,7 @@ import {
 } from "@mui/material";
 import { addNewAddress, updateAddress } from "../features/address/addressSlice";
 import Navbar from "../Components/Navbar";
+import { enqueueSnackbar } from "notistack";
 
 const indianStates = [
   "Andaman and Nicobar Islands",
@@ -107,10 +108,10 @@ function CustomerAddressFormPage({ pageType }) {
     const json = await res.json();
     if (json.success) {
       dispatch(addNewAddress(json.data));
-      console.log(json.data);
+      enqueueSnackbar('Successfully address added', { variant: 'success' })
       navigate(from, { replace: true });
     } else {
-      console.log(json.error);
+      enqueueSnackbar(json.error, { variant: 'error' })
     }
   };
 
@@ -129,10 +130,10 @@ function CustomerAddressFormPage({ pageType }) {
     const json = await res.json();
     if (json.success) {
       dispatch(updateAddress(json.data));
-      console.log(json.data);
+      enqueueSnackbar('Successfully address edited', { variant: 'success' })
       navigate(from, { replace: true });
     } else {
-      console.log(json.error);
+      enqueueSnackbar(json.error, { variant: 'error' })
     }
   };
 
@@ -328,7 +329,7 @@ function CustomerAddressFormPage({ pageType }) {
               variant="contained"
               type="submit"
               onClick={formik.handleSubmit}>
-              Use this location
+              {pageType === "create" ? "Add address" : "Edit address"}
             </Button>
           </Box>
         </Paper>

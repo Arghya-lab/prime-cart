@@ -7,6 +7,7 @@ import ProductWidget from "../Components/ProductWidget";
 import Footer from "../Components/Footer";
 import { setSearchProducts } from "../features/product/productSlice";
 import { SentimentVeryDissatisfied } from "@mui/icons-material";
+import { setLoadingProgress } from "../features/additionalInfo/additionalInfoSlice";
 
 function SearchProductPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -21,12 +22,15 @@ function SearchProductPage() {
 
   useEffect(() => {
     (async () => {
+      dispatch(setLoadingProgress(5));
       const res = await fetch(
         `${
           import.meta.env.VITE_API_BASE_URL
         }/products?query=${query}&page=${currentPage}&limit=${productLimit}`
       );
+      dispatch(setLoadingProgress(50));
       const json = await res.json();
+      dispatch(setLoadingProgress(85));
       if (json.success) {
         console.log(json.data);
         dispatch(setSearchProducts(json.data.products));
@@ -34,8 +38,9 @@ function SearchProductPage() {
       } else {
         console.log(json.error);
       }
+      dispatch(setLoadingProgress(100));
     })();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   const handlePageChange = (event, page) => {

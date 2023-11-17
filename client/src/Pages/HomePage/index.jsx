@@ -12,6 +12,7 @@ import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import ShovelerWidget from "../../Components/ShovelerWidget";
 import Footer from "../../Components/Footer";
+// import { enqueueSnackbar } from 'notistack'
 
 const properties = {
   prevArrow: (
@@ -106,6 +107,7 @@ function HomePage() {
           title={"Best Sellers in Books"}
           urls={bestSellersInBooks}
         />
+        {/* <button onClick={() => enqueueSnackbar('That was easy!', { variant: 'error' })}>Show snackbar</button> */}
         <Footer />
       </Stack>
     </Box>

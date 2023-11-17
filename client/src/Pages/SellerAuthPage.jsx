@@ -13,6 +13,7 @@ import Navbar from "../Components/Navbar";
 import { setSellerToken } from "../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { enqueueSnackbar } from "notistack";
 
 const initialValues = {
   customerSupportEmail: "",
@@ -47,24 +48,25 @@ function SellerAuthPage() {
     initialValues,
     validationSchema,
     onSubmit: async (values) => {
-      console.log("create Seller");
-
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/createSeller`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: Token,
-        },
-        body: JSON.stringify(values),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/auth/createSeller`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: Token,
+          },
+          body: JSON.stringify(values),
+        }
+      );
       const json = await res.json();
       if (json.success) {
-        console.log("Successfully created seller.");
         dispatch(setSellerToken(json.data));
+        enqueueSnackbar("Successfully created seller", { variant: "success" });
         // Send them back to the page they tried to visit when they were redirected to the login page. Use { replace: true } so we don't create another entry in the history stack for the login page.  This means that when they get to the protected page and click the back button, they won't end up back on the login page, which is also really nice for the user experience.
         navigate("/seller", { replace: true });
       } else {
-        console.log(json.error);
+        enqueueSnackbar(json.error, { variant: "error" });
       }
     },
   });
@@ -72,20 +74,23 @@ function SellerAuthPage() {
   const handleFetchSellerInfo = async () => {
     console.log("fetch Seller");
 
-    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/getSellerToken`, {
-      method: "GET",
-      headers: {
-        Authorization: Token,
-      },
-    });
+    const res = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/auth/getSellerToken`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: Token,
+        },
+      }
+    );
     const json = await res.json();
     if (json.success) {
-      console.log("Successfully get seller info.");
       dispatch(setSellerToken(json.data));
+      enqueueSnackbar("Successfully fetch seller info", { variant: "success" });
       // Send them back to the page they tried to visit when they were redirected to the login page. Use { replace: true } so we don't create another entry in the history stack for the login page.  This means that when they get to the protected page and click the back button, they won't end up back on the login page, which is also really nice for the user experience.
       navigate("/seller", { replace: true });
     } else {
-      console.log(json.error);
+      enqueueSnackbar(json.error, { variant: "error" });
     }
   };
 

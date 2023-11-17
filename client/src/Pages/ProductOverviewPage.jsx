@@ -12,13 +12,17 @@ import "react-slideshow-image/dist/styles.css";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import { useDispatch, useSelector } from "react-redux";
-import { setWishList } from "../features/additionalInfo/additionalInfoSlice";
+import {
+  setLoadingProgress,
+  setWishList,
+} from "../features/additionalInfo/additionalInfoSlice";
+import { enqueueSnackbar } from "notistack";
+import { setProducts } from "../features/checkout/checkoutSlice";
 
 function ProductOverviewPage() {
   const { productId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location);
 
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
@@ -29,10 +33,13 @@ function ProductOverviewPage() {
 
   useEffect(() => {
     (async () => {
+      dispatch(setLoadingProgress(5));
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/products/${productId}`
       );
+      dispatch(setLoadingProgress(50));
       const json = await res.json();
+      dispatch(setLoadingProgress(85));
       if (json.success) {
         console.log(json.data);
         setData(json.data);
@@ -40,6 +47,7 @@ function ProductOverviewPage() {
       } else {
         console.log(json.error);
       }
+      dispatch(setLoadingProgress(100));
     })();
   }, []);
 
@@ -62,11 +70,13 @@ function ProductOverviewPage() {
         );
         const json = await res.json();
         if (json.success) {
-          console.log(json.data);
           dispatch(setWishList(json.data));
+          enqueueSnackbar("Successfully added to wishlist", {
+            variant: "success",
+          });
           setIsWishListProduct(true);
         } else {
-          console.log(json.error);
+          enqueueSnackbar(json.error, { variant: "error" });
         }
       })();
     } else {
@@ -82,11 +92,13 @@ function ProductOverviewPage() {
         );
         const json = await res.json();
         if (json.success) {
-          console.log(json.data);
           dispatch(setWishList(json.data));
+          enqueueSnackbar("Successfully remove from wishlist", {
+            variant: "info",
+          });
           setIsWishListProduct(false);
         } else {
-          console.log(json.error);
+          enqueueSnackbar(json.error, { variant: "error" });
         }
       })();
     }
@@ -109,12 +121,19 @@ function ProductOverviewPage() {
       });
       const json = await res.json();
       if (json.success) {
-        console.log(json.data);
+        enqueueSnackbar("Successfully added to cart", {
+          variant: "success",
+        });
       } else {
-        console.log(json.error);
+        enqueueSnackbar(json.error, { variant: "error" });
       }
     })();
   };
+
+  const handleBuyProduct = () => {
+    dispatch(setProducts([data]));
+    navigate("/checkout");
+  }
 
   return (
     <Box>
@@ -154,7 +173,7 @@ function ProductOverviewPage() {
             sx={{
               marginX: "1rem",
             }}>
-            <Typography variant="h5">
+            <Typography variant="h3">
               {/* name */}
               {data?.name}
             </Typography>
@@ -208,7 +227,7 @@ function ProductOverviewPage() {
                 bgcolor: "grey.600",
                 marginTop: "5px",
                 marginBottom: "14px",
-              }}></Box>
+              }}/>
             <Typography
               variant="body2"
               sx={{
@@ -247,7 +266,7 @@ function ProductOverviewPage() {
                   }}>
                   ₹
                 </Typography>
-                <Typography variant="h5" component="span">
+                <Typography variant="h4" component="span" fontWeight={600}>
                   {/* selling price */}
                   {data?.price.selling}
                 </Typography>
@@ -264,7 +283,7 @@ function ProductOverviewPage() {
               <Typography
                 component="span"
                 variant="body2"
-                textDecoration="line-through">
+                sx={{textDecoration:"line-through"}}>
                 ₹{data?.price.mrp}
               </Typography>
             </Box>
@@ -456,12 +475,7 @@ function ProductOverviewPage() {
                 <Stack gap={2} alignItems="center">
                   <Button
                     variant="contained"
-                    sx={{
-                      bgcolor: "warning.light",
-                      color: "#0F1111",
-                      width: "200px",
-                      ":hover": { bgcolor: "warning.main" },
-                    }}
+                    color="warning"
                     onClick={handleAddToCart}>
                     Add to Cart
                   </Button>
@@ -472,7 +486,8 @@ function ProductOverviewPage() {
                       color: "#0F1111",
                       width: "200px",
                       ":hover": { bgcolor: "secondary.light" },
-                    }}>
+                    }}
+                    onClick={handleBuyProduct}>
                     Buy Now
                   </Button>
                 </Stack>

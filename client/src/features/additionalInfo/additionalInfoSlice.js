@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   wishList: [],
   expendedCheckoutAccordion: "address",
+  loadingProgress: 0,
 };
 
 export const additionalInfoSlice = createSlice({
@@ -15,10 +16,13 @@ export const additionalInfoSlice = createSlice({
     setExpendedCheckoutAccordion: (state, action) => {
       state.expendedCheckoutAccordion = action.payload;
     },
+    setLoadingProgress: (state, action) => {
+      state.loadingProgress = action.payload;
+    },
   },
 });
 
-export const { setWishList, setExpendedCheckoutAccordion } =
+export const { setWishList, setExpendedCheckoutAccordion, setLoadingProgress } =
   additionalInfoSlice.actions;
 
 export default additionalInfoSlice.reducer;

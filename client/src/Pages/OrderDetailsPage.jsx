@@ -3,17 +3,20 @@ import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoadingProgress } from "../features/additionalInfo/additionalInfoSlice";
 
 function OrderDetailsPage() {
   const { orderId } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
 
   const [data, setData] = useState({});
 
   useEffect(() => {
     (async () => {
+      dispatch(setLoadingProgress(5));
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/orders/${orderId}`,
         {
@@ -23,13 +26,16 @@ function OrderDetailsPage() {
           },
         }
       );
+      dispatch(setLoadingProgress(50));
       const json = await res.json();
+      dispatch(setLoadingProgress(85));
       if (json.success) {
         console.log(json.data);
         setData(json.data);
       } else {
         console.log(json.error);
       }
+      dispatch(setLoadingProgress(100));
     })();
   }, []);
 

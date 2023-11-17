@@ -113,10 +113,10 @@ function FilterWidget() {
             paddingY: "1rem",
           }}>
           <Typography
-            variant="subtitle2"
+            variant="subtitle1"
+            fontWeight= {700}
             sx={{
               marginBottom: "8px",
-              fontWeight: "700",
             }}>
             Avg. customer review
           </Typography>
@@ -230,10 +230,10 @@ function FilterWidget() {
             paddingY: "1rem",
           }}>
           <Typography
-            variant="subtitle2"
+            variant="subtitle1"
+            fontWeight= {700}
             sx={{
               marginBottom: "8px",
-              fontWeight: "700",
             }}>
             Price
           </Typography>

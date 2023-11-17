@@ -7,6 +7,7 @@ import {
   setAddressToUpdate,
   setToDefaultAddress,
 } from "../features/address/addressSlice";
+import { enqueueSnackbar } from "notistack";
 
 function AddressWidget({ address }) {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ function AddressWidget({ address }) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
 
-  const handleDeleteProduct = async () => {
+  const handleRemoveAddress = async () => {
     const res = await fetch(
       `${import.meta.env.VITE_API_BASE_URL}/address/${address._id} `,
       {
@@ -27,12 +28,13 @@ function AddressWidget({ address }) {
     );
     const json = await res.json();
     if (json.success) {
-      console.log(json.data);
       dispatch(deleteAddress(address._id));
+      enqueueSnackbar("Address removed", { variant: "warning" });
     } else {
-      console.log(json.error);
+      enqueueSnackbar(json.error, { variant: "error" });
     }
   };
+
   const handleSetToDefault = async () => {
     const res = await fetch(
       `${import.meta.env.VITE_API_BASE_URL}/address/default/${address._id} `,
@@ -45,10 +47,10 @@ function AddressWidget({ address }) {
     );
     const json = await res.json();
     if (json.success) {
-      console.log(json.data);
+      enqueueSnackbar("Changed default address", { variant: "info" });
       dispatch(setToDefaultAddress(address._id));
     } else {
-      console.log(json.error);
+      enqueueSnackbar(json.error, { variant: "error" });
     }
   };
 
@@ -126,7 +128,7 @@ function AddressWidget({ address }) {
                 textDecoration: "underline",
               },
             }}
-            onClick={handleDeleteProduct}>
+            onClick={handleRemoveAddress}>
             Remove
           </Typography>
           {!address?.isDefault && (

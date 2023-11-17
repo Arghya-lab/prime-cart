@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import { DeleteOutline, IosShare } from "@mui/icons-material";
+import { DeleteOutline } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -11,6 +11,8 @@ import {
 } from "@mui/material";
 import { setWishList } from "../features/additionalInfo/additionalInfoSlice";
 import { setWishListProducts } from "../features/product/productSlice";
+import { enqueueSnackbar } from "notistack";
+import { useNavigate } from "react-router-dom";
 
 function WishListProductWidget({
   id,
@@ -20,6 +22,7 @@ function WishListProductWidget({
   ratingCount,
   price,
 }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   let wishListProducts = useSelector((state) => state.product.wishListProducts);
@@ -37,16 +40,40 @@ function WishListProductWidget({
       );
       const json = await res.json();
       if (json.success) {
-        console.log(json.data);
         dispatch(setWishList(json.data));
+        enqueueSnackbar('Product removed from wishlist', { variant: 'info' })        
       } else {
-        console.log(json.error);
+        enqueueSnackbar(json.error, { variant: 'error' })
       }
     })();
     const updatedWishListProducts = wishListProducts.filter((product) => {
       return product._id !== id;
     });
     dispatch(setWishListProducts(updatedWishListProducts));
+  };
+
+  const handleAddToCart = () => {
+    // check if customer is logged in
+    if (!token) {
+      navigate("/login", { state: { from: location } }, { replace: true });
+      return;
+    }
+    (async () => {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/cart`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify({ productId: id }),
+      });
+      const json = await res.json();
+      if (json.success) {
+        enqueueSnackbar('Product added to cart', { variant: 'success' })
+      } else {
+        enqueueSnackbar(json.error, { variant: 'error' })
+      }
+    })();
   };
 
   return (
@@ -160,7 +187,8 @@ function WishListProductWidget({
               sx={{
                 marginY: "8px",
                 ":hover": { bgcolor: "warning.main" },
-              }}>
+              }}
+              onClick={handleAddToCart}>
               Add to Cart
             </Button>
             <Box
@@ -168,9 +196,9 @@ function WishListProductWidget({
               alignItems="center"
               justifyContent="flex-end"
               gap="6px">
-              <IconButton>
+              {/* <IconButton>
                 <IosShare />
-              </IconButton>
+              </IconButton> */}
               <IconButton onClick={handleRemoveFromWishList}>
                 <DeleteOutline />
               </IconButton>

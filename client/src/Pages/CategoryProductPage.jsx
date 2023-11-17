@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { setLoadingProgress } from "../features/additionalInfo/additionalInfoSlice";
 import { Box, Pagination, Stack, Typography } from "@mui/material";
+import { SentimentVeryDissatisfied } from "@mui/icons-material";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import FilterWidget from "../Components/FilterWidget";
 import ProductWidget from "../Components/ProductWidget";
 import { setCategoryProducts } from "../features/product/productSlice";
-import { SentimentVeryDissatisfied } from "@mui/icons-material";
 
 function CategoryProductPage() {
   const { type } = useParams();
@@ -22,13 +23,16 @@ function CategoryProductPage() {
 
   useEffect(() => {
     (async () => {
+      dispatch(setLoadingProgress(5));
       try {
         const res = await fetch(
           `${
             import.meta.env.VITE_API_BASE_URL
           }/products/category/${type}?page=${currentPage}&limit=${productLimit}`
         );
+        dispatch(setLoadingProgress(50));
         const json = await res.json();
+        dispatch(setLoadingProgress(85));
         if (json.success) {
           console.log(json.data);
           dispatch(setCategoryProducts(json.data.products));
@@ -39,6 +43,7 @@ function CategoryProductPage() {
       } catch (error) {
         console.log("clientSide error");
       }
+      dispatch(setLoadingProgress(100));
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
@@ -61,7 +66,6 @@ function CategoryProductPage() {
             Shop home entertainment, TVs, home audio, headphones, cameras,
             accessories and more
           </Typography>
-
           {categoryProducts.length !== 0 ? (
             <>
               <Box

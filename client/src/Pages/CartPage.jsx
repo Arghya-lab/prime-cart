@@ -16,6 +16,7 @@ import Footer from "../Components/Footer";
 import CartProductWidget from "../Components/CartProductWidget";
 import { setCartProduct } from "../features/cart/cartSlice";
 import { setProducts } from "../features/checkout/checkoutSlice";
+import { setLoadingProgress } from "../features/additionalInfo/additionalInfoSlice";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 13,
@@ -26,7 +27,8 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
   [`& .${linearProgressClasses.bar}`]: {
     borderRadius: 0,
-    backgroundColor: theme.palette.mode === "light" ? "success.light" : "#308fe8",
+    backgroundColor:
+      theme.palette.mode === "light" ? "#009674" : "#308fe8",
   },
 }));
 
@@ -40,19 +42,23 @@ function CartPage() {
 
   useEffect(() => {
     (async () => {
+      dispatch(setLoadingProgress(5));
       const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/cart`, {
         method: "GET",
         headers: {
           Authorization: token,
         },
       });
+      dispatch(setLoadingProgress(50));
       const json = await res.json();
+      dispatch(setLoadingProgress(85));
       if (json.success) {
         console.log(json.data);
         dispatch(setCartProduct(json.data));
       } else {
         console.log(json.error);
       }
+      dispatch(setLoadingProgress(100));
     })();
   }, []);
 
@@ -66,7 +72,7 @@ function CartPage() {
 
   const handleBuyCartProducts = () => {
     dispatch(setProducts(products));
-    navigate("/checkout")
+    navigate("/checkout");
   };
 
   return (
@@ -87,18 +93,6 @@ function CartPage() {
                 lineHeight: "36px",
               }}>
               Shopping Cart
-            </Typography>
-            <Typography
-              component="span"
-              variant="subtitle2"
-              sx={{
-                color: "success.dark",
-                cursor: "pointer",
-                ":hover": {
-                  textDecoration: "underline",
-                },
-              }}>
-              Deselect all items
             </Typography>
             <Typography
               variant="body2"
@@ -134,7 +128,7 @@ function CartPage() {
               </Typography>
               <Typography
                 component="span"
-                variant="h6"
+                variant="h4"
                 sx={{ fontWeight: 600 }}>
                 {/* total price */}
                 {totalPrice}
@@ -151,7 +145,7 @@ function CartPage() {
               </Box>
               <Typography variant="subtitle2">₹499</Typography>
             </Stack>
-            {totalPrice >= 499 ? (
+            {totalPrice >= 500 ? (
               <Stack direction="row">
                 <CheckCircle sx={{ color: "success.light" }} />
                 <Box>
@@ -192,7 +186,7 @@ function CartPage() {
                   sx={{
                     color: "error.main",
                   }}>
-                  ₹365.00
+                  ₹{500-totalPrice}
                 </Typography>
                 &nbsp;
                 <Typography component="span" variant="body2">
@@ -213,7 +207,10 @@ function CartPage() {
                   sx={{
                     color: "success.dark",
                     cursor: "pointer",
-                    ":hover": { color: "error.main", textDecoration: "underLine" },
+                    ":hover": {
+                      color: "error.main",
+                      textDecoration: "underLine",
+                    },
                   }}>
                   View Products ›
                 </Typography>
@@ -232,23 +229,20 @@ function CartPage() {
               </Typography>
               <Typography
                 component="span"
-                variant="h6"
+                variant="h4"
                 sx={{ fontWeight: 600 }}>
                 {/* total price */}
                 {totalPrice}
               </Typography>
             </Box>
+            <Box display="flex" justifyContent="center" marginY="2rem">
             <Button
               variant="contained"
-              // sx={{
-              //   bgcolor: "warning.light",
-              //   color: "#0F1111",
-              //   width: "200px",
-              //   ":hover": { bgcolor: "warning.main" },
-              // }}
+              color="warning"
               onClick={handleBuyCartProducts}>
               Proceed to Buy
             </Button>
+          </Box>
           </Box>
         </Box>
       ) : (

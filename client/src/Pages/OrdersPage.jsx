@@ -2,21 +2,24 @@ import { Box, Pagination, Stack, Typography } from "@mui/material";
 import Navbar from "../Components/Navbar";
 import OrderProductWidget from "../Components/OrderProductWidget";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Footer from "../Components/Footer";
 import { useSearchParams } from "react-router-dom";
+import { setLoadingProgress } from "../features/additionalInfo/additionalInfoSlice";
 
 function OrdersPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = decodeURIComponent(searchParams.get("page") || 1);
   const productLimit = decodeURIComponent(searchParams.get("limit") || 8);
 
+  const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   const [orders, setOrders] = useState(null);
   const [totalResult, setTotalResult] = useState(0);
 
   useEffect(() => {
     (async () => {
+      dispatch(setLoadingProgress(5));
       const res = await fetch(
         `${
           import.meta.env.VITE_API_BASE_URL
@@ -28,7 +31,9 @@ function OrdersPage() {
           },
         }
       );
+      dispatch(setLoadingProgress(50));
       const json = await res.json();
+      dispatch(setLoadingProgress(85));
       if (json.success) {
         console.log(json.data);
         setOrders(json.data.products);
@@ -36,6 +41,7 @@ function OrdersPage() {
       } else {
         console.log(json.error);
       }
+      dispatch(setLoadingProgress(100));
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);

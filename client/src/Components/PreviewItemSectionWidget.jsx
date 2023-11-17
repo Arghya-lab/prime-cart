@@ -105,10 +105,8 @@ function PreviewItemSectionWidget() {
         display="flex">
         <Box width="60%" paddingRight="20px">
           <Button
-            sx={{
-              bgcolor: "warning.light",
-              ":hover": { bgcolor: "warning.dark" },
-            }}
+            variant="contained"
+            color="warning"
             onClick={handleRedirectToOrderPage}>
             Go to order page
           </Button>

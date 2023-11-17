@@ -4,6 +4,8 @@ import Navbar from "../Components/Navbar";
 import WishListProductWidget from "../Components/WishListProductWidget";
 import { useDispatch, useSelector } from "react-redux";
 import { setWishListProducts } from "../features/product/productSlice";
+import { setLoadingProgress } from "../features/additionalInfo/additionalInfoSlice";
+import Footer from "../Components/Footer";
 
 function WishlistPage() {
   const dispatch = useDispatch();
@@ -12,6 +14,7 @@ function WishlistPage() {
 
   useEffect(() => {
     (async () => {
+      dispatch(setLoadingProgress(5));
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/wishList/products`,
         {
@@ -21,14 +24,18 @@ function WishlistPage() {
           },
         }
       );
+      dispatch(setLoadingProgress(50));
       const json = await res.json();
+      dispatch(setLoadingProgress(85));
       if (json.success) {
+        console.log(json.data);
         dispatch(setWishListProducts(json.data));
       } else {
         console.log(json.error);
       }
+      dispatch(setLoadingProgress(100));
     })();
-  }, [data]);
+  }, []);
 
   return (
     <Box>
@@ -38,25 +45,23 @@ function WishlistPage() {
           <Typography
             variant="h2"
             color="success.dark"
-              fontWeight= {700}
-              padding= "1rem"
-              textAlign= "center"
-           >
+            fontWeight={700}
+            padding="1rem"
+            textAlign="center">
             Wishlist
           </Typography>
           <Box
-              width= "10rem"
-              height= "4px"
-              bgcolor= "success.dark"
-              marginX= "auto"
-            />
+            width="10rem"
+            height="4px"
+            bgcolor="success.dark"
+            marginX="auto"
+          />
         </Box>
         <Box
           border="1px solid grey.600"
           borderRadius="2px"
-            maxWidth= "1366px"
-            padding= "14px 18px"
-          >
+          maxWidth="1366px"
+          padding="14px 18px">
           {data &&
             data.map((info) => (
               <WishListProductWidget
@@ -71,6 +76,7 @@ function WishlistPage() {
             ))}
         </Box>
       </Box>
+      <Footer />
     </Box>
   );
 }

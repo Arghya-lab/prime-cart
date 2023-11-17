@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { enqueueSnackbar } from 'notistack'
 import {
   Box,
   Paper,
@@ -77,11 +78,12 @@ function LoginPage() {
     const json = await res.json();
     if (json.success) {
       dispatch(setCustomerLogin(json.data));
+      enqueueSnackbar('Successfully login', { variant: 'success' })
       dispatch(setWishList(json.data.wishList));
       // Send them back to the page they tried to visit when they were redirected to the login page. Use { replace: true } so we don't create another entry in the history stack for the login page.  This means that when they get to the protected page and click the back button, they won't end up back on the login page, which is also really nice for the user experience.
       navigate(from, { replace: true });
     } else {
-      console.log(json.error);
+      enqueueSnackbar(json.error, { variant: 'error' })
     }
   };
 
@@ -99,11 +101,12 @@ function LoginPage() {
     const json = await res.json();
     if (json.success) {
       dispatch(setCustomerLogin(json.data));
+      enqueueSnackbar('Successfully signup', { variant: 'success' })
       dispatch(setWishList(json.data.wishList));
       // Send them back to the page they tried to visit when they were redirected to the login page. Use { replace: true } so we don't create another entry in the history stack for the login page.  This means that when they get to the protected page and click the back button, they won't end up back on the login page, which is also really nice for the user experience.
       navigate(from, { replace: true });
     } else {
-      console.log(json.error);
+      enqueueSnackbar(json.error, { variant: 'error' })
     }
   };
 

@@ -7,6 +7,7 @@ import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import AddressWidget from "../Components/AddressWidget";
 import { setAddresses } from "../features/address/addressSlice";
+import { setLoadingProgress } from "../features/additionalInfo/additionalInfoSlice";
 
 function AddressPage() {
   const navigate = useNavigate();
@@ -17,19 +18,23 @@ function AddressPage() {
 
   useEffect(() => {
     (async () => {
+      dispatch(setLoadingProgress(5));
       const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/address`, {
         method: "GET",
         headers: {
           Authorization: token,
         },
       });
+      dispatch(setLoadingProgress(50));
       const json = await res.json();
+      dispatch(setLoadingProgress(85));
       if (json.success) {
         console.log(json.data);
         dispatch(setAddresses(json.data));
       } else {
         console.log(json.error);
       }
+      dispatch(setLoadingProgress(100));
     })();
   }, []);
 

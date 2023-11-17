@@ -4,6 +4,7 @@ import CardPaymentForm from "./CardPaymentForm";
 import { useDispatch, useSelector } from "react-redux";
 import { setExpendedCheckoutAccordion } from "../../features/additionalInfo/additionalInfoSlice";
 import { setPayment } from "../../features/checkout/checkoutSlice";
+import { enqueueSnackbar } from "notistack";
 
 function PaymentSectionWidget() {
   const dispatch = useDispatch();
@@ -32,10 +33,10 @@ function PaymentSectionWidget() {
     );
     const paymentResponse = await paymentRes.json();
     if (!paymentResponse.success) {
-      console.log(paymentResponse.error);
+      enqueueSnackbar(paymentResponse.error, { variant: 'error' })
     } else {
       console.log(paymentResponse.data);
-      console.log("Payment successful.");
+      enqueueSnackbar('Payment successful', { variant: 'success' })
       dispatch(
         setPayment({
           paymentMethod: paymentOptionSelected,
@@ -43,7 +44,6 @@ function PaymentSectionWidget() {
         })
       );
       // Place the order
-
       const values = {
         productsInfo: products.map((product) => {
           return {
@@ -69,10 +69,10 @@ function PaymentSectionWidget() {
       );
       const json = await orderRes.json();
       if (json.success) {
-        console.log(json.data);
         dispatch(setExpendedCheckoutAccordion("preview"));
+        enqueueSnackbar('Successfully order placed', { variant: 'success' })
       } else {
-        console.log(json.error);
+        enqueueSnackbar(json.error, { variant: 'error' })
       }
     }
   };

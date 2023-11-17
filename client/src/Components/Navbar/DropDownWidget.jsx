@@ -2,18 +2,24 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { Box, List, ListItem, Paper, Typography } from "@mui/material";
-import { Favorite, Home, Logout, Storefront } from "@mui/icons-material";
+import { Favorite, Home, Login, Logout, Storefront } from "@mui/icons-material";
 import { setLogout } from "../../features/auth/authSlice";
+import { enqueueSnackbar } from "notistack";
 
 function DropDownWidget({ isDropdownOpen }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const isSeller = Boolean(useSelector((state) => state.auth.sellerToken));
+  const { token, sellerToken } = useSelector((state) => state.auth);
 
   const handleLogout = () => {
     dispatch(setLogout());
+    enqueueSnackbar('Successfully logout', { variant: 'info' })
     navigate("/");
+  };
+
+  const handleLogin = () => {
+    navigate("/login");
   };
 
   return (
@@ -72,35 +78,60 @@ function DropDownWidget({ isDropdownOpen }) {
           </Box>
         </Link>
       </ListItem>
+      {token ? (
+        <ListItem
+          sx={{
+            width: "100%",
+            height: "48px",
+            padding: "8px 16px",
+          }}>
+          <Box
+            display="flex"
+            alignItems="center"
+            color="grey.1000"
+            cursor="pointer"
+            onClick={handleLogout}>
+            <Logout />
+            <Typography
+              px={1}
+              sx={{
+                ":hover": { color: "#e47911", textDecoration: "underline" },
+              }}>
+              Logout
+            </Typography>
+          </Box>
+        </ListItem>
+      ) : (
+        <ListItem
+          sx={{
+            width: "100%",
+            height: "48px",
+            padding: "8px 16px",
+          }}>
+          <Box
+            display="flex"
+            alignItems="center"
+            color="grey.1000"
+            cursor="pointer"
+            onClick={handleLogin}>
+            <Login />
+            <Typography
+              px={1}
+              sx={{
+                ":hover": { color: "#e47911", textDecoration: "underline" },
+              }}>
+              Login
+            </Typography>
+          </Box>
+        </ListItem>
+      )}
       <ListItem
         sx={{
           width: "100%",
           height: "48px",
           padding: "8px 16px",
         }}>
-        <Box
-          display="flex"
-          alignItems="center"
-          color="grey.1000"
-          cursor="pointer"
-          onClick={handleLogout}>
-          <Logout />
-          <Typography
-            px={1}
-            sx={{
-              ":hover": { color: "#e47911", textDecoration: "underline" },
-            }}>
-            Logout
-          </Typography>
-        </Box>
-      </ListItem>
-      <ListItem
-        sx={{
-          width: "100%",
-          height: "48px",
-          padding: "8px 16px",
-        }}>
-        {isSeller ? (
+        {sellerToken ? (
           <Box
             display="flex"
             alignItems="center"

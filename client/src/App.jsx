@@ -1,5 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import { RequireAuth, RequireSellerAuth } from "./Components/RequireAuth";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoadingProgress } from "./features/additionalInfo/additionalInfoSlice";
+import LoadingBar from "react-top-loading-bar";
 import LoginPage from "./Pages/LoginPage";
 import HomePage from "./Pages/HomePage";
 import WishlistPage from "./Pages/WishlistPage";
@@ -18,8 +21,15 @@ import OrderDetailsPage from "./Pages/OrderDetailsPage";
 import AddressPage from "./Pages/AddressPage";
 
 function App() {
+  const dispatch = useDispatch();
+  const { loadingProgress } = useSelector((state) => state.additionalInfo);
   return (
     <>
+      <LoadingBar
+        color="#f11946"
+        progress={loadingProgress}
+        onLoaderFinished={() => dispatch(setLoadingProgress(0))}
+      />
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/" element={<HomePage />} />
