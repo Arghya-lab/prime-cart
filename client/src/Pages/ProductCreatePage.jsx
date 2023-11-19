@@ -82,7 +82,7 @@ function ProductCreatePage() {
       const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/products/create`, {
         method: "POST",
         headers: {
-          "seller-auth": sellerToken,
+          "Seller-Authorization": sellerToken,
         },
         body: formData,
       });

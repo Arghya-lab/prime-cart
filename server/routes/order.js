@@ -3,19 +3,33 @@ const fetchCustomer = require("../middleware/fetchCustomer");
 const {
   createOrder,
   getAllOrder,
+  getSellerOrders,
+  getSalesStatistics,
   getOrderDetails,
-  CancelOrder
+  CancelOrder,
+  confirmOrdersBySeller,
 } = require("../controllers/order");
 
 const router = express.Router();
 
-// Create a order of a customer using : POST /api/orders  =>  require token
+/* CREATE */
+// Create an order of a customer using : POST /api/orders  =>  require token
 router.post("/", fetchCustomer, createOrder);
+
+/* READ */
 // Get all orders of a customer using : GET /api/orders  =>  require token  *
 router.get("/", fetchCustomer, getAllOrder);
+// Get all orders of a seller using : GET /api/orders/seller  =>  Seller Token require
+router.get("/seller", fetchSeller, getSellerOrders);
+// Get sales statistics of products a seller : GET /api/orders/statistics =>  Seller Token require
+router.get("/statistics", fetchSeller, getSalesStatistics);
 // Get all order details of a order using : GET /api/orders/:orderId  =>  require token
 router.get("/:orderId", fetchCustomer, getOrderDetails);
-// Cancel a order of a customer using : GET /api/orders  =>  require token
-router.get("/cancel/:id", fetchCustomer, CancelOrder);
+
+/* UPDATE */
+// Cancel a order of a customer using : PATCH /api/orders  =>  require token
+router.patch("/cancel/:orderId", fetchCustomer, CancelOrder);
+// confirm an orders by seller using : PATCH /api/orders/confirm  =>  Seller Token require
+router.patch("/confirm/:orderId", fetchSeller, confirmOrdersBySeller);
 
 module.exports = router;

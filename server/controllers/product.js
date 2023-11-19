@@ -59,8 +59,11 @@ const getSearchProducts = async (req, res) => {
         { name: { $regex: query, $options: "i" } },
       ],
     };
-    const products = await Product.find(match).skip((page-1)*limit).limit(limit).lean(); // for read-only operations
-    const totalProducts = await Product.find(match).countDocuments()
+    const products = await Product.find(match)
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .lean(); // for read-only operations
+    const totalProducts = await Product.find(match).countDocuments();
     res.status(200).json({ success: true, data: { products, totalProducts } });
   } catch (error) {
     res
@@ -111,6 +114,23 @@ const getCategoryProducts = async (req, res) => {
   }
 };
 
+//  get Seller Products
+const getSellerProducts = async (req, res) => {
+  try {
+    const { sellerId } = req.seller;
+    const { page = 1, limit = 15 } = req.query;
+    const products = await Product.find({ sellerId })
+      .select("-sellerId -description -highlights")
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .lean();
+    const totalProducts = await Product.find({ sellerId }).countDocuments();
+    res.status(200).json({ success: true, data: { products, totalProducts } });
+  } catch (error) {
+    res.status(500).json({ success: false, error: "Failed to fetch products" });
+  }
+};
+
 //  get a product by productId
 const getProductById = async (req, res) => {
   try {
@@ -157,6 +177,36 @@ const updateProduct = async (req, res) => {
   }
 };
 
+//  add stock of a product by seller
+const addStock = async (req, res) => {
+  try {
+    const { productId } = req.params;
+    const { sellerId } = req.seller;
+    const { addedStock } = req.body;
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res
+        .status(404)
+        .json({ success: false, error: "Product not found" });
+    }
+    if (product.sellerId.toString() !== sellerId) {
+      return res.status(401).json({
+        success: false,
+        error: "Please authenticate using a valid token",
+      });
+    }
+    const updatedProduct = await Product.findByIdAndUpdate(
+      { productId },
+      { $set: { stock: product.stock + addedStock } }, //  Update only the fields passed to $set.
+      { new: true }, //  method will return the updated document.
+      { runValidators: true } //  run defined validation checks on the updated data.
+    );
+    res.status(200).json({ success: true, data: updatedProduct });
+  } catch (error) {
+    res.status(500).json({ success: false, error: "Failed to update product" });
+  }
+};
+
 /* DELETE */
 //  delete a product by seller
 const deleteProduct = async (req, res) => {
@@ -187,6 +237,8 @@ module.exports = {
   getSearchProducts,
   getCategoryProducts,
   getProductById,
+  getSellerProducts,
   updateProduct,
+  addStock,
   deleteProduct,
 };

@@ -5,7 +5,7 @@ const jwtSecret = process.env.JWT_SECRET;
 
 const fetchSeller = (req, res, next) => {
   try {
-    const sellerAuthorization = req.header("seller-auth");
+    const sellerAuthorization = req.header("Seller-Authorization");
     const token = sellerAuthorization.split("Bearer ")[1];
     if (!token) {
       res

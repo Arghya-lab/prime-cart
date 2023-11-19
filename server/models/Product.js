@@ -63,7 +63,7 @@ const productSchema = new mongoose.Schema(
     },
     imgUrls: {
       type: [String],
-      // required: true,
+      required: true,
     },
     rating: {
       type: Number,

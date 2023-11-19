@@ -12,6 +12,11 @@ const orderSchema = new mongoose.Schema(
       ref: "Product",
       required: true,
     },
+    sellerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Seller",
+      required: true,
+    },
     variantId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Product.variant",
@@ -21,14 +26,23 @@ const orderSchema = new mongoose.Schema(
       required: true,
       default: 1,
     },
-    totalPrice: {
-      type: Number,
-      required: true,
+    price: {
+      type: {
+        productPrice: {
+          type: Number,
+          required: true,
+        },
+        deliveryCharge: {
+          type: Number,
+          required: true,
+          default: 0,
+        },
+      },
     },
     orderStatus: {
       type: String,
-      enum: ["pending", "processing", "shipped", "delivered"],
-      default: "pending",
+      enum: ["processing", "confirmed", "shipping", "delivered", "canceled"],
+      default: "processing",
     },
     paymentId: {
       type: mongoose.Schema.Types.ObjectId,
