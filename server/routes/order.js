@@ -9,6 +9,7 @@ const {
   CancelOrder,
   confirmOrdersBySeller,
 } = require("../controllers/order");
+const fetchSeller = require("../middleware/fetchSeller");
 
 const router = express.Router();
 

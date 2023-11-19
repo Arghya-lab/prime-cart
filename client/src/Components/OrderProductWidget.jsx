@@ -1,4 +1,4 @@
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { Box, Paper, Stack, Typography } from "@mui/material";
 
@@ -8,17 +8,17 @@ function OrderProductWidget({
   name,
   imgUrl,
   quantity,
-  totalPrice,
-  orderPlacedTime
+  price,
+  orderPlacedTime,
 }) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleShowOrderDetail = () => {
-    navigate(`/orderDetails/${orderId}`)
-  }
+    navigate(`/orderDetails/${orderId}`);
+  };
   const handleShowProduct = () => {
-    navigate(`/product/${productId}`)
-  }
+    navigate(`/product/${productId}`);
+  };
   return (
     <Paper
       elevation={1}
@@ -31,8 +31,7 @@ function OrderProductWidget({
         justifyContent="space-between"
         borderRadius="8px 8px 0 0"
         borderBottom="1px solid"
-        
-        borderColor= "grey.500"
+        borderColor="grey.500"
         bgcolor="grey.100">
         <Box display="flex" justifyContent="flex-start">
           <Box paddingRight="16px">
@@ -48,7 +47,7 @@ function OrderProductWidget({
               TOTAL
             </Typography>
             <Typography variant="subtitle2" color="grey.800">
-              ₹{totalPrice}
+              ₹{price.productPrice + price.deliveryCharge}
             </Typography>
           </Box>
         </Box>
@@ -66,8 +65,7 @@ function OrderProductWidget({
                 textDecoration: "underline",
               },
             }}
-            onClick={handleShowOrderDetail}
-            >
+            onClick={handleShowOrderDetail}>
             View order details
           </Typography>
         </Box>
@@ -77,7 +75,9 @@ function OrderProductWidget({
           <Box margin="0 20px 0 0">
             <img
               /* img url */
-              src={`${import.meta.env.VITE_IMG_BASE_URL}/assets/productImgs/${imgUrl}`}
+              src={`${
+                import.meta.env.VITE_IMG_BASE_URL
+              }/assets/productImgs/${imgUrl}`}
               height="100px"
               width="100px"
             />
@@ -87,14 +87,17 @@ function OrderProductWidget({
               width: "100%",
               maxWidth: "448px",
             }}>
-            <Typography variant="body1" color="success.dark" sx={{
-              cursor: "pointer",
-              ":hover": {
-                color: "secondary.main",
-                textDecoration: "underline",
-              },
-            }}
-            onClick={handleShowProduct}>
+            <Typography
+              variant="body1"
+              color="success.dark"
+              sx={{
+                cursor: "pointer",
+                ":hover": {
+                  color: "secondary.main",
+                  textDecoration: "underline",
+                },
+              }}
+              onClick={handleShowProduct}>
               {/* name */}
               {name}
             </Typography>
@@ -114,8 +117,8 @@ OrderProductWidget.propTypes = {
   name: PropTypes.string.isRequired,
   imgUrl: PropTypes.string.isRequired,
   quantity: PropTypes.number.isRequired,
-  totalPrice: PropTypes.number.isRequired,
+  price: PropTypes.object.isRequired,
   orderPlacedTime: PropTypes.string.isRequired,
-}
+};
 
 export default OrderProductWidget;

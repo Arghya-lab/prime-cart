@@ -19,6 +19,10 @@ import CheckoutPage from "./Pages/CheckoutPage";
 import CustomerAddressFormPage from "./Pages/CustomerAddressFormPage";
 import OrderDetailsPage from "./Pages/OrderDetailsPage";
 import AddressPage from "./Pages/AddressPage";
+import SellerOrders from "./Components/SellerOrders";
+import SellerOverview from "./Components/SellerOverview";
+import SellerListings from "./Components/SellerListings";
+import SellerMetrics from "./Components/SellerMetrics";
 
 function App() {
   const dispatch = useDispatch();
@@ -100,15 +104,26 @@ function App() {
             </RequireAuth>
           }
         />
-        <Route path="/sellerAuth" element={<SellerAuthPage />} />
+        <Route
+          path="/sellerAuth"
+          element={
+            <RequireAuth>
+              <SellerAuthPage />
+            </RequireAuth>
+          }
+        />
         <Route
           path="/seller"
           element={
             <RequireSellerAuth>
               <SellerPage />
             </RequireSellerAuth>
-          }
-        />
+          }>
+          <Route index element={<SellerOverview />} />
+          <Route path="listings" element={<SellerListings />} />
+          <Route path="orders" element={<SellerOrders />} />
+          <Route path="metrics" element={<SellerMetrics />} />
+        </Route>
         <Route
           path="/createProduct"
           element={

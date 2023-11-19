@@ -14,6 +14,9 @@ function OrderDetailsPage() {
 
   const [data, setData] = useState({});
 
+  const productPrice = isNaN(data?.price?.productPrice) ? 0 : data?.price?.productPrice;
+  const deliveryCharge = isNaN(data?.price?.deliveryCharge) ? 0 : data?.price?.deliveryCharge;
+
   useEffect(() => {
     (async () => {
       dispatch(setLoadingProgress(5));
@@ -119,13 +122,13 @@ function OrderDetailsPage() {
                 Item(s) Subtotal:
               </Typography>
               <Typography component="div" variant="h6">
-                379.00
+                {productPrice}
               </Typography>
             </Box>
             <Box display="flex" justifyContent="space-between">
               <Typography>Shipping:</Typography>
               <Typography component="div" variant="h6">
-                40.00
+                {deliveryCharge}
               </Typography>
             </Box>
             <Box display="flex" justifyContent="space-between">
@@ -133,7 +136,7 @@ function OrderDetailsPage() {
                 Total:
               </Typography>
               <Typography component="p" variant="h6" fontWeight={600}>
-                {data?.price}
+                {productPrice+deliveryCharge}
               </Typography>
             </Box>
           </Box>
@@ -180,7 +183,7 @@ function OrderDetailsPage() {
                   variant="h6"
                   color="error"
                   marginTop="8px">
-                  Rs.&nbsp;{data?.price}
+                  Rs.&nbsp;{productPrice}
                 </Typography>
                 <Typography component="div" variant="h6" marginTop="8px">
                   Qty.&nbsp;{data?.quantity}

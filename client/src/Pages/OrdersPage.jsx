@@ -72,7 +72,7 @@ function OrdersPage() {
                 name={order.name}
                 imgUrl={order.imgUrls[order.imgUrls.length - 1]}
                 quantity={order.quantity}
-                totalPrice={order.totalPrice}
+                price={order.price}
                 orderPlacedTime={order.orderPlacedTime}
               />
             ))
