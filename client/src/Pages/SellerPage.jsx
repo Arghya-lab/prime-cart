@@ -1,11 +1,21 @@
 import { Box, Typography } from "@mui/material";
 import SellerNavbar from "../Components/SellerNavbar";
-import { Outlet, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 function SellerPage() {
   const navigate = useNavigate();
+  const location = useLocation()
   const [selectedTab, setSelectedTab] = useState("overview");
+
+  useEffect(() => {
+    const pathArr = location.pathname.split("/")
+    const tabs = ["overview", "listings", "orders", "metrics"]
+    if (tabs.includes(pathArr[pathArr.length-1])) {
+      setSelectedTab(pathArr[pathArr.length-1])
+    }
+  }, [])
+  
 
   return (
     <Box minHeight="100vh">

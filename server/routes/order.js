@@ -28,9 +28,9 @@ router.get("/statistics", fetchSeller, getSalesStatistics);
 router.get("/:orderId", fetchCustomer, getOrderDetails);
 
 /* UPDATE */
-// Cancel a order of a customer using : PATCH /api/orders  =>  require token
+// Cancel a order of a customer using : PATCH /api/orders/cancel/:orderId  =>  require token
 router.patch("/cancel/:orderId", fetchCustomer, CancelOrder);
-// confirm an orders by seller using : PATCH /api/orders/confirm  =>  Seller Token require
+// confirm an orders by seller using : PATCH /api/orders/confirm/:orderId  =>  Seller Token require
 router.patch("/confirm/:orderId", fetchSeller, confirmOrdersBySeller);
 
 module.exports = router;

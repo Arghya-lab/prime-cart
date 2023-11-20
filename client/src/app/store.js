@@ -6,6 +6,7 @@ import addressSlice from "../features/address/addressSlice";
 import productSlice from "../features/product/productSlice";
 import cartSlice from "../features/cart/cartSlice";
 import checkoutSlice from "../features/checkout/checkoutSlice";
+import sellerSlice from "../features/seller/sellerSlice";
 
 const loadStateFromLocalStorage = () => {
   try {
@@ -27,6 +28,7 @@ const reducers = combineReducers({
   product: productSlice,
   cart: cartSlice,
   checkout: checkoutSlice,
+  seller: sellerSlice,
 });
 
 const store = configureStore({

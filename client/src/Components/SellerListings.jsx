@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Box,
@@ -15,7 +16,7 @@ import {
 import { styled } from "@mui/material/styles";
 import { tableCellClasses } from "@mui/material/TableCell";
 import { setLoadingProgress } from "../features/additionalInfo/additionalInfoSlice";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { setSellerListings } from "../features/seller/sellerSlice";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,8 +39,9 @@ function SellerListings() {
 
   const dispatch = useDispatch();
   const { sellerToken } = useSelector((state) => state.auth);
-
-  const [listings, setListings] = useState([]);
+  
+  // const [listings, setListings] = useState([]);
+  const { sellerListings } = useSelector((state) => state.seller);
   const [totalResult, setTotalResult] = useState(0);
 
   useEffect(() => {
@@ -61,7 +63,7 @@ function SellerListings() {
       dispatch(setLoadingProgress(85));
       if (json.success) {
         console.log(json.data);
-        setListings(json.data.products);
+        dispatch(setSellerListings(json.data.products));
         setTotalResult(json.data.totalProducts);
       } else {
         console.log(json.error);
@@ -103,7 +105,7 @@ function SellerListings() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {listings.map((row) => (
+            {sellerListings.map((row) => (
               <TableRow key={row._id}>
                 <StyledTableCell>
                   <img
@@ -159,7 +161,7 @@ function SellerListings() {
           </TableBody>
         </Table>
       </TableContainer>
-      {totalResult > listings.length && (
+      {totalResult > sellerListings.length && (
         <Box display="flex" justifyContent="center" mt={2}>
           <Pagination
             count={Math.ceil(totalResult / productLimit)}
