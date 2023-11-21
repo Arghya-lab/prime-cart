@@ -16,7 +16,8 @@ import {
 import { styled } from "@mui/material/styles";
 import { tableCellClasses } from "@mui/material/TableCell";
 import { setLoadingProgress } from "../features/additionalInfo/additionalInfoSlice";
-import { setSellerListings } from "../features/seller/sellerSlice";
+import { setProductUpdateValue, setSellerListings } from "../features/seller/sellerSlice";
+import { enqueueSnackbar } from "notistack";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -39,8 +40,7 @@ function SellerListings() {
 
   const dispatch = useDispatch();
   const { sellerToken } = useSelector((state) => state.auth);
-  
-  // const [listings, setListings] = useState([]);
+
   const { sellerListings } = useSelector((state) => state.seller);
   const [totalResult, setTotalResult] = useState(0);
 
@@ -66,12 +66,26 @@ function SellerListings() {
         dispatch(setSellerListings(json.data.products));
         setTotalResult(json.data.totalProducts);
       } else {
-        console.log(json.error);
+        enqueueSnackbar(json.error, { variant: 'error' })
       }
       dispatch(setLoadingProgress(100));
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
+
+  const handleEdit = async (id)=> {
+    const res = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/products/${id}`
+    );
+    const json = await res.json();
+    if (json.success) {
+      console.log(json.data);
+      dispatch(setProductUpdateValue(json.data))
+      navigate("/editProduct");
+    } else {
+      enqueueSnackbar(json.error, { variant: 'error' })
+    }
+  }
 
   const handlePageChange = (event, page) => {
     setSearchParams({ page: page, limit: productLimit });
@@ -151,7 +165,7 @@ function SellerListings() {
                       textDecoration: "underline",
                     },
                   }}
-                  onClick={() => navigate("/editProduct")}>
+                  onClick={()=>handleEdit(row._id)}>
                   edit listing
                 </StyledTableCell>
                 <StyledTableCell align="right">{row.createdAt}</StyledTableCell>

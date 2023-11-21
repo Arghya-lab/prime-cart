@@ -11,7 +11,7 @@ import OrdersPage from "./Pages/OrdersPage";
 import SellerAuthPage from "./Pages/SellerAuthPage";
 import SellerPage from "./Pages/SellerPage";
 import NotfoundPage from "./Pages/NotfoundPage";
-import ProductCreatePage from "./Pages/ProductCreatePage";
+import ProductFormPage from "./Pages/ProductFormPage";
 import CategoryProductPage from "./Pages/CategoryProductPage";
 import SearchProductPage from "./Pages/SearchProductPage";
 import ProductOverviewPage from "./Pages/ProductOverviewPage";
@@ -128,7 +128,15 @@ function App() {
           path="/createProduct"
           element={
             <RequireSellerAuth>
-              <ProductCreatePage />
+              <ProductFormPage pageType={"create"} />
+            </RequireSellerAuth>
+          }
+        />
+        <Route
+          path="/editProduct"
+          element={
+            <RequireSellerAuth>
+              <ProductFormPage pageType={"edit"} />
             </RequireSellerAuth>
           }
         />

@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useSelector } from "react-redux";
@@ -16,18 +18,10 @@ import {
 } from "@mui/material";
 import SellerNavbar from "../Components/SellerNavbar";
 import ImgDrop from "../Components/ImgDrop";
-import { useEffect, useState } from "react";
 import { red } from "@mui/material/colors";
+import { useNavigate } from "react-router-dom";
+import { enqueueSnackbar } from "notistack";
 
-const initialValues = {
-  name: "",
-  category: "",
-  mrp: "",
-  selling: "",
-  description: "",
-  highlights: "",
-  stock: "",
-};
 const validationSchema = yup.object({
   name: yup.string("Enter product name").required("Product name is required"),
   category: yup
@@ -46,10 +40,18 @@ const validationSchema = yup.object({
   stock: yup.number("Enter product name").required("Product name is required"),
 });
 
-function ProductCreatePage() {
+function ProductFormPage({ pageType }) {
   const sellerToken = useSelector((state) => state.auth.sellerToken);
+  const { productUpdateId, initialUpdateValue } = useSelector(
+    (state) => state.seller
+  );
   const [productImgs, setProductImgs] = useState(null);
   const [imgDropError, setImgDropError] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!productUpdateId) navigate("/seller/listings");
+  }, []);
 
   useEffect(() => {
     if (productImgs) {
@@ -59,40 +61,82 @@ function ProductCreatePage() {
 
   const handleDropzoneValue = (value) => {
     setProductImgs(value);
-    setImgDropError(false)
+    setImgDropError(false);
     console.log(value);
   };
 
-  const formik = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit: async (values) => {
-      const formData = new FormData();
-      for (const value in values) {
-        formData.append(value, values[value]);
-      }
-      for (const productImg of productImgs) {
-        formData.append(`productImgs`, productImg);
-      }
-      const productImgsName = productImgs
-        .map((productImg) => productImg.name)
-        .join(",");
-      formData.append("productImgsName", productImgsName);
+  const handleCreateProduct = async (values) => {
+    const formData = new FormData();
+    for (const value in values) {
+      formData.append(value, values[value]);
+    }
+    for (const productImg of productImgs) {
+      formData.append(`productImgs`, productImg);
+    }
+    const productImgsName = productImgs
+      .map((productImg) => productImg.name)
+      .join(",");
+    formData.append("productImgsName", productImgsName);
 
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/products/create`, {
+    const res = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/products/create`,
+      {
         method: "POST",
         headers: {
           "Seller-Authorization": sellerToken,
         },
         body: formData,
-      });
-      const json = await res.json();
-      if (json.success) {
-        console.log("product created");
-        console.log(json.data);
-      } else {
-        console.log(json.error);
       }
+    );
+    const json = await res.json();
+    if (json.success) {
+      console.log(json.data);
+      enqueueSnackbar("product created", { variant: "success" });
+    } else {
+      enqueueSnackbar(json.error, { variant: "error" });
+    }
+  };
+
+  const handleEditProduct = async (values) => {
+    console.log(values);
+
+    const res = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/products/${productUpdateId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Seller-Authorization": sellerToken,
+        },
+        body: values,
+      }
+    );
+    const json = await res.json();
+    if (json.success) {
+      console.log(json.data);
+      enqueueSnackbar("Product updated", { variant: "success" });
+    } else {
+      enqueueSnackbar(json.error, { variant: "error" });
+    }
+  };
+
+  const formik = useFormik({
+    initialValues:
+      pageType === "create"
+        ? {
+            name: "",
+            category: "",
+            mrp: "",
+            selling: "",
+            description: "",
+            highlights: "",
+            stock: "",
+          }
+        : initialUpdateValue,
+    validationSchema,
+    onSubmit: (values) => {
+      pageType === "create"
+        ? handleCreateProduct(values)
+        : handleEditProduct(values);
     },
   });
 
@@ -101,7 +145,7 @@ function ProductCreatePage() {
       <SellerNavbar />
       <Paper elevation={8} sx={{ m: "2rem auto", maxWidth: "768px" }}>
         <Typography textAlign="center" p="2rem" variant="h2" gutterBottom>
-          Fill product info
+          {pageType === "create" ? "Fill product info" : "Edit product info"}
         </Typography>
         <Stack
           component="form"
@@ -109,10 +153,14 @@ function ProductCreatePage() {
           spacing={3}
           padding={4}
           onSubmit={formik.handleSubmit}>
-          <ImgDrop onDropzoneValue={handleDropzoneValue} />
-          <FormHelperText sx={{ color: red[700], width: "100%" }}>
-            {imgDropError ? "Images not uploaded." : ""}
-          </FormHelperText>
+          {pageType === "create" ? (
+            <Box>
+              <ImgDrop onDropzoneValue={handleDropzoneValue} />
+              <FormHelperText sx={{ color: red[700], width: "100%" }}>
+                {imgDropError ? "Images not uploaded." : ""}
+              </FormHelperText>
+            </Box>
+          ) : null}
           <TextField
             sx={{ m: 1 }}
             variant="outlined"
@@ -130,13 +178,14 @@ function ProductCreatePage() {
           <FormControl fullWidth>
             <InputLabel
               id="category"
+              color="grey"
               sx={{
                 color:
                   formik.touched.category && Boolean(formik.errors.category)
                     ? red[700]
                     : undefined,
               }}>
-              Age
+              Category
             </InputLabel>
             <Select
               labelId="category"
@@ -178,6 +227,7 @@ function ProductCreatePage() {
             <TextField
               variant="outlined"
               fullWidth
+              color="grey"
               id="mrp"
               name="mrp"
               label="Maximum retail price"
@@ -190,6 +240,7 @@ function ProductCreatePage() {
             <TextField
               variant="outlined"
               fullWidth
+              color="grey"
               id="selling"
               name="selling"
               label="Selling price"
@@ -257,7 +308,7 @@ function ProductCreatePage() {
             onClick={() => {
               if (!productImgs) setImgDropError(true);
             }}>
-            Submit
+            {pageType === "create" ? "Submit" : "edit"}
           </Button>
         </Stack>
       </Paper>
@@ -265,4 +316,8 @@ function ProductCreatePage() {
   );
 }
 
-export default ProductCreatePage;
+ProductFormPage.propTypes = {
+  pageType: PropTypes.string.isRequired,
+};
+
+export default ProductFormPage;
