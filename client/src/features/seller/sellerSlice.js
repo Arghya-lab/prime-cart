@@ -2,6 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   sellerListings: [],
   sellerOrders: [],
+  ordersStatusCount: {
+    canceled: 0,
+    confirmed: 0,
+    delivered: 0,
+    processing: 0,
+    shipping: 0,
+  },
+  salesAndRevenue: [],
   productUpdateId: "",
   initialUpdateValue: {
     name: "",
@@ -33,9 +41,15 @@ export const sellerSlice = createSlice({
         return order;
       });
     },
+    setOrdersStatusCount: (state, action) => {
+      state.ordersStatusCount = action.payload;
+    },
+    setSalesAndRevenue: (state, action) => {
+      state.salesAndRevenue = action.payload;
+    },
     setProductUpdateValue: (state, action) => {
       const data = action.payload;
-      state.productUpdateId = data._id
+      state.productUpdateId = data._id;
       state.initialUpdateValue = {
         name: data.name,
         category: data.category,
@@ -53,6 +67,8 @@ export const {
   setSellerListings,
   setSellerOrders,
   setSellerOrderConfirm,
+  setOrdersStatusCount,
+  setSalesAndRevenue,
   setProductUpdateValue,
 } = sellerSlice.actions;
 

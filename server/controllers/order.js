@@ -144,28 +144,14 @@ const getSalesStatistics = async (req, res) => {
     });
     const salesAndRevenue = {};
     await Promise.all(
-      ordersInfo.forEach(async (order) => {
-        if (salesAndRevenue[order.productId]) {
-          if (order.orderStatus === "canceled") {
-            salesAndRevenue[order.productId] = {
-              ...salesAndRevenue[order.productId],
-              totalCanceled: salesAndRevenue[order.productId].totalCanceled + 1,
-            };
-          } else {
-            salesAndRevenue[order.productId] = {
-              ...salesAndRevenue[order.productId],
-              totalSalesNo:
-                salesAndRevenue[order.productId].totalSalesNo + order.quantity,
-              totalRevenue:
-                salesAndRevenue[order.productId].totalRevenue +
-                order.price.productPrice,
-            };
-          }
-        } else {
+      ordersInfo.map(async (order) => {
+        if (!salesAndRevenue[order.productId]) {
+          const product = await Product.findById(order.productId)
+            .select("name category imgUrls")
+            .lean();
+
           salesAndRevenue[order.productId] = {
-            product: await Product.findById(order.productId)
-              .select("name category imgUrls")
-              .lean(),
+            product,
             totalSalesNo: order.orderStatus === "canceled" ? 0 : order.quantity,
             totalRevenue:
               order.orderStatus === "canceled" ? 0 : order.price.productPrice,
@@ -174,11 +160,22 @@ const getSalesStatistics = async (req, res) => {
         }
       })
     );
+    ordersInfo.forEach((order) => {
+      if (order.orderStatus === "canceled") {
+        salesAndRevenue[order.productId].totalCanceled++;
+      } else {
+        salesAndRevenue[order.productId].totalSalesNo =
+          salesAndRevenue[order.productId].totalSalesNo + order.quantity;
+        salesAndRevenue[order.productId].totalRevenue +=
+          order.price.productPrice;
+      }
+    });
 
     res
       .status(200)
       .json({ success: true, data: { ordersStatusCount, salesAndRevenue } });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .json({ success: false, error: "Failed to fetch statistics" });
