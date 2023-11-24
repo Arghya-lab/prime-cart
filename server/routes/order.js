@@ -8,6 +8,8 @@ const {
   getOrderDetails,
   CancelOrder,
   confirmOrdersBySeller,
+  setOrderStatusToShippingByAdmin,
+  setOrderStatusToDeliveredByAdmin,
 } = require("../controllers/order");
 const fetchSeller = require("../middleware/fetchSeller");
 
@@ -30,7 +32,11 @@ router.get("/:orderId", fetchCustomer, getOrderDetails);
 /* UPDATE */
 // Cancel a order of a customer using : PATCH /api/orders/cancel/:orderId  =>  require token
 router.patch("/cancel/:orderId", fetchCustomer, CancelOrder);
-// confirm an orders by seller using : PATCH /api/orders/confirm/:orderId  =>  Seller Token require
+// confirm an order by seller using : PATCH /api/orders/confirm/:orderId  =>  Seller Token require
 router.patch("/confirm/:orderId", fetchSeller, confirmOrdersBySeller);
+// Set order status as shipping by Admin using : PATCH /api/orders/shipping
+router.patch("/shipping/:orderId", setOrderStatusToShippingByAdmin);
+// Set order status as delivered by Admin using : PATCH /api/orders/delivered
+router.patch("/delivered/:orderId", setOrderStatusToDeliveredByAdmin);
 
 module.exports = router;

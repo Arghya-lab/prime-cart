@@ -246,6 +246,12 @@ const confirmOrdersBySeller = async (req, res) => {
         error: "Please authenticate using a valid token",
       });
     }
+    if (order.orderStatus !== "processing") {
+      return res.status(400).json({
+        success: false,
+        error: "Failed to confirm order.",
+      });
+    }
     const data = await Order.findOneAndUpdate(
       { _id: orderId, sellerId },
       { orderStatus: "confirmed" },
@@ -261,6 +267,56 @@ const confirmOrdersBySeller = async (req, res) => {
   }
 };
 
+const setOrderStatusToShippingByAdmin = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const order = await Order.findById(orderId);
+    if (order.orderStatus !== "confirmed") {
+      return res.status(400).json({
+        success: false,
+        error: "Failed to set as shipping.",
+      });
+    }
+    const data = await Order.findOneAndUpdate(
+      { _id: orderId },
+      { orderStatus: "shipping" },
+      { new: true },
+      { runValidators: true }
+    );
+    res.status(200).json({ success: true, data });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: "Failed to set as shipping.",
+    });
+  }
+};
+
+const setOrderStatusToDeliveredByAdmin = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const order = await Order.findById(orderId);
+    if (order.orderStatus !== "shipping") {
+      return res.status(400).json({
+        success: false,
+        error: "Failed to set as delivered.",
+      });
+    }
+    const data = await Order.findOneAndUpdate(
+      { _id: orderId, sellerId },
+      { orderStatus: "delivered" },
+      { new: true },
+      { runValidators: true }
+    );
+    res.status(200).json({ success: true, data });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: "Failed to set as delivered.",
+    });
+  }
+};
+
 module.exports = {
   createOrder,
   getAllOrder,
@@ -269,4 +325,6 @@ module.exports = {
   getOrderDetails,
   CancelOrder,
   confirmOrdersBySeller,
+  setOrderStatusToShippingByAdmin,
+  setOrderStatusToDeliveredByAdmin,
 };
