@@ -13,9 +13,9 @@ ShopPrime, the premier online shopping platform that brings you an unparalleled 
 - [x] **Checkout Process**: Implement a seamless, multi-step checkout process with options for different payment methods.
 - [x] **Shipping and Delivery Options**: Offer various shipping methods and delivery timeframes.
 - [x] **Seller Dashboard**: Provide sellers with a dashboard to manage their listings, view orders, and track sales.
-- [ ] **Admin Dashboard**: Offer administrators tools to manage the platform, including user accounts, products, and orders.
-- [ ] **Order Tracking and History**: Provide users with the ability to track their orders and view order history.
+- [x] **Order Tracking and History**: Provide users with the ability to track their orders and view order history.
 - [ ] **Mobile Responsiveness**: Ensure the platform is optimized for mobile devices to cater to users on various platforms.
+- [ ] **Admin Dashboard**: Offer administrators tools to manage the platform, including user accounts, products, and orders.
 - [ ] **Social Media Integration**: Allow users to share products on social media platforms.
 - [ ] **Payment Integration**: Integrate various payment gateways to ensure secure transactions.
 - [ ] **User Notifications**: Send email or push notifications for order updates, promotions, and other relevant information.
