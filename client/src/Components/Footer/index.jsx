@@ -1,7 +1,19 @@
-import { Box, Grid, Link, List, ListItem, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Link,
+  List,
+  ListItem,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import { topNavData, btmNavData } from "./data";
 
 function Footer() {
+  const largeScreen = useMediaQuery("(min-width:1024px)");
+  const mediumScreen = useMediaQuery("(min-width:768px)");
+  const smallScreen = useMediaQuery("(min-width:425px)");
+
   return (
     <Box>
       <Box
@@ -28,9 +40,11 @@ function Footer() {
             maxWidth: "1000px",
             display: "flex",
             justifyContent: "space-between",
+            flexWrap: "wrap",
             padding: "1.25rem",
             gap: "1rem",
-            m: "auto",
+            marginX: "auto",
+            paddingX: largeScreen ? "1.25rem" : "0.75rem",
           }}>
           {btmNavData.map((elem, index) => (
             <Grid
@@ -42,12 +56,12 @@ function Footer() {
                 gap: "0.25rem",
               }}>
               <Typography
-                variant="h5"
+                component="h5"
+                variant={smallScreen ? "h5" : "h6"}
                 color="#fff"
                 fontWeight={700}
                 lineHeight="120%"
-                margin="6px 0 14px 0"
-                whiteSpace="nowrap">
+                margin={smallScreen ? "6px 0 4px" : "6px 0 0"}>
                 {elem.menu}
               </Typography>
               <List sx={{ listStyleType: "none", padding: 0 }}>
@@ -62,12 +76,10 @@ function Footer() {
                       color="grey.500"
                       sx={{
                         textDecoration: "none",
-                        whiteSpace: "normal",
                         cursor: "pointer",
                         listStyleType: "none",
-                        wordWrap: "break-word",
                         lineHeight: "120%",
-                        fontSize: "14px",
+                        fontSize: smallScreen ? "14px" : "12px",
                         ":hover": { textDecoration: "underline" },
                       }}
                       target="_blank" // Enable this if needed
@@ -92,7 +104,15 @@ function Footer() {
       <Box sx={{ bgcolor: "info.dark" }}>
         <Box
           display="grid"
-          gridTemplateColumns="repeat(7, 1fr)"
+          gridTemplateColumns={
+            largeScreen
+              ? "repeat(7, 1fr)"
+              : mediumScreen
+              ? "repeat(5, 1fr)"
+              : smallScreen
+              ? "repeat(3, 1fr)"
+              : "repeat(2, 1fr)"
+          }
           maxWidth="1000px"
           margin="0 auto"
           padding="1rem">

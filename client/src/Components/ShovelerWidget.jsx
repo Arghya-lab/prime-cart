@@ -1,11 +1,16 @@
 import PropTypes from "prop-types";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography, useMediaQuery } from "@mui/material";
 
 function ShovelerWidget({ title, urls }) {
+  const mediumScreen = useMediaQuery("(min-width:768px)");
+
   return (
-    <Box px="28px">
-      <Paper square sx={{ padding: "20px" }}>
-        <Typography variant="h4" fontWeight={600}>
+    <Box px={mediumScreen ? "1.75rem" : "0.8rem"}>
+      <Paper square sx={{ padding: "1.25rem" }}>
+        <Typography
+          component="h4"
+          variant={mediumScreen ? "h4" : "h6"}
+          fontWeight={600}>
           {title}
         </Typography>
         <Box

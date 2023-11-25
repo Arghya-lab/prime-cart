@@ -1,24 +1,21 @@
-import {
-  Box,
-  IconButton,
-  InputBase,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
-// import MenuIcon from "@mui/icons-material/Menu";
+import { Box, Stack, Typography, useMediaQuery } from "@mui/material";
 import { useState } from "react";
 import {
-  Search,
   ShoppingCart,
   KeyboardArrowDown,
   KeyboardArrowUp,
+  ShoppingBasket,
+  AccountCircle,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import DropDownWidget from "./DropDownWidget";
+import SearchBar from "./SearchBar";
 
 function Navbar() {
-  const [searchValue, setSearchValue] = useState("");
+  const largeScreen = useMediaQuery("(min-width:1024px)");
+  const mediumScreen = useMediaQuery("(min-width:768px)");
+  const smallScreen = useMediaQuery("(min-width:425px)");
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -29,134 +26,108 @@ function Navbar() {
     setIsDropdownOpen(false);
   };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    const query = searchValue.trim();
-    if (query.length >= 3) {
-      navigate(`/search?query=${encodeURIComponent(searchValue)}`);
-    } else {
-      console.log("query must be at least 3 char length");
-    }
-    setSearchValue("");
-  };
-
   return (
-    <Stack
-      direction="row"
-      alignItems="center"
-      bgcolor="#131921"
-      justifyContent="space-between"
-      px="2rem"
-      py="6px"
-      height="60px">
-      <Typography
-        variant="h1"
-        fontSize={40}
-        fontWeight="fontWeightBold"
-        color="#fff"
-        padding="4px 6px"
-        sx={{
-          cursor: "pointer",
-          ":hover": { border: "1px solid white", borderRadius: "2px" },
-        }}
-        onClick={() => navigate("/")}>
-        Prime Cart
-      </Typography>
-      <Paper
-        component="form"
-        sx={{
-          mx: "1.5rem",
-          p: "2px 4px",
-          display: "flex",
-          alignItems: "center",
-          width: "640px",
-        }}
-        onSubmit={handleSearch}>
-        <InputBase
-          sx={{ ml: 1, flex: 1 }}
-          placeholder="Search products...."
-          inputProps={{ "aria-label": "search products" }}
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-        />
-        <IconButton
-          type="submit"
-          sx={{ p: "10px" }}
-          aria-label="search"
-          onClick={handleSearch}>
-          <Search />
-        </IconButton>
-      </Paper>
+    <Stack bgcolor="#131921" py="6px" alignItems="center">
       <Stack
         direction="row"
-        spacing={3}
         alignItems="center"
-        paddingX={3}
-        justifyContent="space-between">
-        <Box
-          padding="4px 6px"
-          sx={{
-            cursor: "pointer",
-            ":hover": { border: "1px solid white", borderRadius: "2px" },
+        justifyContent="space-between"
+        width="100%">
+        <img
+          src="http://localhost:5173/logo/logo-220px.png"
+          style={{
+            width: largeScreen ? "220px" : "160px",
+            margin: "0.7rem 0 0.7rem 1rem",
           }}
-          onMouseEnter={handleViewItems}
-          onMouseLeave={handleHideItems}>
-          <Typography variant="caption" color="#fff">
-            Hello, sign in
-          </Typography>
+          onClick={() => navigate("/")}
+        />
+        {largeScreen ? <SearchBar /> : null}
+        <Stack
+          direction="row"
+          spacing={mediumScreen ? 3 : 1}
+          alignItems="center"
+          paddingX={3}
+          justifyContent="space-between">
           <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            color="#fff">
-            <Typography variant="subtitle1"fontWeight={600}>
-              Account & Lists
-            </Typography>
-            {isDropdownOpen ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+            padding={smallScreen ? "4px 2px" : "4px 6px"}
+            color="#fff"
+            sx={{
+              cursor: "pointer",
+              ":hover": { border: "1px solid white", borderRadius: "2px" },
+            }}
+            onMouseEnter={handleViewItems}
+            onMouseLeave={handleHideItems}>
+            {mediumScreen ? (
+              <>
+                <Typography variant="caption">Hello, sign in</Typography>
+                <Box display="flex" justifyContent="center" alignItems="center">
+                  <Typography variant="subtitle1" fontWeight={600}>
+                    Account & Lists
+                  </Typography>
+                  {isDropdownOpen ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+                </Box>
+                <DropDownWidget isDropdownOpen={isDropdownOpen} />
+              </>
+            ) : (
+              <AccountCircle
+                fontSize={smallScreen ? "large" : "medium"}
+                sx={{ color: "#fff" }}
+              />
+            )}
           </Box>
-          <DropDownWidget isDropdownOpen={isDropdownOpen} />
-        </Box>
-        <Box
-          sx={{
-            padding: "4px 6px",
-            cursor: "pointer",
-            ":hover": { border: "1px solid white", borderRadius: "2px" },
-          }}
-          onClick={() => navigate("/orders")}>
-          <Typography variant="caption" color="#fff">
-            Returns
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            color="#fff"
-            lineHeight="15px"
-            fontWeight={600}>
-            & Orders
-          </Typography>
-        </Box>
-        <Box
-          padding="4px 6px"
-          sx={{
-            cursor: "pointer",
-            ":hover": { border: "1px solid white", borderRadius: "2px" },
-          }}
-          onClick={() => navigate("/cart")}>
-          <Typography
-            variant="caption"
-            color="#fff"
-            display="flex"
-            alignItems="flex-end">
-            <ShoppingCart fontSize="large" />
-            <Typography
-              variant="subtitle1"
-              color="#fff"
-              lineHeight="15px"
-              fontWeight={600}>
-              Cart
-            </Typography>
-          </Typography>
-        </Box>
+          <Box
+            sx={{
+              padding: smallScreen ? "4px 2px" : "4px 6px",
+              cursor: "pointer",
+              color: "#fff",
+              ":hover": { border: "1px solid white", borderRadius: "2px" },
+            }}
+            onClick={() => navigate("/orders")}>
+            {mediumScreen ? (
+              <>
+                <Typography variant="caption">Returns</Typography>
+                <Typography
+                  variant="subtitle1"
+                  lineHeight="15px"
+                  fontWeight={600}>
+                  & Orders
+                </Typography>
+              </>
+            ) : (
+              <ShoppingBasket
+                fontSize={smallScreen ? "large" : "medium"}
+                sx={{ color: "#fff" }}
+              />
+            )}
+          </Box>
+          <Box
+            padding={smallScreen ? "4px 2px" : "4px 6px"}
+            sx={{
+              cursor: "pointer",
+              ":hover": { border: "1px solid white", borderRadius: "2px" },
+            }}
+            onClick={() => navigate("/cart")}>
+            {mediumScreen ? (
+              <Box variant="caption" display="flex" alignItems="flex-end">
+                <ShoppingCart sx={{ color: "#fff" }} fontSize="large" />
+                <Typography
+                  variant="subtitle1"
+                  lineHeight="15px"
+                  color="#fff"
+                  fontWeight={600}>
+                  Cart
+                </Typography>
+              </Box>
+            ) : (
+              <ShoppingCart
+                fontSize={smallScreen ? "large" : "medium"}
+                sx={{ color: "#fff" }}
+              />
+            )}
+          </Box>
+        </Stack>
       </Stack>
+      {!largeScreen ? <SearchBar /> : null}
     </Stack>
   );
 }
