@@ -19,13 +19,6 @@ function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleViewItems = () => {
-    setIsDropdownOpen(true);
-  };
-  const handleHideItems = () => {
-    setIsDropdownOpen(false);
-  };
-
   return (
     <Stack bgcolor="#131921" py="6px" alignItems="center">
       <Stack
@@ -48,16 +41,16 @@ function Navbar() {
           alignItems="center"
           paddingX={3}
           justifyContent="space-between">
-          <Box
-            padding={smallScreen ? "4px 2px" : "4px 6px"}
-            color="#fff"
-            sx={{
-              cursor: "pointer",
-              ":hover": { border: "1px solid white", borderRadius: "2px" },
-            }}
-            onMouseEnter={handleViewItems}
-            onMouseLeave={handleHideItems}>
-            {mediumScreen ? (
+          {mediumScreen ? (
+            <Box
+              padding={smallScreen ? "4px 2px" : "4px 6px"}
+              color="#fff"
+              sx={{
+                cursor: "pointer",
+                ":hover": { border: "1px solid white", borderRadius: "2px" },
+              }}
+              onMouseEnter={() => setIsDropdownOpen(true)}
+              onMouseLeave={() => setIsDropdownOpen(false)}>
               <>
                 <Typography variant="caption">Hello, sign in</Typography>
                 <Box display="flex" justifyContent="center" alignItems="center">
@@ -66,15 +59,22 @@ function Navbar() {
                   </Typography>
                   {isDropdownOpen ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
                 </Box>
-                <DropDownWidget isDropdownOpen={isDropdownOpen} />
               </>
-            ) : (
+              <DropDownWidget isDropdownOpen={isDropdownOpen} />
+            </Box>
+          ) : (
+            <>
               <AccountCircle
                 fontSize={smallScreen ? "large" : "medium"}
                 sx={{ color: "#fff" }}
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               />
-            )}
-          </Box>
+              <DropDownWidget
+                isDropdownOpen={isDropdownOpen}
+                setClose={() => setIsDropdownOpen(false)}
+              />
+            </>
+          )}
           <Box
             sx={{
               padding: smallScreen ? "4px 2px" : "4px 6px",

@@ -1,12 +1,28 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
-import { Box, List, ListItem, Paper, Typography } from "@mui/material";
-import { Favorite, Home, Login, Logout, Storefront } from "@mui/icons-material";
+import {
+  Box,
+  List,
+  ListItem,
+  Paper,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
+import {
+  Clear,
+  Favorite,
+  Home,
+  Login,
+  Logout,
+  Storefront,
+} from "@mui/icons-material";
 import { setLogout } from "../../features/auth/authSlice";
 import { enqueueSnackbar } from "notistack";
 
-function DropDownWidget({ isDropdownOpen }) {
+function DropDownWidget({ isDropdownOpen, setClose }) {
+  const mediumScreen = useMediaQuery("(min-width:768px)");
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -14,7 +30,7 @@ function DropDownWidget({ isDropdownOpen }) {
 
   const handleLogout = () => {
     dispatch(setLogout());
-    enqueueSnackbar('Successfully logout', { variant: 'info' })
+    enqueueSnackbar("Successfully logout", { variant: "info" });
     navigate("/");
   };
 
@@ -32,8 +48,20 @@ function DropDownWidget({ isDropdownOpen }) {
         position: "absolute",
         minWidth: "184px",
         zIndex: "50",
-        top: "55px",
+        top: mediumScreen ? "64px" : "55px",
+        right: mediumScreen ? "auto" : 0,
       }}>
+      {!mediumScreen ? (
+        <ListItem
+          sx={{
+            width: "100%",
+            height: "48px",
+            padding: "16px 0 0",
+          }}
+          onClick={setClose}>
+          <Clear sx={{ marginLeft: "120px" }} />
+        </ListItem>
+      ) : null}
       <ListItem
         sx={{
           width: "100%",
@@ -177,6 +205,7 @@ function DropDownWidget({ isDropdownOpen }) {
 
 DropDownWidget.propTypes = {
   isDropdownOpen: PropTypes.bool.isRequired,
+  setClose: PropTypes.func,
 };
 
 export default DropDownWidget;

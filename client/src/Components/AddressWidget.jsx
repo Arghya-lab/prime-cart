@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Divider, Paper, Typography } from "@mui/material";
+import { Box, Divider, Typography, useMediaQuery } from "@mui/material";
 import {
   deleteAddress,
   setAddressToUpdate,
@@ -10,6 +10,9 @@ import {
 import { enqueueSnackbar } from "notistack";
 
 function AddressWidget({ address }) {
+  const mediumScreen = useMediaQuery("(min-width:768px)");
+  const smallScreen = useMediaQuery("(min-width:425px)");
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -55,10 +58,15 @@ function AddressWidget({ address }) {
   };
 
   return (
-    <Paper
+    <Box
+      border="2px solid"
+      borderRadius="8px"
+      borderColor="grey.500"
       sx={{
-        minHeight: "272px",
-        width: "312px",
+        minHeight: smallScreen ? "272px" : "208px",
+        minWidth: mediumScreen ? "308px" : "272px",
+        maxWidth: mediumScreen ? "308px" : "400px",
+        marginY: "0.5rem",
       }}>
       {address?.isDefault && (
         <Box height="40px" borderBottom="1px solid" borderColor="grey.500">
@@ -151,7 +159,7 @@ function AddressWidget({ address }) {
           )}
         </Box>
       </Box>
-    </Paper>
+    </Box>
   );
 }
 

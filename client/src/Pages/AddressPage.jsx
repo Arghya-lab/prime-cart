@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
@@ -10,6 +10,9 @@ import { setAddresses } from "../features/address/addressSlice";
 import { setLoadingProgress } from "../features/additionalInfo/additionalInfoSlice";
 
 function AddressPage() {
+  const mediumScreen = useMediaQuery("(min-width:768px)");
+  const smallScreen = useMediaQuery("(min-width:425px)");
+
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -39,14 +42,30 @@ function AddressPage() {
   }, []);
 
   return (
-    <Box>
+    <Box sx={{ overflowX: "hidden" }}>
       <Navbar />
-      <Box width="980px" padding="16px" margin="2rem auto">
-        <Typography variant="h1">Your Addresses</Typography>
-        <Box marginY="1rem" display="flex" flexWrap="wrap" gap="1rem">
+      <Box
+        maxWidth="980px"
+        padding="1rem"
+        margin={
+          mediumScreen ? "2rem auto" : smallScreen ? "1rem auto" : "0.5rem auto"
+        }>
+        <Typography component="h3" variant={smallScreen ? "h1" : "h2"}>
+          Your Addresses
+        </Typography>
+        <Box
+          marginY="1rem"
+          display="grid"
+          gridTemplateColumns={
+            mediumScreen
+              ? "repeat(auto-fill,minmax(320px,auto))"
+              : "repeat(auto-fill,minmax(272px,408px))"
+          }>
           <Box
-            height="272px"
-            width="312px"
+            height={smallScreen ? "272px" : "208px"}
+            minWidth={mediumScreen ? "308px" : "272px"}
+            maxWidth={mediumScreen ? "308px" : "400px"}
+            marginY="0.5rem"
             display="flex"
             flexDirection="column"
             alignItems="center"
@@ -70,7 +89,7 @@ function AddressPage() {
             </Box>
             <Typography
               component="p"
-              variant="h2"
+              variant={smallScreen ? "h2" : "h4"}
               fontWeight={700}
               color="grey.800">
               Add address
