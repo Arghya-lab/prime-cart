@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Box, Button, Checkbox, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Checkbox,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import CardPaymentForm from "./CardPaymentForm";
 import { useDispatch, useSelector } from "react-redux";
 import { setExpendedCheckoutAccordion } from "../../features/additionalInfo/additionalInfoSlice";
@@ -7,6 +13,8 @@ import { setPayment } from "../../features/checkout/checkoutSlice";
 import { enqueueSnackbar } from "notistack";
 
 function PaymentSectionWidget() {
+  const mediumScreen = useMediaQuery("(min-width:768px)");
+
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   const { products, deliveryAddress, paymentId } = useSelector(
@@ -33,10 +41,10 @@ function PaymentSectionWidget() {
     );
     const paymentResponse = await paymentRes.json();
     if (!paymentResponse.success) {
-      enqueueSnackbar(paymentResponse.error, { variant: 'error' })
+      enqueueSnackbar(paymentResponse.error, { variant: "error" });
     } else {
       console.log(paymentResponse.data);
-      enqueueSnackbar('Payment successful', { variant: 'success' })
+      enqueueSnackbar("Payment successful", { variant: "success" });
       dispatch(
         setPayment({
           paymentMethod: paymentOptionSelected,
@@ -70,9 +78,9 @@ function PaymentSectionWidget() {
       const json = await orderRes.json();
       if (json.success) {
         dispatch(setExpendedCheckoutAccordion("preview"));
-        enqueueSnackbar('Successfully order placed', { variant: 'success' })
+        enqueueSnackbar("Successfully order placed", { variant: "success" });
       } else {
-        enqueueSnackbar(json.error, { variant: 'error' })
+        enqueueSnackbar(json.error, { variant: "error" });
       }
     }
   };
@@ -80,7 +88,7 @@ function PaymentSectionWidget() {
   const [cardDetails, setCardDetails] = useState(null);
 
   return (
-    <Box marginLeft="35px">
+    <Box marginLeft={mediumScreen ? "35px" : "24px"}>
       <Box
         border="1px solid"
         borderColor="grey.500"
@@ -158,10 +166,12 @@ function PaymentSectionWidget() {
               <Checkbox
                 checked={paymentOptionSelected === "cod"}
                 size="small"
-                
                 color="success"
               />
-              <Typography variant="subtitle1" fontWeight={600} paddingLeft="10px">
+              <Typography
+                variant="subtitle1"
+                fontWeight={600}
+                paddingLeft="10px">
                 Cash on Delivery/Pay on Delivery
               </Typography>
             </Box>

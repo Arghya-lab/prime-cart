@@ -1,9 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Box, Button, Stack, Typography } from "@mui/material";
-import { resetCheckout } from "../features/checkout/checkoutSlice";
+import { Box, Button, Stack, Typography, useMediaQuery } from "@mui/material";
+import { resetCheckout } from "../../features/checkout/checkoutSlice";
 
 function PreviewItemSectionWidget() {
+  const mediumScreen = useMediaQuery("(min-width:768px)");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { products, totalProductsPrice } = useSelector(
@@ -16,7 +18,7 @@ function PreviewItemSectionWidget() {
   };
 
   return (
-    <Box marginLeft="35px">
+    <Box marginLeft={mediumScreen ? "35px" : "24px"}>
       <Box
         border="1px solid"
         borderColor="grey.500"
@@ -107,6 +109,9 @@ function PreviewItemSectionWidget() {
           <Button
             variant="contained"
             color="warning"
+            sx={{
+              textTransform: "capitalize",
+            }}
             onClick={handleRedirectToOrderPage}>
             Go to order page
           </Button>

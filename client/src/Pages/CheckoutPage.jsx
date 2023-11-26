@@ -7,34 +7,41 @@ import {
   AccordionSummary,
   Box,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import { ExpandMore } from "@mui/icons-material";
 import CheckoutHeader from "../Components/Header/CheckoutHeader";
-import AddressSelectionWidget from "../Components/AddressSelectionWidget";
-import PaymentSectionWidget from "../Components/PaymentSectionWidget";
-import PreviewItemSectionWidget from "../Components/PreviewItemSectionWidget";
+import AddressSelectionWidget from "../Components/Checkout/AddressSelectionWidget";
+import PaymentSectionWidget from "../Components/Checkout/PaymentSectionWidget";
+import PreviewItemSectionWidget from "../Components/Checkout/PreviewItemSectionWidget";
+import CheckoutSummary from "../Components/Checkout/CheckoutSummary";
 
 function CheckoutPage() {
+  const largeScreen = useMediaQuery("(min-width:1024px)");
+  const mediumScreen = useMediaQuery("(min-width:768px)");
+
   const navigate = useNavigate();
 
   const expendedCheckoutAccordion = useSelector(
     (state) => state.additionalInfo.expendedCheckoutAccordion
   );
-  const { totalProductsPrice, totalDeliveryCharge } = useSelector(
-    (state) => state.checkout
-  );
+  const { totalProductsPrice } = useSelector((state) => state.checkout);
   useEffect(() => {
     if (totalProductsPrice === 0) {
       navigate("/cart");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <Box>
       <CheckoutHeader />
       <Box padding="16px" maxWidth="1150px" margin="auto" position="relative">
-        <Box paddingRight="290px" position="relative">
-          <Box paddingRight="3.5%">
+        <Box
+          paddingRight={largeScreen ? "326px" : mediumScreen ? "240px" : 0}
+          position="relative">
+          {!mediumScreen ? <CheckoutSummary /> : null}
+          <Box paddingRight={largeScreen ? "3.5%" : mediumScreen ? "1.5%" : 0}>
             <Accordion
               elevation={0}
               disableGutters
@@ -105,7 +112,11 @@ function CheckoutPage() {
               </AccordionDetails>
             </Accordion>
             <Box borderTop="2px solid" borderColor="grey.600" marginTop={4}>
-              <Typography component="p" variant="subtitle1" paragraph marginTop={3}>
+              <Typography
+                component="p"
+                variant="subtitle1"
+                paragraph
+                marginTop={3}>
                 Need help? Check our help pages or contact us
               </Typography>
               <Typography component="p" variant="subtitle1" paragraph>
@@ -125,58 +136,7 @@ function CheckoutPage() {
               </Typography>
             </Box>
           </Box>
-          <Box
-            sx={{
-              width: "290px",
-              marginRight: "-290px",
-              float: "right",
-              overflow: "visible",
-            }}>
-            <Box
-              position="fixed"
-              width="inherit"
-              top="88px"
-              border="1px solid"
-              borderColor= "grey.500"
-              borderRadius="8px"
-              padding="14px 18px">
-              <Typography variant="h6" fontWeight={600}>
-                Order Summary
-              </Typography>
-              <table style={{ width: "100%" }}>
-                <tbody>
-                  <tr>
-                    <td>Items:</td>
-                    <td style={{ textAlign: "right" }}>
-                      ₹{totalProductsPrice}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Delivery:</td>
-                    <td style={{ textAlign: "right" }}>
-                      ₹{totalDeliveryCharge}
-                    </td>
-                  </tr>
-                  <tr style={{ padding: "10px" }}>
-                    <td
-                      colSpan="2"
-                      style={{ height: "1px", background: "grey.600" }}>
-                      <hr />
-                    </td>
-                  </tr>
-                  <tr
-                    style={{
-                      fontSize: "18px",
-                      color: "error.main",
-                      fontWeight: 700,
-                    }}>
-                    <td>Order Total:</td>
-                    <td style={{ textAlign: "right" }}>₹2,160.00</td>
-                  </tr>
-                </tbody>
-              </table>
-            </Box>
-          </Box>
+          {mediumScreen ? <CheckoutSummary /> : null}
         </Box>
       </Box>
     </Box>

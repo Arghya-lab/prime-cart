@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Add } from "@mui/icons-material";
-import { Box, Button, Checkbox, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Checkbox,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import { setDeliveryAddress } from "../../features/checkout/checkoutSlice";
 import { setExpendedCheckoutAccordion } from "../../features/additionalInfo/additionalInfoSlice";
 import {
@@ -11,6 +17,8 @@ import {
 } from "../../features/address/addressSlice";
 
 function AddressSelectionWidget() {
+  const mediumScreen = useMediaQuery("(min-width:768px)");
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -40,6 +48,7 @@ function AddressSelectionWidget() {
         console.log(json.error);
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -60,7 +69,7 @@ function AddressSelectionWidget() {
   };
 
   return (
-    <Box marginLeft="35px">
+    <Box marginLeft={mediumScreen ? "35px" : "24px"}>
       <Box
         border="1px solid"
         borderColor="grey.500"
