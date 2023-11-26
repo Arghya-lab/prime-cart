@@ -1,13 +1,21 @@
-import { Box, Pagination, Stack, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  Box,
+  Pagination,
+  Stack,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import Header from "../Components/Header";
 import OrderProductWidget from "../Components/OrderProductWidget";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import Footer from "../Components/Footer";
-import { useSearchParams } from "react-router-dom";
 import { setLoadingProgress } from "../features/additionalInfo/additionalInfoSlice";
 
 function OrdersPage() {
+  const smallScreen = useMediaQuery("(min-width:425px)");
+
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = decodeURIComponent(searchParams.get("page") || 1);
   const productLimit = decodeURIComponent(searchParams.get("limit") || 8);
@@ -52,11 +60,12 @@ function OrdersPage() {
   };
 
   return (
-    <Box>
+    <Box sx={{ overflowX: "hidden" }}>
       <Header />
-      <Box width="920px" padding="16px" margin="auto">
+      <Box maxWidth="920px" padding="16px" margin="auto">
         <Typography
-          variant="h1"
+          component="h3"
+          variant={smallScreen ? "h1" : "h3"}
           paddingBottom="16px"
           borderBottom="1.5px solid"
           borderColor="grey.400">
