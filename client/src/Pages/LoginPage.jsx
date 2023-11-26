@@ -11,6 +11,7 @@ import {
   TextField,
   Stack,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import { setCustomerLogin } from "../features/auth/authSlice";
 import { setWishList } from "../features/additionalInfo/additionalInfoSlice";
@@ -57,12 +58,14 @@ const signupInitialValues = {
 };
 
 function LoginPage() {
-  const [isLoginPage, setIsLoginPage] = useState(true);
+  const mediumScreen = useMediaQuery("(min-width:768px)");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-
   const from = location.state?.from?.pathname || "/";
+  
+  const [isLoginPage, setIsLoginPage] = useState(true);
 
   const handleLogin = async (values) => {
     const res = await fetch(
@@ -133,7 +136,7 @@ function LoginPage() {
           Prime Cart
         </Typography>
       </Box>
-      <Paper elevation={8} sx={{ m: "2rem auto", maxWidth: "768px" }}>
+      <Paper elevation={8} sx={{ m: mediumScreen?"2rem auto":"2rem 1rem", maxWidth: "736px" }}>
         <Typography textAlign="center" p="2rem" variant="h1" gutterBottom>
           {isLoginPage ? "Login" : "Signup"}
         </Typography>
