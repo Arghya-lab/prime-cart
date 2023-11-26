@@ -93,10 +93,10 @@ function HomePage() {
             display="grid"
             gridTemplateColumns={
               mediumScreen
-                ? "repeat(auto-fill,minmax(350px,auto))"
-                : "repeat(auto-fill,minmax(160px,auto))"
+                ? "repeat(auto-fill,minmax(348px,auto))"
+                : "repeat(auto-fill,minmax(154px,auto))"
             }
-            gap={mediumScreen ? "1rem" : "0.75rem"}>
+            gap={mediumScreen ? "1rem" : "0.5rem"}>
             {categoryImgs.map((data) => (
               <CategoryWidget
                 key={data.name}
