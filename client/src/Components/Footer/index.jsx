@@ -61,7 +61,7 @@ function Footer() {
                 color="#fff"
                 fontWeight={700}
                 lineHeight="120%"
-                margin={smallScreen ? "6px 0 4px" : "6px 0 0"}>
+                margin="10px 0 0">
                 {elem.menu}
               </Typography>
               <List sx={{ listStyleType: "none", padding: 0 }}>

@@ -90,10 +90,13 @@ function HomePage() {
           }}>
           <Box
             px={mediumScreen ? "1.75rem" : "0.8rem"}
-            display="flex"
-            flexWrap="wrap"
-            justifyContent="space-around"
-            gap={mediumScreen ? "1.25rem" : "0.5rem"}>
+            display="grid"
+            gridTemplateColumns={
+              mediumScreen
+                ? "repeat(auto-fill,minmax(350px,auto))"
+                : "repeat(auto-fill,minmax(160px,auto))"
+            }
+            gap={mediumScreen ? "1rem" : "0.75rem"}>
             {categoryImgs.map((data) => (
               <CategoryWidget
                 key={data.name}
