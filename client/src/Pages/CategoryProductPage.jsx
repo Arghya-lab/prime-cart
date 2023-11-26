@@ -2,24 +2,41 @@ import { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoadingProgress } from "../features/additionalInfo/additionalInfoSlice";
-import { Box, Pagination, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Pagination,
+  Stack,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import { SentimentVeryDissatisfied } from "@mui/icons-material";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
-import FilterWidget from "../Components/FilterWidget";
+import FilterWidget from "../Components/Filter/FilterWidget";
 import ProductWidget from "../Components/ProductWidget";
+import FilterDrawer from "../Components/Filter/FilterDrawer";
 import { setCategoryProducts } from "../features/product/productSlice";
 
 function CategoryProductPage() {
+  const largeScreen = useMediaQuery("(min-width:1024px)");
+  const mediumScreen = useMediaQuery("(min-width:768px)");
+
   const { type } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = decodeURIComponent(searchParams.get("page") || 1);
-  const productLimit = decodeURIComponent(searchParams.get("limit") || 2);
+  const productLimit = decodeURIComponent(searchParams.get("limit") || 12);
 
   const dispatch = useDispatch();
   const { categoryProducts } = useSelector((state) => state.product);
 
   const [totalResult, setTotalResult] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+  const openDrawer = () => {
+    console.log("open");
+    setIsOpen(true);
+  };
+  const closeDrawer = () => setIsOpen(false);
 
   useEffect(() => {
     (async () => {
@@ -54,15 +71,21 @@ function CategoryProductPage() {
   };
 
   return (
-    <>
+    <Box sx={{ overflowX: "hidden" }}>
       <Navbar />
       <Stack direction="row">
-        <FilterWidget />
-        <Box sx={{ width: "100%", color: "#0F1111", margin: "1rem" }}>
-          <Typography variant="h1" fontWeight={700} paddingBottom="4px">
+        {mediumScreen ? <FilterWidget /> : null}
+        <Box width="100%" margin="1rem">
+          <Typography
+            component="h3"
+            variant={mediumScreen ? "h1" : "h3"}
+            fontWeight={700}
+            paddingBottom="4px">
             Electronics
           </Typography>
-          <Typography variant="subtitle1" marginBottom="34px">
+          <Typography
+            variant={mediumScreen ? "subtitle1" : "subtitle2"}
+            marginBottom={mediumScreen ? "36px" : "20px"}>
             Shop home entertainment, TVs, home audio, headphones, cameras,
             accessories and more
           </Typography>
@@ -72,8 +95,8 @@ function CategoryProductPage() {
                 border="1px solid"
                 borderRadius="8px"
                 borderColor="grey.500"
-                padding="14px 18px"
-                marginY="20px">
+                padding={mediumScreen ? "14px 18px" : "8px 10px"}
+                marginY={mediumScreen ? "20px" : "12px"}>
                 <Typography
                   component="span"
                   variant="subtitle1"
@@ -89,9 +112,31 @@ function CategoryProductPage() {
                   Electronics
                 </Typography>
               </Box>
+              {!mediumScreen ? (
+                <Box
+                  display="flex"
+                  justifyContent="flex-end"
+                  sx={{ cursor: "pointer" }}>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    color="warning"
+                    sx={{ textTransform: "capitalize", marginBottom: "10px" }}
+                    onClick={openDrawer}>
+                    Open filter option
+                  </Button>
+                  <FilterDrawer isOpen={isOpen} closeDrawer={closeDrawer} />
+                </Box>
+              ) : null}
               <Box
                 display="grid"
-                gridTemplateColumns="repeat(auto-fill,minmax(320px,auto))"
+                gridTemplateColumns={
+                  largeScreen
+                    ? "repeat(auto-fill,minmax(320px,auto))"
+                    : mediumScreen
+                    ? "repeat(auto-fill,minmax(240px,auto))"
+                    : "repeat(auto-fill,minmax(150px,auto))"
+                }
                 gap="1rem">
                 {categoryProducts.map((info) => (
                   <ProductWidget
@@ -136,7 +181,7 @@ function CategoryProductPage() {
         </Box>
       </Stack>
       <Footer />
-    </>
+    </Box>
   );
 }
 

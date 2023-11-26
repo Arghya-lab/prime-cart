@@ -1,15 +1,18 @@
+import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Card,
-  CardContent,
   CardMedia,
   Rating,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
-import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
 
 function ProductWidget({ id, name, imgUrl, rating, ratingCount, price }) {
+  const largeScreen = useMediaQuery("(min-width:1024px)");
+  const mediumScreen = useMediaQuery("(min-width:768px)");
+
   const navigate = useNavigate();
 
   const handleCardClick = () => {
@@ -20,9 +23,8 @@ function ProductWidget({ id, name, imgUrl, rating, ratingCount, price }) {
     <Card
       sx={{
         padding: "2px 6px 6px 0",
-        width: "350px",
+        width: largeScreen ? "350px" : mediumScreen ? "236px" : "150px",
         bgcolor: "primary.light",
-        color: "#0F1111",
       }}>
       <Box
         paddingTop="100%"
@@ -52,54 +54,67 @@ function ProductWidget({ id, name, imgUrl, rating, ratingCount, price }) {
           }}
         />
       </Box>
-      <CardContent
+      <Box
         sx={{
           paddingX: "8px",
-          marginY: "8px",
+          paddingBottom: mediumScreen ? "1.5rem" : "0.5rem",
+          margin: mediumScreen ? "8px 0" : 0,
           fontSize: "14px",
           lineHeight: "20px",
           cursor: "pointer",
         }}
         onClick={handleCardClick}>
-        <Typography variant="h6" fontWeight={600}>
-          {/* name */}
+        <Typography
+          variant={mediumScreen ? "h6" : "subtitle2"}
+          fontWeight={600}>
           {name}
         </Typography>
-        <Box paddingTop="4px" display="flex" alignItems="end" gap="6px">
+        <Box
+          paddingTop="4px"
+          display="flex"
+          alignItems={mediumScreen ? "end" : "start"}
+          gap="6px">
           {/* value = star count */}
-          <Rating name="read-only" value={rating} readOnly />
-          <Typography variant="body1" color="success.dark">
-            {/* rating count */}
+          <Rating
+            name="read-only"
+            value={rating}
+            size={mediumScreen ? "medium" : "small"}
+            readOnly
+          />
+          <Typography
+            variant={mediumScreen ? "body1" : "body2"}
+            color="success.dark">
             {ratingCount}
           </Typography>
         </Box>
         <Box>
-          <Box component="span">
+          <Box display={mediumScreen ? "inline" : "block"}>
             <Typography
               component="span"
-              variant="subtitle1"
+              variant={mediumScreen ? "subtitle1" : "subtitle2"}
               sx={{
                 position: "relative",
-                top: "-0.75em",
+                top: mediumScreen ? "-0.75em" : "-0.25em",
               }}>
               ₹
             </Typography>
-            <Typography component="span" variant="h1">
-              {/* selling price */}
+            <Typography component="span" variant={mediumScreen ? "h1" : "h4"}>
               {price.selling}
             </Typography>
           </Box>
           &nbsp;
           <Box component="span" color="grey.800">
-            <Typography component="span" variant="body1">
-              New Price:
+            <Typography
+              component="span"
+              variant={mediumScreen ? "body2" : "caption"}>
+              MRP:
             </Typography>
             &nbsp;
             <Typography
               component="span"
-              variant="subtitle2"
+              variant={mediumScreen ? "subtitle2" : "caption"}
               textDecoration="line-through">
-              {/* MRP */}₹{price.mrp}
+              ₹{price.mrp}
             </Typography>
             &nbsp;
             <Typography component="span" variant="h6">
@@ -113,14 +128,23 @@ function ProductWidget({ id, name, imgUrl, rating, ratingCount, price }) {
           sx={{
             paddingTop: "4px",
           }}>
-          <Typography component="span">Get it By </Typography>
-          <Typography component="span" fontWeight={700}>
+          <Typography
+            component="span"
+            variant={mediumScreen ? "subtitle1" : "caption"}>
+            Get it By{" "}
+          </Typography>
+          <Typography
+            component="span"
+            variant={mediumScreen ? "subtitle1" : "caption"}
+            fontWeight={700}>
             {/* delivery date */}
             Tuesday, 31 October
           </Typography>
         </Box>
-        <Typography variant="body1">FREE Delivery by Amazon</Typography>
-      </CardContent>
+        {mediumScreen ? (
+          <Typography variant="body1">FREE Delivery by Amazon</Typography>
+        ) : null}
+      </Box>
     </Card>
   );
 }
