@@ -1,5 +1,5 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
-import Navbar from "../Components/Navbar";
+import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -48,7 +48,7 @@ function OrderDetailsPage() {
 
   return (
     <Box>
-      <Navbar />
+      <Header />
       <Box width="920px" padding="16px" margin="auto">
         <Typography variant="h1">Order Details</Typography>
         <Box paddingY="10px">

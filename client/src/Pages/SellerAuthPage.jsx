@@ -9,7 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import Navbar from "../Components/Navbar";
+import Header from "../Components/Header";
 import { setSellerToken } from "../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -96,7 +96,7 @@ function SellerAuthPage() {
 
   return (
     <Box>
-      <Navbar />
+      <Header />
       <Paper
         elevation={8}
         sx={{

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Pagination, Typography } from "@mui/material";
-import Navbar from "../Components/Navbar";
+import Header from "../Components/Header";
 import ProductWidget from "../Components/ProductWidget";
 import Footer from "../Components/Footer";
 import { setSearchProducts } from "../features/product/productSlice";
@@ -50,7 +50,7 @@ function SearchProductPage() {
 
   return (
     <Box>
-      <Navbar />
+      <Header />
       {data.length !== 0 ? (
         <Box margin="1rem">
           <Box

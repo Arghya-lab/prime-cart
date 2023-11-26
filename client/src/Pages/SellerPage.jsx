@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import SellerNavbar from "../Components/SellerNavbar";
+import SellerHeader from "../Components/Header/SellerHeader";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -19,7 +19,7 @@ function SellerPage() {
 
   return (
     <Box minHeight="100vh">
-      <SellerNavbar />
+      <SellerHeader />
       <Box
         maxHeight="56px"
         px="12px"

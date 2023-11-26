@@ -11,7 +11,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { SentimentVeryDissatisfied } from "@mui/icons-material";
-import Navbar from "../Components/Navbar";
+import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import FilterWidget from "../Components/Filter/FilterWidget";
 import ProductWidget from "../Components/ProductWidget";
@@ -72,7 +72,7 @@ function CategoryProductPage() {
 
   return (
     <Box sx={{ overflowX: "hidden" }}>
-      <Navbar />
+      <Header />
       <Stack direction="row">
         {mediumScreen ? <FilterWidget /> : null}
         <Box width="100%" margin="1rem">

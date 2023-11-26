@@ -19,7 +19,7 @@ import {
   Typography,
 } from "@mui/material";
 import { addNewAddress, updateAddress } from "../features/address/addressSlice";
-import Navbar from "../Components/Navbar";
+import Header from "../Components/Header";
 import { enqueueSnackbar } from "notistack";
 
 const indianStates = [
@@ -157,7 +157,7 @@ function CustomerAddressFormPage({ pageType }) {
 
   return (
     <>
-      <Navbar />
+      <Header />
       <Box margin="2rem auto" maxWidth="688px" padding="24px 16px">
         <Paper elevation={6}>
           <Box

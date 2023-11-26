@@ -1,5 +1,5 @@
 import { Box, Pagination, Stack, Typography } from "@mui/material";
-import Navbar from "../Components/Navbar";
+import Header from "../Components/Header";
 import OrderProductWidget from "../Components/OrderProductWidget";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -53,7 +53,7 @@ function OrdersPage() {
 
   return (
     <Box>
-      <Navbar />
+      <Header />
       <Box width="920px" padding="16px" margin="auto">
         <Typography
           variant="h1"

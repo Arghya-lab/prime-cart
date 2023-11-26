@@ -8,9 +8,9 @@ import {
   KeyboardArrowUp,
   Home,
 } from "@mui/icons-material";
-import { setLogout } from "../features/auth/authSlice";
+import { setLogout } from "../../features/auth/authSlice";
 
-function SellerNavbar() {
+function SellerHeader() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -165,4 +165,4 @@ function SellerNavbar() {
   );
 }
 
-export default SellerNavbar;
+export default SellerHeader;

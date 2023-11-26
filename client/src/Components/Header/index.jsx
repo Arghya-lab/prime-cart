@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import DropDownWidget from "./DropDownWidget";
 import SearchBar from "./SearchBar";
 
-function Navbar() {
+function Header() {
   const largeScreen = useMediaQuery("(min-width:1024px)");
   const mediumScreen = useMediaQuery("(min-width:768px)");
   const smallScreen = useMediaQuery("(min-width:425px)");
@@ -132,4 +132,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default Header;

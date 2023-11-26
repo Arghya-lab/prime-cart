@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography, useMediaQuery } from "@mui/material";
-import Navbar from "../Components/Navbar";
+import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import CartProductContainer from "../Components/Cart/CartProductContainer";
 import { setCartProduct } from "../features/cart/cartSlice";
@@ -39,7 +39,7 @@ function CartPage() {
 
   return (
     <Box sx={{ bgcolor: "grey.200", overflowX: "hidden" }}>
-      <Navbar />
+      <Header />
       {products && products.length !== 0 ? (
         mediumScreen ? (
           <Box

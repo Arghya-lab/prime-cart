@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { ExpandMore } from "@mui/icons-material";
-import CheckoutHeader from "../Components/CheckoutHeader";
+import CheckoutHeader from "../Components/Header/CheckoutHeader";
 import AddressSelectionWidget from "../Components/AddressSelectionWidget";
 import PaymentSectionWidget from "../Components/PaymentSectionWidget";
 import PreviewItemSectionWidget from "../Components/PreviewItemSectionWidget";

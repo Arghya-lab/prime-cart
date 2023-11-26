@@ -1,5 +1,5 @@
 import { Box, Button, Stack, useMediaQuery } from "@mui/material";
-import Navbar from "../../Components/Navbar";
+import Header from "../../Components/Header";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import CategoryWidget from "../../Components/CategoryWidget";
 import {
@@ -18,7 +18,7 @@ function HomePage() {
 
   return (
     <Box width="100vw" height="100vh" sx={{ overflowX: "hidden" }}>
-      <Navbar />
+      <Header />
       <Box position="relative" bgcolor="#fff" height="100%">
         <Slide
           {...{

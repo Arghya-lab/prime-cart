@@ -9,7 +9,7 @@ import {
 } from "@mui/icons-material";
 import { Fade } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
-import Navbar from "../Components/Navbar";
+import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -137,7 +137,7 @@ function ProductOverviewPage() {
 
   return (
     <Box>
-      <Navbar />
+      <Header />
       {data ? (
         <Box
           sx={{

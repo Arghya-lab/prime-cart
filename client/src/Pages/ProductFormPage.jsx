@@ -16,7 +16,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import SellerNavbar from "../Components/SellerNavbar";
+import SellerHeader from "../Components/Header/SellerHeader";
 import ImgDrop from "../Components/ImgDrop";
 import { red } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
@@ -142,7 +142,7 @@ function ProductFormPage({ pageType }) {
 
   return (
     <Box>
-      <SellerNavbar />
+      <SellerHeader />
       <Paper elevation={8} sx={{ m: "2rem auto", maxWidth: "768px" }}>
         <Typography textAlign="center" p="2rem" variant="h2" gutterBottom>
           {pageType === "create" ? "Fill product info" : "Edit product info"}

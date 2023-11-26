@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Box, Typography } from "@mui/material";
-import Navbar from "../Components/Navbar";
+import Header from "../Components/Header";
 import WishListProductWidget from "../Components/WishListProductWidget";
 import { useDispatch, useSelector } from "react-redux";
 import { setWishListProducts } from "../features/product/productSlice";
@@ -39,7 +39,7 @@ function WishlistPage() {
 
   return (
     <Box>
-      <Navbar />
+      <Header />
       <Box marginY="15px" marginX="30px">
         <Box marginBottom="2rem">
           <Typography

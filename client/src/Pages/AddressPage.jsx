@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import Navbar from "../Components/Navbar";
+import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import AddressWidget from "../Components/AddressWidget";
 import { setAddresses } from "../features/address/addressSlice";
@@ -43,7 +43,7 @@ function AddressPage() {
 
   return (
     <Box sx={{ overflowX: "hidden" }}>
-      <Navbar />
+      <Header />
       <Box
         maxWidth="980px"
         padding="1rem"
