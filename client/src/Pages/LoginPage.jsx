@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { enqueueSnackbar } from 'notistack'
+import { enqueueSnackbar } from "notistack";
 import {
   Box,
   Paper,
@@ -58,35 +58,33 @@ const signupInitialValues = {
 };
 
 function LoginPage() {
+  const smallScreen = useMediaQuery("(min-width:425px)");
   const mediumScreen = useMediaQuery("(min-width:768px)");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  
+
   const [isLoginPage, setIsLoginPage] = useState(true);
 
   const handleLogin = async (values) => {
-    const res = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/auth/login`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      }
-    );
+    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
     const json = await res.json();
     if (json.success) {
       dispatch(setCustomerLogin(json.data));
-      enqueueSnackbar('Successfully login', { variant: 'success' })
+      enqueueSnackbar("Successfully login", { variant: "success" });
       dispatch(setWishList(json.data.wishList));
       // Send them back to the page they tried to visit when they were redirected to the login page. Use { replace: true } so we don't create another entry in the history stack for the login page.  This means that when they get to the protected page and click the back button, they won't end up back on the login page, which is also really nice for the user experience.
       navigate(from, { replace: true });
     } else {
-      enqueueSnackbar(json.error, { variant: 'error' })
+      enqueueSnackbar(json.error, { variant: "error" });
     }
   };
 
@@ -104,12 +102,12 @@ function LoginPage() {
     const json = await res.json();
     if (json.success) {
       dispatch(setCustomerLogin(json.data));
-      enqueueSnackbar('Successfully signup', { variant: 'success' })
+      enqueueSnackbar("Successfully signup", { variant: "success" });
       dispatch(setWishList(json.data.wishList));
       // Send them back to the page they tried to visit when they were redirected to the login page. Use { replace: true } so we don't create another entry in the history stack for the login page.  This means that when they get to the protected page and click the back button, they won't end up back on the login page, which is also really nice for the user experience.
       navigate(from, { replace: true });
     } else {
-      enqueueSnackbar(json.error, { variant: 'error' })
+      enqueueSnackbar(json.error, { variant: "error" });
     }
   };
 
@@ -124,7 +122,7 @@ function LoginPage() {
   });
 
   return (
-    <Box>
+    <Box sx={{ overflowX: "hidden" }}>
       <Box bgcolor="#131921">
         <Typography
           textAlign="center"
@@ -136,7 +134,9 @@ function LoginPage() {
           Prime Cart
         </Typography>
       </Box>
-      <Paper elevation={8} sx={{ m: mediumScreen?"2rem auto":"2rem 1rem", maxWidth: "736px" }}>
+      <Paper
+        elevation={8}
+        sx={{ m: mediumScreen ? "2rem auto" : "2rem 1rem", maxWidth: "736px" }}>
         <Typography textAlign="center" p="2rem" variant="h1" gutterBottom>
           {isLoginPage ? "Login" : "Signup"}
         </Typography>
@@ -148,8 +148,8 @@ function LoginPage() {
           onSubmit={formik.handleSubmit}>
           {isLoginPage ? null : (
             <Stack
-              spacing={3}
-              direction="row"
+              gap={3}
+              flexDirection={smallScreen ? "row" : "column"}
               fullWidth
               sx={{ m: 1, width: "100%" }}>
               <TextField

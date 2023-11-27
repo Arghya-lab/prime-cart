@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Pagination, Typography } from "@mui/material";
+import { Box, Pagination, Typography, useMediaQuery } from "@mui/material";
+import { SentimentVeryDissatisfied } from "@mui/icons-material";
 import Header from "../Components/Header";
 import ProductWidget from "../Components/ProductWidget";
 import Footer from "../Components/Footer";
 import { setSearchProducts } from "../features/product/productSlice";
-import { SentimentVeryDissatisfied } from "@mui/icons-material";
 import { setLoadingProgress } from "../features/additionalInfo/additionalInfoSlice";
 
 function SearchProductPage() {
+  const largeScreen = useMediaQuery("(min-width:1024px)");
+  const mediumScreen = useMediaQuery("(min-width:768px)");
+
   const [searchParams, setSearchParams] = useSearchParams();
   const query = decodeURIComponent(searchParams.get("query"));
   const currentPage = decodeURIComponent(searchParams.get("page") || 1);
@@ -49,22 +52,17 @@ function SearchProductPage() {
   };
 
   return (
-    <Box>
+    <Box sx={{ overflowX: "hidden" }}>
       <Header />
       {data.length !== 0 ? (
         <Box margin="1rem">
           <Box
             border="1px solid"
-            borderColor="grey.500"
             borderRadius="8px"
-            padding="14px 18px"
-            marginY="20px">
-            <Typography
-              component="span"
-              variant="subtitle1"
-              sx={{
-                paddingLeft: "20px",
-              }}>
+            borderColor="grey.500"
+            padding={mediumScreen ? "14px 18px" : "8px 10px"}
+            marginY={mediumScreen ? "20px" : "12px"}>
+            <Typography component="span" variant="subtitle1" paddingLeft="20px">
               Total {totalResult} results for
             </Typography>
             &nbsp;
@@ -78,7 +76,13 @@ function SearchProductPage() {
           </Box>
           <Box
             display="grid"
-            gridTemplateColumns="repeat(auto-fill,minmax(320px,auto))"
+            gridTemplateColumns={
+              largeScreen
+                ? "repeat(auto-fill,minmax(320px,auto))"
+                : mediumScreen
+                ? "repeat(auto-fill,minmax(240px,auto))"
+                : "repeat(auto-fill,minmax(150px,auto))"
+            }
             gap="1rem">
             {data.map((info) => (
               <ProductWidget

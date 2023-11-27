@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import { DeleteOutline } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -8,11 +7,12 @@ import {
   Rating,
   Stack,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
+import { DeleteOutline } from "@mui/icons-material";
 import { setWishList } from "../features/additionalInfo/additionalInfoSlice";
 import { setWishListProducts } from "../features/product/productSlice";
 import { enqueueSnackbar } from "notistack";
-import { useNavigate } from "react-router-dom";
 
 function WishListProductWidget({
   id,
@@ -22,7 +22,9 @@ function WishListProductWidget({
   ratingCount,
   price,
 }) {
-  const navigate = useNavigate();
+  const largeScreen = useMediaQuery("(min-width:1024px)");
+  const mediumScreen = useMediaQuery("(min-width:768px)");
+
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   let wishListProducts = useSelector((state) => state.product.wishListProducts);
@@ -41,9 +43,9 @@ function WishListProductWidget({
       const json = await res.json();
       if (json.success) {
         dispatch(setWishList(json.data));
-        enqueueSnackbar('Product removed from wishlist', { variant: 'info' })        
+        enqueueSnackbar("Product removed from wishlist", { variant: "info" });
       } else {
-        enqueueSnackbar(json.error, { variant: 'error' })
+        enqueueSnackbar(json.error, { variant: "error" });
       }
     })();
     const updatedWishListProducts = wishListProducts.filter((product) => {
@@ -53,11 +55,6 @@ function WishListProductWidget({
   };
 
   const handleAddToCart = () => {
-    // check if customer is logged in
-    if (!token) {
-      navigate("/login", { state: { from: location } }, { replace: true });
-      return;
-    }
     (async () => {
       const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/cart`, {
         method: "POST",
@@ -69,9 +66,9 @@ function WishListProductWidget({
       });
       const json = await res.json();
       if (json.success) {
-        enqueueSnackbar('Product added to cart', { variant: 'success' })
+        enqueueSnackbar("Product added to cart", { variant: "success" });
       } else {
-        enqueueSnackbar(json.error, { variant: 'error' })
+        enqueueSnackbar(json.error, { variant: "error" });
       }
     })();
   };
@@ -80,14 +77,17 @@ function WishListProductWidget({
     <Box maxWidth="1024px" margin="auto">
       <Box width="100%" height="1.5px" bgcolor="grey.600" />
       <Stack direction="row">
-        <Box width="220px" minHeight="150px" cursor="pointer">
+        <Box
+          width={largeScreen ? "220px" : mediumScreen ? "182px" : "96px"}
+          minHeight="150px"
+          cursor="pointer">
           <img
             /* img url */
             src={`${
               import.meta.env.VITE_IMG_BASE_URL
             }/assets/productImgs/${imgUrl}`}
-            height="135px"
-            width="135px"
+            height={largeScreen ? "136px" : mediumScreen ? "112px" : "68px"}
+            width={largeScreen ? "136px" : mediumScreen ? "112px" : "68px"}
             style={{ margin: "16px" }}
           />
         </Box>
@@ -96,34 +96,45 @@ function WishListProductWidget({
           paddingY="22px"
           textAlign="left"
           display="flex"
+          sx={{
+            ...(!mediumScreen ? { flexDirection: "column" } : null),
+          }}
           justifyContent="space-between">
-          <Box paddingRight="220px" maxWidth="550px">
+          <Box
+            paddingRight={largeScreen ? "120px" : mediumScreen ? "72px" : 0}
+            maxWidth="550px">
             <Typography
               component="p"
-              variant="h6"
+              variant={mediumScreen ? "h6" : "body2"}
               color="success.dark"
-              fontWeight={600}
+              fontWeight={mediumScreen ? 600 : 500}
               sx={{
                 ":hover": { cursor: "pointer", color: "secondary.main" },
               }}>
-              {/* name */}
               {name}
             </Typography>
-            <Typography component="p" variant="body2">
+            <Typography
+              component="p"
+              variant={mediumScreen ? "body2" : "caption"}>
               by boAt (Electronics)
             </Typography>
             <Box display="flex" alignItems="center">
               {/* value = star count */}
-              <Rating name="rating" value={rating} precision={0.5} readOnly />
+              <Rating
+                name="rating"
+                size={mediumScreen ? "medium" : "small"}
+                value={rating}
+                precision={0.5}
+                readOnly
+              />
               &nbsp;
               <Typography
                 component="p"
-                variant="body1"
-                color= "success.dark"
+                variant={mediumScreen ? "body1" : "caption"}
+                color="success.dark"
                 sx={{
                   ":hover": { cursor: "pointer", color: "secondary.main" },
                 }}>
-                {/* rating count */}
                 {ratingCount}
               </Typography>
             </Box>
@@ -156,22 +167,31 @@ function WishListProductWidget({
                 sx={{ position: "relative", top: "-0.3em" }}>
                 ₹
               </Typography>
-              <Typography component="span" fontWeight={600}>
-                {/* selling price */}
+              <Typography
+                component="span"
+                variant={mediumScreen ? "subtitle1" : "caption"}
+                fontWeight={600}>
                 {price.selling}
               </Typography>
-              &nbsp;
-              <Typography component="span" variant="caption">
-                <b>FREE Delivery</b> on orders over ₹499.
-              </Typography>
+              {mediumScreen ? (
+                <>
+                  &nbsp;
+                  <Typography component="span" variant="caption">
+                    <b>FREE Delivery</b> on orders over ₹499.
+                  </Typography>
+                </>
+              ) : null}
             </Box>
             <Box>
-              <Typography component="span" variant="body2" color="grey.800">
+              <Typography
+                component="span"
+                variant={mediumScreen ? "body2" : "caption"}
+                color="grey.800">
                 M.R.P.:&nbsp;
               </Typography>
               <Typography
                 component="span"
-                variant="body2"
+                variant={mediumScreen ? "body2" : "caption"}
                 color="grey.800"
                 textDecoration="line-through">
                 {/* MRP */}
@@ -179,14 +199,21 @@ function WishListProductWidget({
               </Typography>
             </Box>
           </Box>
-          <Box>
+          <Box
+            sx={{
+              ...(!mediumScreen
+                ? { display: "flex", alignItems: "center", gap: "16px" }
+                : null),
+              marginY: "8px",
+            }}>
             <Button
+              size={mediumScreen ? "medium" : "small"}
               variant="contained"
               color="warning"
-              width="200px"
               sx={{
-                marginY: "8px",
+                minWidth: "112px",
                 ":hover": { bgcolor: "warning.main" },
+                textTransform: "capitalize",
               }}
               onClick={handleAddToCart}>
               Add to Cart
@@ -199,7 +226,9 @@ function WishListProductWidget({
               {/* <IconButton>
                 <IosShare />
               </IconButton> */}
-              <IconButton onClick={handleRemoveFromWishList}>
+              <IconButton
+                size={mediumScreen ? "medium" : "small"}
+                onClick={handleRemoveFromWishList}>
                 <DeleteOutline />
               </IconButton>
             </Box>

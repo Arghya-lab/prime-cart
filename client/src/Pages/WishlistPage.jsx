@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import Header from "../Components/Header";
 import WishListProductWidget from "../Components/WishListProductWidget";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +8,9 @@ import { setLoadingProgress } from "../features/additionalInfo/additionalInfoSli
 import Footer from "../Components/Footer";
 
 function WishlistPage() {
+  const mediumScreen = useMediaQuery("(min-width:768px)");
+  const smallScreen = useMediaQuery("(min-width:425px)");
+
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   const data = useSelector((state) => state.product.wishListProducts);
@@ -35,33 +38,23 @@ function WishlistPage() {
       }
       dispatch(setLoadingProgress(100));
     })();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <Box>
+    <Box sx={{ overflowX: "hidden" }}>
       <Header />
-      <Box marginY="15px" marginX="30px">
-        <Box marginBottom="2rem">
-          <Typography
-            variant="h2"
-            color="success.dark"
-            fontWeight={700}
-            padding="1rem"
-            textAlign="center">
-            Wishlist
-          </Typography>
-          <Box
-            width="10rem"
-            height="4px"
-            bgcolor="success.dark"
-            marginX="auto"
-          />
-        </Box>
+      <Box maxWidth="920px" padding="16px" margin="auto">
+        <Typography
+          component="h3"
+          variant={mediumScreen ? "h1" : smallScreen ? "h2" : "h3"}
+          paddingBottom={smallScreen ? "12px" : 0}>
+          Wishlist
+        </Typography>
         <Box
           border="1px solid grey.600"
           borderRadius="2px"
-          maxWidth="1366px"
-          padding="14px 18px">
+          padding={mediumScreen ? "14px 18px" : "14px 0px"}>
           {data &&
             data.map((info) => (
               <WishListProductWidget

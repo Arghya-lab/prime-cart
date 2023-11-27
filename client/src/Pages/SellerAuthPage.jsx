@@ -8,6 +8,7 @@ import {
   Stack,
   TextField,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import Header from "../Components/Header";
 import { setSellerToken } from "../features/auth/authSlice";
@@ -38,6 +39,8 @@ const validationSchema = yup.object({
 });
 
 function SellerAuthPage() {
+  const mediumScreen = useMediaQuery("(min-width:768px)");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isCreateSellerPage, setIsCreateSellerPage] = useState(true);
@@ -95,103 +98,102 @@ function SellerAuthPage() {
   };
 
   return (
-    <Box>
+    <Box sx={{ overflowX: "hidden" }}>
       <Header />
       <Paper
         elevation={8}
         sx={{
-          m: "2rem auto",
-          maxWidth: "768px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "2rem",
+          m: mediumScreen ? "2rem auto" : "2rem 1rem",
+          maxWidth: "736px",
         }}>
         <Typography textAlign="center" p="2rem" variant="h2" gutterBottom>
           {isCreateSellerPage ? "Seller registration form" : undefined}
         </Typography>
-        {isCreateSellerPage ? (
-          <Stack
-            component="form"
-            width={600}
-            alignItems="center"
-            spacing={3}
-            paddingX={4}
-            onSubmit={formik.handleSubmit}>
-            <TextField
-              sx={{ m: 1 }}
-              variant="outlined"
-              fullWidth
-              color="grey"
-              id="customerSupportEmail"
-              name="customerSupportEmail"
-              label="customer Support Email"
-              value={formik.values.customerSupportEmail}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={
-                formik.touched.customerSupportEmail &&
-                Boolean(formik.errors.customerSupportEmail)
-              }
-              helperText={
-                formik.touched.customerSupportEmail &&
-                formik.errors.customerSupportEmail
-              }
-            />
-            <TextField
-              sx={{ m: 1 }}
-              variant="outlined"
-              fullWidth
-              color="grey"
-              id="panNo"
-              name="panNo"
-              label="Pan No."
-              type="panNo"
-              value={formik.values.panNo}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.panNo && Boolean(formik.errors.panNo)}
-              helperText={formik.touched.panNo && formik.errors.panNo}
-            />
-            <TextField
-              sx={{ m: 1 }}
-              variant="outlined"
-              fullWidth
-              color="grey"
-              id="location"
-              name="location"
-              label="Location"
-              type="location"
-              value={formik.values.location}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.location && Boolean(formik.errors.location)}
-              helperText={formik.touched.location && formik.errors.location}
-            />
-            <Button color="primary" variant="contained" type="submit">
-              Submit
+        <Stack
+          component="form"
+          alignItems="center"
+          spacing={3}
+          paddingX={4}
+          onSubmit={formik.handleSubmit}>
+          {isCreateSellerPage ? (
+            <>
+              <TextField
+                sx={{ m: 1 }}
+                variant="outlined"
+                fullWidth
+                color="grey"
+                id="customerSupportEmail"
+                name="customerSupportEmail"
+                label="customer Support Email"
+                value={formik.values.customerSupportEmail}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.customerSupportEmail &&
+                  Boolean(formik.errors.customerSupportEmail)
+                }
+                helperText={
+                  formik.touched.customerSupportEmail &&
+                  formik.errors.customerSupportEmail
+                }
+              />
+              <TextField
+                sx={{ m: 1 }}
+                variant="outlined"
+                fullWidth
+                color="grey"
+                id="panNo"
+                name="panNo"
+                label="Pan No."
+                type="panNo"
+                value={formik.values.panNo}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.panNo && Boolean(formik.errors.panNo)}
+                helperText={formik.touched.panNo && formik.errors.panNo}
+              />
+              <TextField
+                sx={{ m: 1 }}
+                variant="outlined"
+                fullWidth
+                color="grey"
+                id="location"
+                name="location"
+                label="Location"
+                type="location"
+                value={formik.values.location}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.location && Boolean(formik.errors.location)
+                }
+                helperText={formik.touched.location && formik.errors.location}
+              />
+              <Button color="primary" variant="contained" type="submit">
+                Submit
+              </Button>
+            </>
+          ) : (
+            <Button
+              color="primary"
+              variant="contained"
+              type="button"
+              sx={{ width: "300px" }}
+              onClick={handleFetchSellerInfo}>
+              Get seller info
             </Button>
-          </Stack>
-        ) : (
+          )}
           <Button
-            color="primary"
-            variant="contained"
+            color="secondary"
+            variant="text"
             type="button"
-            sx={{ width: "300px" }}
-            onClick={handleFetchSellerInfo}>
-            Get seller info
+            sx={{ m: "1rem" }}
+            onClick={() => setIsCreateSellerPage(!isCreateSellerPage)}>
+            {isCreateSellerPage
+              ? "I am already seller"
+              : "Go to create seller page"}
           </Button>
-        )}
-        <Button
-          color="secondary"
-          variant="text"
-          type="button"
-          sx={{ m: "1rem" }}
-          onClick={() => setIsCreateSellerPage(!isCreateSellerPage)}>
-          {isCreateSellerPage
-            ? "I am already seller"
-            : "Go to create seller page"}
-        </Button>
+        </Stack>
       </Paper>
     </Box>
   );
