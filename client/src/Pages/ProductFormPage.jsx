@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useSelector } from "react-redux";
 import {
   Box,
   Button,
@@ -15,11 +16,11 @@ import {
   Stack,
   TextField,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
+import { red } from "@mui/material/colors";
 import SellerHeader from "../Components/Header/SellerHeader";
 import ImgDrop from "../Components/ImgDrop";
-import { red } from "@mui/material/colors";
-import { useNavigate } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
 
 const validationSchema = yup.object({
@@ -41,6 +42,8 @@ const validationSchema = yup.object({
 });
 
 function ProductFormPage({ pageType }) {
+  const mediumScreen = useMediaQuery("(min-width:768px)");
+
   const sellerToken = useSelector((state) => state.auth.sellerToken);
   const { productUpdateId, initialUpdateValue } = useSelector(
     (state) => state.seller
@@ -50,7 +53,8 @@ function ProductFormPage({ pageType }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!productUpdateId) navigate("/seller/listings");
+    if (pageType === "edit" && !productUpdateId) navigate("/seller/listings");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -141,9 +145,11 @@ function ProductFormPage({ pageType }) {
   });
 
   return (
-    <Box>
+    <Box sx={{ overflowX: "hidden" }}>
       <SellerHeader />
-      <Paper elevation={8} sx={{ m: "2rem auto", maxWidth: "768px" }}>
+      <Paper
+        elevation={8}
+        sx={{ m: mediumScreen ? "2rem auto" : "2rem 1rem", maxWidth: "736px" }}>
         <Typography textAlign="center" p="2rem" variant="h2" gutterBottom>
           {pageType === "create" ? "Fill product info" : "Edit product info"}
         </Typography>

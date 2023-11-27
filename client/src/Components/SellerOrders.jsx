@@ -14,6 +14,7 @@ import {
   Pagination,
   Modal,
   Button,
+  useMediaQuery,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { tableCellClasses } from "@mui/material/TableCell";
@@ -37,6 +38,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 function SellerOrders() {
+  const mediumScreen = useMediaQuery("(min-width:768px)");
+
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = decodeURIComponent(searchParams.get("page") || 1);
   const productLimit = decodeURIComponent(searchParams.get("limit") || 5);
@@ -111,84 +114,92 @@ function SellerOrders() {
       <Typography
         component="h6"
         variant="h1"
-        margin="36px 24px"
+        marginX="24px"
+        marginTop="36px"
+        marginBottom={mediumScreen ? "36px" : "20px"}
         borderBottom="2px solid #DDD">
         orders
       </Typography>
-      <TableContainer component={Paper} sx={{ minWidth: 1024 }}>
-        <Table aria-label="listing table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell align="right">Img</StyledTableCell>
-              <StyledTableCell align="right">Name</StyledTableCell>
-              <StyledTableCell align="right">Sold price</StyledTableCell>
-              <StyledTableCell align="right">Delivery charge</StyledTableCell>
-              <StyledTableCell align="right">Order placed time</StyledTableCell>
-              <StyledTableCell align="right">Payment type</StyledTableCell>
-              <StyledTableCell align="right">Quantity</StyledTableCell>
-              <StyledTableCell align="right">Status</StyledTableCell>
-              <StyledTableCell align="right">Action</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {sellerOrders.map((row) => (
-              <TableRow key={row._id}>
-                <StyledTableCell>
-                  <img
-                    /* img url */
-                    src={`${
-                      import.meta.env.VITE_IMG_BASE_URL
-                    }/assets/productImgs/${
-                      row.product.imgUrls[row.product.imgUrls.length - 1]
-                    }`}
-                    height="70px"
-                    width="70px"
-                  />
-                </StyledTableCell>
-                <StyledTableCell
-                  align="left"
-                  sx={{
-                    color: "success.light",
-                    // fontWeight: 600,
-                  }}>
-                  {row.product.name}
-                </StyledTableCell>
+      <Box sx={{ overflowX: "scroll", margin: "0 24px" }}>
+        <TableContainer component={Paper} sx={{ minWidth: "1344px" }}>
+          <Table aria-label="listing table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell align="right">Img</StyledTableCell>
+                <StyledTableCell align="right">Name</StyledTableCell>
+                <StyledTableCell align="right">Sold price</StyledTableCell>
+                <StyledTableCell align="right">Delivery charge</StyledTableCell>
                 <StyledTableCell align="right">
-                  {row.price.productPrice}
+                  Order placed time
                 </StyledTableCell>
-                <StyledTableCell align="right">
-                  {row.price.deliveryCharge}
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  {row.orderPlacedTime}
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  {row.paymentType}
-                </StyledTableCell>
-                <StyledTableCell align="right">{row.quantity}</StyledTableCell>
-                <StyledTableCell align="right">{row.status}</StyledTableCell>
-                {row.status === "processing" ? (
-                  <StyledTableCell
-                    align="center"
-                    sx={{
-                      color: "secondary.main",
-                      cursor: "pointer",
-                      textDecoration: "underline",
-                      ":hover": {
-                        color: "success.dark",
-                      },
-                    }}
-                    onClick={() => setConfirmOrderId(row._id)}>
-                    confirm
-                  </StyledTableCell>
-                ) : (
-                  <StyledTableCell align="center">-</StyledTableCell>
-                )}
+                <StyledTableCell align="right">Payment type</StyledTableCell>
+                <StyledTableCell align="right">Quantity</StyledTableCell>
+                <StyledTableCell align="right">Status</StyledTableCell>
+                <StyledTableCell align="right">Action</StyledTableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {sellerOrders.map((row) => (
+                <TableRow key={row._id}>
+                  <StyledTableCell>
+                    <img
+                      /* img url */
+                      src={`${
+                        import.meta.env.VITE_IMG_BASE_URL
+                      }/assets/productImgs/${
+                        row.product.imgUrls[row.product.imgUrls.length - 1]
+                      }`}
+                      height="70px"
+                      width="70px"
+                    />
+                  </StyledTableCell>
+                  <StyledTableCell
+                    align="left"
+                    sx={{
+                      color: "success.light",
+                      // fontWeight: 600,
+                    }}>
+                    {row.product.name}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {row.price.productPrice}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {row.price.deliveryCharge}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {row.orderPlacedTime}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {row.paymentType}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {row.quantity}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">{row.status}</StyledTableCell>
+                  {row.status === "processing" ? (
+                    <StyledTableCell
+                      align="center"
+                      sx={{
+                        color: "secondary.main",
+                        cursor: "pointer",
+                        textDecoration: "underline",
+                        ":hover": {
+                          color: "success.dark",
+                        },
+                      }}
+                      onClick={() => setConfirmOrderId(row._id)}>
+                      confirm
+                    </StyledTableCell>
+                  ) : (
+                    <StyledTableCell align="center">-</StyledTableCell>
+                  )}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
       <Modal open={Boolean(confirmOrderId)} onClose={handleCloseModal}>
         <Box
           border="2px solid white"
@@ -225,7 +236,11 @@ function SellerOrders() {
         </Box>
       </Modal>
       {totalResult > sellerOrders.length && (
-        <Box display="flex" justifyContent="center" mt={2}>
+        <Box
+          display="flex"
+          justifyContent="center"
+          mt="1rem"
+          marginBottom="24px">
           <Pagination
             count={Math.ceil(totalResult / productLimit)}
             siblingCount={1}

@@ -1,9 +1,11 @@
-import { Box, Typography } from "@mui/material";
-import SellerHeader from "../Components/Header/SellerHeader";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Box, Typography, useMediaQuery } from "@mui/material";
+import SellerHeader from "../Components/Header/SellerHeader";
 
 function SellerPage() {
+  const smallScreen = useMediaQuery("(min-width:425px)");
+
   const navigate = useNavigate();
   const location = useLocation()
   const [selectedTab, setSelectedTab] = useState("overview");
@@ -21,7 +23,6 @@ function SellerPage() {
     <Box minHeight="100vh">
       <SellerHeader />
       <Box
-        maxHeight="56px"
         px="12px"
         color="#fff"
         bgcolor="info.main"
@@ -32,7 +33,7 @@ function SellerPage() {
         >
         <Typography
           marginY="6px"
-          padding="4px 24px"
+          padding={smallScreen?"4px 24px":"2px 10px"}
           sx={{
             borderRadius: "2px",
             cursor: "pointer",
@@ -48,7 +49,7 @@ function SellerPage() {
         </Typography>
         <Typography
           marginY="6px"
-          padding="4px 24px"
+          padding={smallScreen?"4px 24px":"2px 10px"}
           sx={{
             borderRadius: "2px",
             cursor: "pointer",
@@ -64,7 +65,7 @@ function SellerPage() {
         </Typography>
         <Typography
           marginY="6px"
-          padding="4px 24px"
+          padding={smallScreen?"4px 24px":"2px 10px"}
           sx={{
             borderRadius: "2px",
             cursor: "pointer",
@@ -80,7 +81,7 @@ function SellerPage() {
         </Typography>
         <Typography
           marginY="6px"
-          padding="4px 24px"
+          padding={smallScreen?"4px 24px":"2px 10px"}
           sx={{
             borderRadius: "2px",
             cursor: "pointer",

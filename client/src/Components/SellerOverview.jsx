@@ -1,13 +1,16 @@
-import { Box, Paper, Stack, Typography } from "@mui/material";
-import { enqueueSnackbar } from "notistack";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Box, Paper, Stack, Typography, useMediaQuery } from "@mui/material";
 import {
   setOrdersStatusCount,
   setSalesAndRevenue,
 } from "../features/seller/sellerSlice";
+import { enqueueSnackbar } from "notistack";
 
 function SellerOverview() {
+  const mediumScreen = useMediaQuery("(min-width:768px)");
+  const smallScreen = useMediaQuery("(min-width:425px)");
+
   const dispatch = useDispatch();
   const sellerToken = useSelector((state) => state.auth.sellerToken);
   const { ordersStatusCount, salesAndRevenue } = useSelector(
@@ -34,26 +37,37 @@ function SellerOverview() {
         enqueueSnackbar(json.error, { variant: "error" });
       }
     })();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <Box margin="1rem">
+    <Box
+      maxWidth="920px"
+      padding={smallScreen ? "16px" : 0}
+      margin="auto"
+      sx={{ overflowX: "hidden" }}>
       <Box>
         <Typography
           component="h6"
-          variant="h2"
-          margin="36px 18px"
+          variant={smallScreen ? "h2" : "h3"}
+          margin={mediumScreen ? "36px 18px" : "16px 16px 24px"}
           borderBottom="2px solid #DDD">
           Order status
         </Typography>
-        <Box marginX="36px" display="flex" gap="24px" flexWrap="wrap">
+        <Box
+          marginX={mediumScreen ? "36px" : "24px"}
+          display="flex"
+          gap="24px"
+          flexWrap="wrap">
           {Object.keys(ordersStatusCount).map((type) => (
             //  Object.keys(ordersStatusCount) returns an array of keys
-            <Paper key={type} elevation={3} sx={{ padding: "24px 48px" }}>
+            <Paper
+              key={type}
+              elevation={3}
+              sx={{ padding: mediumScreen ? "24px 48px" : "12px 24px" }}>
               <Typography
                 component="h6"
-                variant="h3"
+                variant={mediumScreen ? "h3" : "h4"}
                 fontWeight={600}
                 color={
                   type === "canceled"
@@ -81,14 +95,15 @@ function SellerOverview() {
         <Typography
           component="h6"
           variant="h2"
-          margin="5rem 18px 36px"
+          margin={smallScreen ? "80px 18px 36px" : "36px 18px 24px"}
           borderBottom="2px solid #DDD">
           Top selling products
         </Typography>
         <Paper
           elevation={3}
           sx={{
-            marginX: "36px",
+            marginX: mediumScreen ? "36px" : "24px",
+            marginBottom: "24px",
             display: "flex",
             flexDirection: "column",
             gap: "24px",
@@ -106,21 +121,25 @@ function SellerOverview() {
                       }/assets/productImgs/${
                         item.product.imgUrls[item.product.imgUrls.length - 1]
                       }`}
-                      height="160px"
-                      width="160px"
+                      height={smallScreen ? "160px" : "120px"}
+                      width={smallScreen ? "160px" : "120px"}
                       style={{ margin: "16px" }}
                     />
                   </Box>
                   <Box
                     width="100%"
-                    paddingY="22px"
+                    paddingY="20px"
                     textAlign="left"
                     display="flex"
                     justifyContent="space-between">
-                    <Box paddingRight="220px" maxWidth="550px">
+                    <Box
+                      paddingRight={mediumScreen ? "220px" : "12px"}
+                      maxWidth="550px">
                       <Typography
                         component="p"
-                        variant="h4"
+                        variant={
+                          mediumScreen ? "h4" : smallScreen ? "h6" : "body2"
+                        }
                         color="grey.800"
                         fontWeight={600}
                         sx={{
@@ -132,12 +151,14 @@ function SellerOverview() {
                         {item.product.name}
                       </Typography>
                       <Box>
-                        <Typography component="span" variant="h5">
-                          Category :&nbsp;
-                        </Typography>
+                        {smallScreen ? (
+                          <Typography component="span" variant="h5">
+                            Category :&nbsp;
+                          </Typography>
+                        ) : null}
                         <Typography
                           component="span"
-                          variant="h5"
+                          variant={smallScreen ? "h5" : "subtitle2"}
                           color="grey.800">
                           {item.product.category
                             .replace(/([A-Z])/g, " $1") // Insert space before capital letters
@@ -147,21 +168,25 @@ function SellerOverview() {
                             )}
                         </Typography>
                       </Box>
-                      <Box marginY="4px">
-                        <Typography component="span" variant="h5">
-                          Total sold count :
+                      <Box marginY={smallScreen ? "4px" : 0}>
+                        <Typography
+                          component="span"
+                          variant={smallScreen ? "h5" : "subtitle2"}>
+                          Total sold :
                         </Typography>
                         &nbsp;
                         <Typography
                           component="span"
-                          variant="h6"
+                          variant={smallScreen ? "h6" : "subtitle2"}
                           fontWeight={600}
                           color="success.light">
-                          {item.totalSalesNo}
+                          {item.totalSalesNo} items
                         </Typography>
                       </Box>
                       <Box>
-                        <Typography component="span" variant="h5">
+                        <Typography
+                          component="span"
+                          variant={smallScreen ? "h5" : "subtitle2"}>
                           Total revenue :
                         </Typography>
                         &nbsp;
@@ -181,13 +206,13 @@ function SellerOverview() {
                       <Box>
                         <Typography
                           component="span"
-                          variant="h5"
+                          variant={smallScreen ? "h5" : "subtitle2"}
                           color="error.light">
                           Canceled&nbsp;
                         </Typography>
                         <Typography
                           component="span"
-                          variant="h6"
+                          variant={smallScreen ? "h6" : "subtitle2"}
                           color="grey.800"
                           textDecoration="line-through">
                           by : {item.totalCanceled} people

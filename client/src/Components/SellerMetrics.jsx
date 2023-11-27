@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography, useMediaQuery } from "@mui/material";
 import {
   Chart as ChartJS,
   Tooltip,
@@ -19,6 +19,9 @@ import {
 import { enqueueSnackbar } from "notistack";
 
 function SellerMetrics() {
+  const mediumScreen = useMediaQuery("(min-width:768px)");
+  const smallScreen = useMediaQuery("(min-width:425px)");
+
   const dispatch = useDispatch();
   const sellerToken = useSelector((state) => state.auth.sellerToken);
   const { salesAndRevenue } = useSelector((state) => state.seller);
@@ -109,35 +112,47 @@ function SellerMetrics() {
   };
 
   return (
-    <Box display="flex" flexWrap="wrap">
-      <Box margin="1.5rem">
+    <Box
+      display="flex"
+      flexWrap="wrap"
+      maxWidth="1440px"
+      margin="auto"
+      sx={{ overflowX: "hidden" }}>
+      <Box
+        margin={smallScreen ? "1.5rem" : 0}
+        width={mediumScreen ? "auto" : "100%"}>
         <Typography
           component="h6"
-          variant="h2"
-          margin="5rem 18px 36px"
+          variant={smallScreen ? "h2" : "h3"}
+          margin={smallScreen ? "20px 0px 36px" : "36px 8px 24px"}
           borderBottom="2px solid #DDD">
           Total sales
         </Typography>
         <Paper
           sx={{
             maxWidth: "460px",
-            padding: "1rem"
+            padding: smallScreen ? "1rem" : "0.5rem",
+            marginX: smallScreen ? 0 : "0.5rem",
           }}>
-        <Doughnut data={pieData} />
-      </Paper>
+          <Doughnut style={{ margin: "auto" }} data={pieData} />
+        </Paper>
       </Box>
-      <Box margin="1.5rem">
+      <Box
+        margin={smallScreen ? "1.5rem" : 0}
+        width={mediumScreen ? "auto" : "100%"}>
         <Typography
           component="h6"
-          variant="h2"
-          margin="5rem 18px 36px"
+          variant={smallScreen ? "h2" : "h3"}
+          margin={smallScreen ? "20px 0px 36px" : "36px 8px 24px"}
           borderBottom="2px solid #DDD">
           Total sold & cancel
         </Typography>
         <Paper
           sx={{
             maxWidth: "680px",
-            padding: "1rem"
+            minWidth: mediumScreen ? "640px" : "80%",
+            padding: smallScreen ? "1rem" : "0.5rem",
+            marginX: smallScreen ? 0 : "0.5rem",
           }}>
           <Bar
             options={{

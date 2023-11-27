@@ -1,16 +1,29 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { Box, List, ListItem, Paper, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  List,
+  ListItem,
+  Paper,
+  Stack,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import {
   Logout,
   KeyboardArrowDown,
   KeyboardArrowUp,
   Home,
+  AddCircle,
+  AccountCircle,
+  Clear,
 } from "@mui/icons-material";
 import { setLogout } from "../../features/auth/authSlice";
 
 function SellerHeader() {
+  const mediumScreen = useMediaQuery("(min-width:768px)");
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -36,24 +49,19 @@ function SellerHeader() {
       px="2rem"
       py="6px"
       height="60px">
-      <Typography
-        variant="h1"
-        fontSize={40}
-        fontWeight="fontWeightBold"
-        color="#fff"
-        padding="4px 6px"
-        sx={{
-          cursor: "pointer",
-          ":hover": { border: "1px solid white", borderRadius: "2px" },
+      <img
+        src="http://localhost:5173/logo/logo-220px.png"
+        style={{
+          width: mediumScreen ? "220px" : "160px",
+          margin: "0.7rem 0",
         }}
-        onClick={() => navigate("/")}>
-        Prime Cart
-      </Typography>
+        onClick={() => navigate("/")}
+      />
       <Stack
         direction="row"
-        spacing={5}
+        spacing={mediumScreen ? 5 : 1}
         alignItems="center"
-        px={3}
+        px={mediumScreen?3:0}
         py={1.6}
         justifyContent="space-between">
         <Box
@@ -63,16 +71,22 @@ function SellerHeader() {
             ":hover": { border: "1px solid white", borderRadius: "2px" },
           }}
           onClick={() => navigate("/createProduct")}>
-          <Typography variant="caption" color="#fff">
-            list new
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            color="#fff"
-            lineHeight="15px"
-            fontWeight={600}>
-            product
-          </Typography>
+          {mediumScreen ? (
+            <>
+              <Typography variant="caption" color="#fff">
+                list new
+              </Typography>
+              <Typography
+                variant="subtitle1"
+                color="#fff"
+                lineHeight="15px"
+                fontWeight={600}>
+                product
+              </Typography>
+            </>
+          ) : (
+            <AddCircle fontSize="large" sx={{ color: "#fff" }} />
+          )}
         </Box>
         <Box
           onMouseEnter={handleViewItems}
@@ -86,19 +100,29 @@ function SellerHeader() {
             }}
             onMouseEnter={handleViewItems}
             onMouseLeave={handleHideItems}>
-            <Typography variant="caption" color="#fff">
-              Hello, sign in
-            </Typography>
-            <Box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              color="#fff">
-              <Typography variant="subtitle1" fontWeight={600}>
-                Account & Lists
-              </Typography>
-              {isDropdownOpen ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
-            </Box>
+            {mediumScreen ? (
+              <>
+                <Typography variant="caption" color="#fff">
+                  Hello, sign in
+                </Typography>
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  color="#fff">
+                  <Typography variant="subtitle1" fontWeight={600}>
+                    Account & Lists
+                  </Typography>
+                  {isDropdownOpen ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+                </Box>
+              </>
+            ) : (
+              <AccountCircle
+                fontSize="large"
+                sx={{ color: "#fff" }}
+                onClick={handleViewItems}
+              />
+            )}
             <Paper
               component={List}
               sx={{
@@ -108,8 +132,20 @@ function SellerHeader() {
                 position: "absolute",
                 minWidth: "184px",
                 zIndex: "50",
-                top: "55px",
+                top: mediumScreen ? "64px" : "55px",
+                right: mediumScreen ? "auto" : 0,
               }}>
+              {!mediumScreen ? (
+                <ListItem
+                  sx={{
+                    width: "100%",
+                    height: "48px",
+                    padding: "16px 0 0",
+                  }}
+                  onClick={handleHideItems}>
+                  <Clear sx={{ marginLeft: "120px" }} />
+                </ListItem>
+              ) : null}
               <ListItem
                 sx={{
                   width: "100%",

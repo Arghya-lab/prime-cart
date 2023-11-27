@@ -136,7 +136,7 @@ function ProductOverviewPage() {
   }
 
   return (
-    <Box>
+    <Box sx={{overflowX: "hidden"}}>
       <Header />
       {data ? (
         <Box
