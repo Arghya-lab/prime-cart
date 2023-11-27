@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { Box, Button, Rating, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Rating,
+  Stack,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import {
   LocalShippingOutlined,
   LocationOnOutlined,
   PaymentOutlined,
   ProductionQuantityLimitsOutlined,
 } from "@mui/icons-material";
-import { Fade } from "react-slideshow-image";
+// import { Fade } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
@@ -18,8 +25,14 @@ import {
 } from "../features/additionalInfo/additionalInfoSlice";
 import { enqueueSnackbar } from "notistack";
 import { setProducts } from "../features/checkout/checkoutSlice";
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
 
 function ProductOverviewPage() {
+  const extraLargeScreen = useMediaQuery("(min-width:1440px)");
+  const largeScreen = useMediaQuery("(min-width:1024px)");
+  const smallScreen = useMediaQuery("(min-width:425px)");
+
   const { productId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -30,6 +43,17 @@ function ProductOverviewPage() {
 
   const [data, setData] = useState(null);
   const [isWishListProduct, setIsWishListProduct] = useState(false);
+  
+  const images =
+    data &&
+    data.imgUrls.map((img) => ({
+      original: `${
+        import.meta.env.VITE_IMG_BASE_URL
+      }/assets/productImgs/${img}`,
+      thumbnail: `${
+        import.meta.env.VITE_IMG_BASE_URL
+      }/assets/productImgs/${img}`,
+    }));
 
   useEffect(() => {
     (async () => {
@@ -133,46 +157,34 @@ function ProductOverviewPage() {
   const handleBuyProduct = () => {
     dispatch(setProducts([data]));
     navigate("/checkout");
-  }
+  };
 
   return (
-    <Box sx={{overflowX: "hidden"}}>
+    <Box sx={{ overflowX: largeScreen ? "inherit" : "hidden" }}>
       <Header />
       {data ? (
         <Box
-          sx={{
-            margin: "1rem",
-            display: "flex",
-          }}>
-          <div className="slide-container" style={{ width: "800px" }}>
-            <Fade>
-              {data.imgUrls.map((img, index) => (
-                <div
-                  key={index}
-                  style={{
-                    margin: "auto",
-                    width: "100%",
-                    maxWidth: "600px",
-                    maxHeight: "600px",
-                    padding: "30px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}>
-                  <img
-                    style={{ objectFit: "contain" }}
-                    src={`${
-                      import.meta.env.VITE_IMG_BASE_URL
-                    }/assets/productImgs/${img}`}
-                  />
-                </div>
-              ))}
-            </Fade>
-          </div>
+          maxWidth="1440px"
+          margin="auto"
+          padding="16px"
+          display="flex"
+          flexDirection={largeScreen ? "row" : "column"}>
           <Box
-            sx={{
-              marginX: "1rem",
-            }}>
+            width={extraLargeScreen ? "512px" : largeScreen ? "400px" : "100%"}
+            maxWidth="512px"
+            sx={{ ...(largeScreen ? null : { marginX: "auto" }) }}
+            marginBottom="36px"
+            height="100%"
+            position="sticky"
+            top="16px">
+            <ImageGallery
+              showNav={false}
+              showPlayButton={false}
+              showBullets={true}
+              items={images}
+            />
+          </Box>
+          <Box paddingX={smallScreen ? "1rem" : 0}>
             <Typography variant="h3">
               {/* name */}
               {data?.name}
@@ -227,7 +239,8 @@ function ProductOverviewPage() {
                 bgcolor: "grey.600",
                 marginTop: "5px",
                 marginBottom: "14px",
-              }}/>
+              }}
+            />
             <Typography
               variant="body2"
               sx={{
@@ -283,7 +296,7 @@ function ProductOverviewPage() {
               <Typography
                 component="span"
                 variant="body2"
-                sx={{textDecoration:"line-through"}}>
+                sx={{ textDecoration: "line-through" }}>
                 ₹{data?.price.mrp}
               </Typography>
             </Box>

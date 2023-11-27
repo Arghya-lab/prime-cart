@@ -3,8 +3,11 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: #0F1111;
+  color: #0f1111;
 }
+
+
+/*  ------- Shoveler container horizontal scrollbar styling -------  */
 
 /* custom scrollbar for Chrome, Safari, and Opera */
 .no-scrollbar::-webkit-scrollbar {
@@ -27,3 +30,54 @@ body {
   /* Firefox */
 }
 
+
+/*  ------- Custom styling for react-image-gallery pkg -------  */
+
+.image-gallery {
+  width: 100%;
+}
+.image-gallery-content .image-gallery-slide .image-gallery-image {
+  width: 100%;
+  object-fit: contain;
+  max-height: 304px;
+}
+.image-gallery-thumbnail .image-gallery-thumbnail-image {
+  display: none;
+}
+.image-gallery-thumbnail.active, .image-gallery-thumbnail:focus {
+  outline: none;
+  border: none;
+}
+
+@media (min-width: 425px) {
+  .image-gallery-thumbnail .image-gallery-thumbnail-image {
+    width: auto;
+    max-height: 60px;
+    object-fit: cover;
+    display: inline-block;
+  }
+  .image-gallery-thumbnail.active, .image-gallery-thumbnail:focus {
+    outline: none;
+    border: 2px solid #C7511F;
+}
+}
+
+@media (min-width: 1024px) {
+  .image-gallery {
+    width: 400px;
+  }
+  .image-gallery-content .image-gallery-slide .image-gallery-image {
+    width: 100%;
+    max-height: 325px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .image-gallery {
+    width: 512px;
+  }
+  .image-gallery-content .image-gallery-slide .image-gallery-image {
+    width: 100%;
+    max-height: 416px;
+  }
+}
